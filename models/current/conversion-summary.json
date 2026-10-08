@@ -1,0 +1,42 @@
+{
+  "complete": true,
+  "construction_complete": true,
+  "source_sha256": "5017f1ff932f0adc2fd3c10b84c8c59bfcb1931fb4b0eb4db17252e095c4c0bd",
+  "canonical_sha256": "4827327dcb382d29dc0dfd00d5b050d24f0c9a55d9892ec59864892ccf5f8219",
+  "compact_sha256": "a71ff3f637d4ce2660f4967ad29f012b563a3075281bb737a7eb421de367e2d9",
+  "source_trees": 32,
+  "source_nodes": 480,
+  "nodes": 63,
+  "classes": 2,
+  "raw_features": 54,
+  "canonical_bytes": 1072,
+  "compact_bytes": 768,
+  "construction_seconds": 0.552525462,
+  "native_prediction_rule": {
+    "comparison": ">=",
+    "kind": "positive_probability_threshold",
+    "operation": "ResidentTrainer::predict_probabilities; native multi:softprob full-round view",
+    "probability_class": 1,
+    "rounds": "all",
+    "threshold": 0.32499998807907104,
+    "threshold_precision": "FP32"
+  },
+  "qualification_mode": "none",
+  "qualification_performed": false,
+  "qualification_complete": false,
+  "accepted_native_class_root": false,
+  "all_finite_FP32_and_NaN_cells_verified": false,
+  "native_class_mismatches": null,
+  "artifact_qualification": "unqualified_conversion_artifact",
+  "builtin_converter_checks_performed": true,
+  "scope": "Complete maintained converter construction with builtin checks; independent exhaustive native-class qualification not requested",
+  "input_scope": "declared input feature vectors; upstream feature generation is outside this conversion",
+  "ordinary_tree": {
+    "nodes": 181,
+    "leaves": 91,
+    "internal_nodes": 90,
+    "shared_nodes": 63,
+    "maximum_decision_depth": 15
+  },
+  "heldout_accuracy_claim": false
+}

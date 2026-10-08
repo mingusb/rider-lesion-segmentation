@@ -1,0 +1,64 @@
+{
+  "format": "rider-earlier-study-aggregate-summary-1",
+  "complete": true,
+  "patients": 32,
+  "scans": 62,
+  "outer_folds": 5,
+  "inner_folds": 5,
+  "OOF_folds": 3,
+  "features": 54,
+  "primary_metric": "macro patient Dice; pool acquisitions within each patient, then average patients",
+  "evaluation_scope": "All declared ROI rows; truth-positive voxels outside the ROI contribute false negatives for every method",
+  "metrics": [
+    {
+      "method": "native_baseline",
+      "label": "XGBoost, inner-selected rule",
+      "macro_patient_Dice": 0.7575268777458939,
+      "TP": 143155,
+      "FP": 36134,
+      "FN": 15556,
+      "TN_in_ROI": 31549511
+    },
+    {
+      "method": "nonlinear_combiner",
+      "label": "Nonlinear combiner, inner-selected rule",
+      "macro_patient_Dice": 0.7358912886931294,
+      "TP": 143043,
+      "FP": 49386,
+      "FN": 15668,
+      "TN_in_ROI": 31536259
+    },
+    {
+      "method": "inner_selected",
+      "label": "Inner-selected pipeline",
+      "macro_patient_Dice": 0.7427411937151336,
+      "TP": 146513,
+      "FP": 51074,
+      "FN": 12198,
+      "TN_in_ROI": 31534571
+    },
+    {
+      "method": "reference_default",
+      "label": "Fixed CNN default",
+      "macro_patient_Dice": 0.7343239168343711,
+      "TP": 148059,
+      "FP": 50697,
+      "FN": 10652,
+      "TN_in_ROI": 31534948
+    },
+    {
+      "method": "reference_inner_selected",
+      "label": "Inner-selected CNN rule",
+      "macro_patient_Dice": 0.7274604262795794,
+      "TP": 136782,
+      "FP": 43328,
+      "FN": 21929,
+      "TN_in_ROI": 31542317
+    }
+  ],
+  "source_result_sha256": "761347e6972c08fcaa381eabf15cfde0c2cf91e6756cd920bf47bcb4b3d74fb3",
+  "fit_group_weights": "global",
+  "fit_sampling_weights": "inverse_retention",
+  "native_probability_cutoffs": 19,
+  "scope": "Exploratory procedure evaluation. The all-patient refit has no separate held-out score."
+}

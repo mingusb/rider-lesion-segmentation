@@ -1,0 +1,37 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {"major": 3, "minor": 30, "patch": 0},
+  "configurePresets": [
+    {
+      "name": "cuda-release",
+      "displayName": "Decision Programs C++23/CUDA release",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/cuda-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CUDA_ARCHITECTURES": "native",
+        "DP_ENABLE_CUDA": "ON",
+        "BUILD_TESTING": "ON"
+      }
+    },
+    {
+      "name": "host-tools",
+      "displayName": "CLI, structural tools and metadata checks without CUDA",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/host-tools",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "DP_ENABLE_CUDA": "OFF",
+        "BUILD_TESTING": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {"name": "cuda-release", "configurePreset": "cuda-release", "jobs": 2},
+    {"name": "host-tools", "configurePreset": "host-tools", "jobs": 2}
+  ],
+  "testPresets": [
+    {"name": "host-tools", "configurePreset": "host-tools", "filter": {"include": {"label": "host"}}, "output": {"outputOnFailure": true}},
+    {"name": "cuda-release-host", "configurePreset": "cuda-release", "filter": {"include": {"label": "host"}}, "output": {"outputOnFailure": true}}
+  ]
+}

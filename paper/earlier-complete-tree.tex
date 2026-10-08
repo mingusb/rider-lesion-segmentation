@@ -1,0 +1,51 @@
+\begin{tikzpicture}[x=1in,y=1in, every node/.style={inner sep=.6pt,outer sep=0pt,font=\fontsize{7}{8}\selectfont},
+trueedge/.style={draw=treeblue,line width=.6pt,preaction={draw=treeblue,opacity=.08,line width=1.4pt}},falseedge/.style={draw=treeorange,densely dashed,line width=.6pt,preaction={draw=treeorange,opacity=.08,line width=1.4pt}}]
+\node[text=leafgray] (n1) at (0.61458,1.94970) {$\mathbf{B}$};
+\node[text=leafteal] (n5) at (0.43403,1.14760) {$\mathbf{L}$};
+\node[text=leafgray] (n10) at (0.10069,0.07812) {$\mathbf{B}$};
+\node[text=leafteal] (n11) at (0.22569,0.07812) {$\mathbf{L}$};
+\node[text=treeink] (n9) at (0.15625,0.34549) {$x<\tau_{7}$};
+\node[text=leafteal] (n12) at (0.39236,0.34549) {$\mathbf{L}$};
+\node[text=treeink] (n8) at (0.32292,0.61285) {$u<\tau_{6}$};
+\node[text=leafgray] (n14) at (0.62847,0.34549) {$\mathbf{B}$};
+\node[text=leafgray] (n16) at (0.80903,0.07812) {$\mathbf{B}$};
+\node[text=leafteal] (n17) at (0.93403,0.07812) {$\mathbf{L}$};
+\node[text=treeink] (n15) at (0.87847,0.34549) {$x<\tau_{7}$};
+\node[text=treeink] (n13) at (0.68403,0.61285) {$u<\tau_{6}$};
+\node[text=treeink] (n7) at (0.50347,0.88021) {$a_{21}<\tau_{5}$};
+\node[text=leafteal] (n18) at (0.86458,0.88021) {$\mathbf{L}$};
+\node[text=treeink] (n6) at (0.68403,1.14760) {$u<\tau_{4}$};
+\node[text=treeink] (n4) at (0.55903,1.41490) {$a_{21}<\tau_{3}$};
+\node[text=leafteal] (n19) at (0.92014,1.41490) {$\mathbf{L}$};
+\node[text=treeink] (n3) at (0.73958,1.68230) {$x<\tau_{2}$};
+\node[text=leafteal] (n20) at (0.97569,1.68230) {$\mathbf{L}$};
+\node[text=treeink] (n2) at (0.86458,1.94970) {$x<\tau_{1}$};
+\node[text=rootpurple] (n0) at (0.73958,2.21700) {$m<1$};
+\draw[trueedge] (n0.south) -- (n1.north);
+\draw[falseedge] (n0.south) -- (n2.north);
+\draw[trueedge] (n2.south) -- (n3.north);
+\draw[trueedge] (n3.south) -- (n4.north);
+\draw[trueedge] (n4.south) -- (n5.north);
+\draw[falseedge] (n4.south) -- (n6.north);
+\draw[trueedge] (n6.south) -- (n7.north);
+\draw[trueedge] (n7.south) -- (n8.north);
+\draw[trueedge] (n8.south) -- (n9.north);
+\draw[trueedge] (n9.south) -- (n10.north);
+\draw[falseedge] (n9.south) -- (n11.north);
+\draw[falseedge] (n8.south) -- (n12.north);
+\draw[falseedge] (n7.south) -- (n13.north);
+\draw[trueedge] (n13.south) -- (n14.north);
+\draw[falseedge] (n13.south) -- (n15.north);
+\draw[trueedge] (n15.south) -- (n16.north);
+\draw[falseedge] (n15.south) -- (n17.north);
+\draw[falseedge] (n6.south) -- (n18.north);
+\draw[falseedge] (n3.south) -- (n19.north);
+\draw[falseedge] (n2.south) -- (n20.north);
+\end{tikzpicture}
+\par\smallskip
+{\footnotesize\color{treeink}
+\textcolor{treeblue}{Solid: true}\quad\textcolor{treeorange}{Dashed: false}\quad $\mathbf B$: background\quad $\mathbf L$: lesion. NaN follows false.\par
+$x$: normalized CT intensity; $u$: local CT mean (2-mm radius); $m$: CNN mask; $a_{21}$: decoder activation 21.\par
+$\tau_{1}=-0.407344371$\quad $\tau_{2}=-0.711924314$\quad $\tau_{3}=-0.0117178345$\quad $\tau_{4}=-0.635912418$\par
+$\tau_{5}=-0.0102527272$\quad $\tau_{6}=-0.785341203$\quad $\tau_{7}=-1.02144098$\par
+}

@@ -1,0 +1,2483 @@
+% Self-contained ICML-style named-author white paper.
+\begin{filecontents*}[overwrite]{algorithm.sty}
+% ALGORITHM STYLE -- Released 8 April 1996
+%    for LaTeX-2e
+% Copyright -- 1994 Peter Williams
+% E-mail Peter.Williams@dsto.defence.gov.au
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{algorithm}
+\typeout{Document Style `algorithm' - floating environment}
+
+\RequirePackage{float}
+\RequirePackage{ifthen}
+\newcommand{\ALG@within}{nothing}
+\newboolean{ALG@within}
+\setboolean{ALG@within}{false}
+\newcommand{\ALG@floatstyle}{ruled}
+\newcommand{\ALG@name}{Algorithm}
+\newcommand{\listalgorithmname}{List of \ALG@name s}
+
+% Declare Options
+% first appearance
+\DeclareOption{plain}{
+  \renewcommand{\ALG@floatstyle}{plain}
+}
+\DeclareOption{ruled}{
+  \renewcommand{\ALG@floatstyle}{ruled}
+}
+\DeclareOption{boxed}{
+  \renewcommand{\ALG@floatstyle}{boxed}
+}
+% then numbering convention
+\DeclareOption{part}{
+  \renewcommand{\ALG@within}{part}
+  \setboolean{ALG@within}{true}
+}
+\DeclareOption{chapter}{
+  \renewcommand{\ALG@within}{chapter}
+  \setboolean{ALG@within}{true}
+}
+\DeclareOption{section}{
+  \renewcommand{\ALG@within}{section}
+  \setboolean{ALG@within}{true}
+}
+\DeclareOption{subsection}{
+  \renewcommand{\ALG@within}{subsection}
+  \setboolean{ALG@within}{true}
+}
+\DeclareOption{subsubsection}{
+  \renewcommand{\ALG@within}{subsubsection}
+  \setboolean{ALG@within}{true}
+}
+\DeclareOption{nothing}{
+  \renewcommand{\ALG@within}{nothing}
+  \setboolean{ALG@within}{true}
+}
+\DeclareOption*{\edef\ALG@name{\CurrentOption}}
+
+% ALGORITHM
+%
+\ProcessOptions
+\floatstyle{\ALG@floatstyle}
+\ifthenelse{\boolean{ALG@within}}{
+  \ifthenelse{\equal{\ALG@within}{part}}
+     {\newfloat{algorithm}{htbp}{loa}[part]}{}
+  \ifthenelse{\equal{\ALG@within}{chapter}}
+     {\newfloat{algorithm}{htbp}{loa}[chapter]}{}
+  \ifthenelse{\equal{\ALG@within}{section}}
+     {\newfloat{algorithm}{htbp}{loa}[section]}{}
+  \ifthenelse{\equal{\ALG@within}{subsection}}
+     {\newfloat{algorithm}{htbp}{loa}[subsection]}{}
+  \ifthenelse{\equal{\ALG@within}{subsubsection}}
+     {\newfloat{algorithm}{htbp}{loa}[subsubsection]}{}
+  \ifthenelse{\equal{\ALG@within}{nothing}}
+     {\newfloat{algorithm}{htbp}{loa}}{}
+}{
+  \newfloat{algorithm}{htbp}{loa}
+}
+\floatname{algorithm}{\ALG@name}
+
+\newcommand{\listofalgorithms}{\listof{algorithm}{\listalgorithmname}}
+
+
+\end{filecontents*}
+\begin{filecontents*}[overwrite]{algorithmic.sty}
+% ALGORITHMIC STYLE -- Released 8 APRIL 1996
+%    for LaTeX version 2e
+% Copyright -- 1994 Peter Williams
+% E-mail PeterWilliams@dsto.defence.gov.au
+%
+% Modified by Alex Smola (08/2000)
+% E-mail Alex.Smola@anu.edu.au
+%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{algorithmic}
+\typeout{Document Style `algorithmic' - environment}
+%
+\RequirePackage{ifthen}
+\RequirePackage{calc}
+\newboolean{ALC@noend}
+\setboolean{ALC@noend}{false}
+\newcounter{ALC@line}
+\newcounter{ALC@rem}
+\newlength{\ALC@tlm}
+%
+\DeclareOption{noend}{\setboolean{ALC@noend}{true}}
+%
+\ProcessOptions
+%
+% ALGORITHMIC
+\newcommand{\algorithmicrequire}{\textbf{Require:}}
+\newcommand{\algorithmicensure}{\textbf{Ensure:}}
+\newcommand{\algorithmiccomment}[1]{\{#1\}}
+\newcommand{\algorithmicend}{\textbf{end}}
+\newcommand{\algorithmicif}{\textbf{if}}
+\newcommand{\algorithmicthen}{\textbf{then}}
+\newcommand{\algorithmicelse}{\textbf{else}}
+\newcommand{\algorithmicelsif}{\algorithmicelse\ \algorithmicif}
+\newcommand{\algorithmicendif}{\algorithmicend\ \algorithmicif}
+\newcommand{\algorithmicfor}{\textbf{for}}
+\newcommand{\algorithmicforall}{\textbf{for all}}
+\newcommand{\algorithmicdo}{\textbf{do}}
+\newcommand{\algorithmicendfor}{\algorithmicend\ \algorithmicfor}
+\newcommand{\algorithmicwhile}{\textbf{while}}
+\newcommand{\algorithmicendwhile}{\algorithmicend\ \algorithmicwhile}
+\newcommand{\algorithmicloop}{\textbf{loop}}
+\newcommand{\algorithmicendloop}{\algorithmicend\ \algorithmicloop}
+\newcommand{\algorithmicrepeat}{\textbf{repeat}}
+\newcommand{\algorithmicuntil}{\textbf{until}}
+
+%changed by alex smola
+\newcommand{\algorithmicinput}{\textbf{input}}
+\newcommand{\algorithmicoutput}{\textbf{output}}
+\newcommand{\algorithmicset}{\textbf{set}}
+\newcommand{\algorithmictrue}{\textbf{true}}
+\newcommand{\algorithmicfalse}{\textbf{false}}
+\newcommand{\algorithmicand}{\textbf{and\ }}
+\newcommand{\algorithmicor}{\textbf{or\ }}
+\newcommand{\algorithmicfunction}{\textbf{function}}
+\newcommand{\algorithmicendfunction}{\algorithmicend\ \algorithmicfunction}
+\newcommand{\algorithmicmain}{\textbf{main}}
+\newcommand{\algorithmicendmain}{\algorithmicend\ \algorithmicmain}
+%end changed by alex smola
+
+\def\ALC@item[#1]{%
+\if@noparitem \@donoparitem
+  \else \if@inlabel \indent \par \fi
+         \ifhmode \unskip\unskip \par \fi
+         \if@newlist \if@nobreak \@nbitem \else
+                        \addpenalty\@beginparpenalty
+                        \addvspace\@topsep \addvspace{-\parskip}\fi
+           \else \addpenalty\@itempenalty \addvspace\itemsep
+          \fi
+    \global\@inlabeltrue
+\fi
+\everypar{\global\@minipagefalse\global\@newlistfalse
+          \if@inlabel\global\@inlabelfalse \hskip -\parindent \box\@labels
+             \penalty\z@ \fi
+          \everypar{}}\global\@nobreakfalse
+\if@noitemarg \@noitemargfalse \if@nmbrlist \refstepcounter{\@listctr}\fi \fi
+\sbox\@tempboxa{\makelabel{#1}}%
+\global\setbox\@labels
+ \hbox{\unhbox\@labels \hskip \itemindent
+       \hskip -\labelwidth \hskip -\ALC@tlm
+       \ifdim \wd\@tempboxa >\labelwidth
+                \box\@tempboxa
+          \else \hbox to\labelwidth {\unhbox\@tempboxa}\fi
+       \hskip \ALC@tlm}\ignorespaces}
+%
+\newenvironment{algorithmic}[1][0]{
+\let\@item\ALC@item
+  \newcommand{\ALC@lno}{%
+\ifthenelse{\equal{\arabic{ALC@rem}}{0}}
+{{\footnotesize \arabic{ALC@line}:}}{}%
+}
+\let\@listii\@listi
+\let\@listiii\@listi
+\let\@listiv\@listi
+\let\@listv\@listi
+\let\@listvi\@listi
+\let\@listvii\@listi
+  \newenvironment{ALC@g}{
+    \begin{list}{\ALC@lno}{ \itemsep\z@ \itemindent\z@
+    \listparindent\z@ \rightmargin\z@ 
+    \topsep\z@ \partopsep\z@ \parskip\z@\parsep\z@
+    \leftmargin 1em
+    \addtolength{\ALC@tlm}{\leftmargin}
+    }
+  }
+  {\end{list}}
+  \newcommand{\ALC@it}{\addtocounter{ALC@line}{1}\addtocounter{ALC@rem}{1}\ifthenelse{\equal{\arabic{ALC@rem}}{#1}}{\setcounter{ALC@rem}{0}}{}\item}
+  \newcommand{\ALC@com}[1]{\ifthenelse{\equal{##1}{default}}%
+{}{\ \algorithmiccomment{##1}}}
+  \newcommand{\REQUIRE}{\item[\algorithmicrequire]}
+  \newcommand{\ENSURE}{\item[\algorithmicensure]}
+  \newcommand{\STATE}{\ALC@it}
+  \newcommand{\COMMENT}[1]{\algorithmiccomment{##1}}
+%changes by alex smola
+  \newcommand{\INPUT}{\item[\algorithmicinput]}
+  \newcommand{\OUTPUT}{\item[\algorithmicoutput]}
+  \newcommand{\SET}{\item[\algorithmicset]}
+%  \newcommand{\TRUE}{\algorithmictrue}
+%  \newcommand{\FALSE}{\algorithmicfalse}
+  \newcommand{\AND}{\algorithmicand}
+  \newcommand{\OR}{\algorithmicor}
+  \newenvironment{ALC@func}{\begin{ALC@g}}{\end{ALC@g}}
+  \newenvironment{ALC@main}{\begin{ALC@g}}{\end{ALC@g}}
+%end changes by alex smola
+  \newenvironment{ALC@if}{\begin{ALC@g}}{\end{ALC@g}}
+  \newenvironment{ALC@for}{\begin{ALC@g}}{\end{ALC@g}}
+  \newenvironment{ALC@whl}{\begin{ALC@g}}{\end{ALC@g}}
+  \newenvironment{ALC@loop}{\begin{ALC@g}}{\end{ALC@g}}
+  \newenvironment{ALC@rpt}{\begin{ALC@g}}{\end{ALC@g}}
+  \renewcommand{\\}{\@centercr}
+  \newcommand{\IF}[2][default]{\ALC@it\algorithmicif\ ##2\ \algorithmicthen%
+\ALC@com{##1}\begin{ALC@if}}
+  \newcommand{\SHORTIF}[2]{\ALC@it\algorithmicif\ ##1\
+    \algorithmicthen\ {##2}}
+  \newcommand{\ELSE}[1][default]{\end{ALC@if}\ALC@it\algorithmicelse%
+\ALC@com{##1}\begin{ALC@if}}
+  \newcommand{\ELSIF}[2][default]%
+{\end{ALC@if}\ALC@it\algorithmicelsif\ ##2\ \algorithmicthen%
+\ALC@com{##1}\begin{ALC@if}}
+  \newcommand{\FOR}[2][default]{\ALC@it\algorithmicfor\ ##2\ \algorithmicdo%
+\ALC@com{##1}\begin{ALC@for}}
+  \newcommand{\FORALL}[2][default]{\ALC@it\algorithmicforall\ ##2\ %
+\algorithmicdo%
+\ALC@com{##1}\begin{ALC@for}}
+  \newcommand{\SHORTFORALL}[2]{\ALC@it\algorithmicforall\ ##1\ %
+    \algorithmicdo\ {##2}}
+  \newcommand{\WHILE}[2][default]{\ALC@it\algorithmicwhile\ ##2\ %
+\algorithmicdo%
+\ALC@com{##1}\begin{ALC@whl}}
+  \newcommand{\LOOP}[1][default]{\ALC@it\algorithmicloop%
+\ALC@com{##1}\begin{ALC@loop}}
+%changed by alex smola
+  \newcommand{\FUNCTION}[2][default]{\ALC@it\algorithmicfunction\ ##2\ %
+    \ALC@com{##1}\begin{ALC@func}}
+  \newcommand{\MAIN}[2][default]{\ALC@it\algorithmicmain\ ##2\ %
+    \ALC@com{##1}\begin{ALC@main}}
+%end changed by alex smola
+  \newcommand{\REPEAT}[1][default]{\ALC@it\algorithmicrepeat%
+    \ALC@com{##1}\begin{ALC@rpt}}
+    \newcommand{\UNTIL}[1]{\end{ALC@rpt}\ALC@it\algorithmicuntil\ ##1}
+  \ifthenelse{\boolean{ALC@noend}}{
+    \newcommand{\ENDIF}{\end{ALC@if}}
+    \newcommand{\ENDFOR}{\end{ALC@for}}
+    \newcommand{\ENDWHILE}{\end{ALC@whl}}
+    \newcommand{\ENDLOOP}{\end{ALC@loop}}
+    \newcommand{\ENDFUNCTION}{\end{ALC@func}}
+    \newcommand{\ENDMAIN}{\end{ALC@main}}
+  }{
+    \newcommand{\ENDIF}{\end{ALC@if}\ALC@it\algorithmicendif}
+    \newcommand{\ENDFOR}{\end{ALC@for}\ALC@it\algorithmicendfor}
+    \newcommand{\ENDWHILE}{\end{ALC@whl}\ALC@it\algorithmicendwhile}
+    \newcommand{\ENDLOOP}{\end{ALC@loop}\ALC@it\algorithmicendloop}
+    \newcommand{\ENDFUNCTION}{\end{ALC@func}\ALC@it\algorithmicendfunction}
+    \newcommand{\ENDMAIN}{\end{ALC@main}\ALC@it\algorithmicendmain}
+  } 
+  \renewcommand{\@toodeep}{}
+  \begin{list}{\ALC@lno}{\setcounter{ALC@line}{0}\setcounter{ALC@rem}{0}%
+      \itemsep\z@ \itemindent\z@ \listparindent\z@%
+      \partopsep\z@ \parskip\z@ \parsep\z@%
+      \labelsep 0.5em \topsep 0.2em%
+      \ifthenelse{\equal{#1}{0}}
+      {\labelwidth 0.5em }
+      {\labelwidth  1.2em }
+      \leftmargin\labelwidth \addtolength{\leftmargin}{\labelsep}
+      \ALC@tlm\labelsep
+      }
+    }
+  {\end{list}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{filecontents*}
+\begin{filecontents*}[overwrite]{fancyhdr.sty}
+%%
+%% This is file `fancyhdr.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% fancyhdr.dtx  (with options: `fancyhdr')
+%% 
+%% This is a generated file.
+%% 
+%% This file may be distributed and/or modified under the conditions of
+%% the LaTeX Project Public License, either version 1.3 of this license
+%% or (at your option) any later version.  The latest version of this
+%% license is in:
+%% 
+%%    http://www.latex-project.org/lppl.txt
+%% 
+%% and version 1.3 or later is part of all distributions of LaTeX version
+%% 2005/12/01 or later.
+%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\NeedsTeXFormat{LaTeX2e}[2018-04-01]
+\ProvidesPackage{fancyhdr}%
+           [2025/02/07 v5.2
+                  Extensive control of page headers and footers]%
+% Copyright (C) 1994-2025 by Pieter van Oostrum <pieter@vanoostrum.org>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifdefined\NewDocumentCommand\else\RequirePackage{xparse}\fi
+\newif\iff@nch@check
+\f@nch@checktrue
+\DeclareOption{nocheck}{%
+  \f@nch@checkfalse
+}
+\let\f@nch@gbl\relax
+\newif\iff@nch@compatViii
+\DeclareOption{compatV3}{%
+  \PackageWarningNoLine{fancyhdr}{The `compatV3' option is deprecated.\MessageBreak
+    It will disappear in one of the following releases.\MessageBreak
+    Please change your document to work\MessageBreak
+    without this option}
+  \let\f@nch@gbl\global
+  \f@nch@compatViiitrue
+}
+\newif\iff@nch@twoside
+\f@nch@twosidefalse
+\DeclareOption{twoside}{%
+  \if@twoside\else\f@nch@twosidetrue\fi
+}
+\newcommand\f@nch@def[2]{%
+  \def\temp@a{#2}\ifx\temp@a\@empty\f@nch@gbl\def#1{}%
+                 \else\f@nch@gbl\def#1{#2\strut}\fi}
+\DeclareOption{myheadings}{%
+  \@ifundefined{chapter}{%
+    \def\ps@myheadings{\ps@f@nch@fancyproto \let\@mkboth\@gobbletwo
+      \fancyhf{}
+      \fancyhead[LE,RO]{\thepage}%
+      \fancyhead[RE]{\slshape\leftmark}%
+      \fancyhead[LO]{\slshape\rightmark}%
+      \let\sectionmark\@gobble
+      \let\subsectionmark\@gobble
+    }%
+  }%
+  {\def\ps@myheadings{\ps@f@nch@fancyproto \let\@mkboth\@gobbletwo
+      \fancyhf{}
+      \fancyhead[LE,RO]{\thepage}%
+      \fancyhead[RE]{\slshape\leftmark}%
+      \fancyhead[LO]{\slshape\rightmark}%
+      \let\chaptermark\@gobble
+      \let\sectionmark\@gobble
+    }%
+  }%
+}
+\DeclareOption{headings}{%
+  \@ifundefined{chapter}{%
+    \if@twoside
+      \def\ps@headings{\ps@f@nch@fancyproto \def\@mkboth{\protect\markboth}
+        \fancyhf{}
+        \fancyhead[LE,RO]{\thepage}%
+        \fancyhead[RE]{\slshape\leftmark}%
+        \fancyhead[LO]{\slshape\rightmark}%
+        \def\sectionmark##1{%
+          \markboth{\MakeUppercase{%
+            \ifnum \c@secnumdepth >\z@ \thesection\quad \fi##1}}{}}%
+        \def\subsectionmark##1{%
+          \markright{%
+            \ifnum \c@secnumdepth >\@ne \thesubsection\quad \fi##1}}%
+      }%
+    \else
+      \def\ps@headings{\ps@f@nch@fancyproto \def\@mkboth{\protect\markboth}
+        \fancyhf{}
+        \fancyhead[LE,RO]{\thepage}%
+        \fancyhead[RE]{\slshape\leftmark}%
+        \fancyhead[LO]{\slshape\rightmark}%
+        \def\sectionmark##1{%
+          \markright {\MakeUppercase{%
+            \ifnum \c@secnumdepth >\z@ \thesection\quad \fi##1}}}%
+        \let\subsectionmark\@gobble % Not needed but inserted for safety
+      }%
+    \fi
+  }{\if@twoside
+      \def\ps@headings{\ps@f@nch@fancyproto \def\@mkboth{\protect\markboth}
+        \fancyhf{}
+        \fancyhead[LE,RO]{\thepage}%
+        \fancyhead[RE]{\slshape\leftmark}%
+        \fancyhead[LO]{\slshape\rightmark}%
+        \def\chaptermark##1{%
+          \markboth{\MakeUppercase{%
+            \ifnum \c@secnumdepth >\m@ne \if@mainmatter
+              \@chapapp\ \thechapter. \ \fi\fi##1}}{}}%
+        \def\sectionmark##1{%
+          \markright {\MakeUppercase{%
+            \ifnum \c@secnumdepth >\z@ \thesection. \ \fi##1}}}%
+      }%
+    \else
+      \def\ps@headings{\ps@f@nch@fancyproto \def\@mkboth{\protect\markboth}
+        \fancyhf{}
+        \fancyhead[LE,RO]{\thepage}%
+        \fancyhead[RE]{\slshape\leftmark}%
+        \fancyhead[LO]{\slshape\rightmark}%
+        \def\chaptermark##1{%
+          \markright{\MakeUppercase{%
+            \ifnum \c@secnumdepth >\m@ne \if@mainmatter
+              \@chapapp\ \thechapter. \ \fi\fi##1}}}%
+        \let\sectionmark\@gobble % Not needed but inserted for safety
+      }%
+    \fi
+  }%
+}
+\ProcessOptions*
+\newcommand{\f@nch@forc}[3]{\expandafter\f@nchf@rc\expandafter#1\expandafter{#2}{#3}}
+\newcommand{\f@nchf@rc}[3]{\def\temp@ty{#2}\ifx\@empty\temp@ty\else
+                                    \f@nch@rc#1#2\f@nch@rc{#3}\fi}
+\long\def\f@nch@rc#1#2#3\f@nch@rc#4{\def#1{#2}#4\f@nchf@rc#1{#3}{#4}}
+\newcommand{\f@nch@for}[3]{\edef\@fortmp{#2}%
+  \expandafter\@forloop#2,\@nil,\@nil\@@#1{#3}}
+\newcommand\f@nch@default[3]{%
+  \edef\temp@a{\lowercase{\edef\noexpand\temp@a{#3}}}\temp@a \def#1{}%
+  \f@nch@forc\tmpf@ra{#2}%
+  {\expandafter\f@nch@ifin\tmpf@ra\temp@a{\edef#1{#1\tmpf@ra}}{}}%
+  \ifx\@empty#1\def#1{#2}\fi}
+\newcommand{\f@nch@ifin}[4]{%
+  \edef\temp@a{#2}\def\temp@b##1#1##2\temp@b{\def\temp@b{##1}}%
+  \expandafter\temp@b#2#1\temp@b\ifx\temp@a\temp@b #4\else #3\fi}
+\newcommand{\fancyhead}[2][]{\f@nch@fancyhf\fancyhead h[#1]{#2}}%
+\newcommand{\fancyfoot}[2][]{\f@nch@fancyhf\fancyfoot f[#1]{#2}}%
+\newcommand{\fancyhf}[2][]{\f@nch@fancyhf\fancyhf {}[#1]{#2}}%
+\newcommand{\fancyheadoffset}[2][]{\f@nch@fancyhfoffs\fancyheadoffset h[#1]{#2}}%
+\newcommand{\fancyfootoffset}[2][]{\f@nch@fancyhfoffs\fancyfootoffset f[#1]{#2}}%
+\newcommand{\fancyhfoffset}[2][]{\f@nch@fancyhfoffs\fancyhfoffset {}[#1]{#2}}%
+\def\f@nch@fancyhf@Echeck#1{%
+  \if@twoside\else
+    \iff@nch@twoside\else
+      \if\f@nch@@eo e%
+        \PackageWarning{fancyhdr} {\string#1's `E' option without twoside option is useless.\MessageBreak
+          Please consider using the `twoside' option}%
+  \fi\fi\fi
+}
+\long\def\f@nch@fancyhf#1#2[#3]#4{%
+  \def\temp@c{}%
+  \f@nch@forc\tmpf@ra{#3}%
+  {\expandafter\f@nch@ifin\tmpf@ra{eolcrhf,EOLCRHF}%
+    {}{\edef\temp@c{\temp@c\tmpf@ra}}}%
+  \ifx\@empty\temp@c\else \PackageError{fancyhdr}{Illegal char `\temp@c' in
+    \string#1 argument: [#3]}{}%
+  \fi \f@nch@for\temp@c{#3}%
+  {\f@nch@default\f@nch@@eo{eo}\temp@c
+    \f@nch@fancyhf@Echeck{#1}%
+    \f@nch@default\f@nch@@lcr{lcr}\temp@c
+    \f@nch@default\f@nch@@hf{hf}{#2\temp@c}%
+    \f@nch@forc\f@nch@eo\f@nch@@eo
+        {\f@nch@forc\f@nch@lcr\f@nch@@lcr
+          {\f@nch@forc\f@nch@hf\f@nch@@hf
+            {\expandafter\f@nch@def\csname
+              f@nch@\f@nch@eo\f@nch@lcr\f@nch@hf\endcsname {#4}}}}}}
+\def\f@nch@fancyhfoffs#1#2[#3]#4{%
+  \def\temp@c{}%
+  \f@nch@forc\tmpf@ra{#3}%
+  {\expandafter\f@nch@ifin\tmpf@ra{eolrhf,EOLRHF}%
+    {}{\edef\temp@c{\temp@c\tmpf@ra}}}%
+  \ifx\@empty\temp@c\else \PackageError{fancyhdr}{Illegal char `\temp@c' in
+    \string#1 argument: [#3]}{}%
+  \fi \f@nch@for\temp@c{#3}%
+  {\f@nch@default\f@nch@@eo{eo}\temp@c
+    \f@nch@fancyhf@Echeck{#1}%
+    \f@nch@default\f@nch@@lcr{lr}\temp@c
+    \f@nch@default\f@nch@@hf{hf}{#2\temp@c}%
+    \f@nch@forc\f@nch@eo\f@nch@@eo
+        {\f@nch@forc\f@nch@lcr\f@nch@@lcr
+          {\f@nch@forc\f@nch@hf\f@nch@@hf
+            {\expandafter\setlength\csname
+              f@nch@offset@\f@nch@eo\f@nch@lcr\f@nch@hf\endcsname {#4}}}}}%
+  \f@nch@setoffs}
+\NewDocumentCommand {\fancyheadwidth}{ s O{} O{} m }
+                      {\f@nch@fancyhfwidth{#1}\fancyheadwidth h[#2][#3]{#4}}%
+\NewDocumentCommand {\fancyfootwidth}{ s O{} O{} m }
+                      {\f@nch@fancyhfwidth{#1}\fancyfootwidth f[#2][#3]{#4}}%
+\NewDocumentCommand {\fancyhfwidth}  { s O{} O{} m }
+                      {\f@nch@fancyhfwidth{#1}\fancyhfwidth  {}[#2][#3]{#4}}%
+\def\f@nch@fancyhfwidth#1#2#3[#4][#5]#6{%
+  \setlength\@tempdima{#6}%
+  \def\temp@c{}%
+  \f@nch@forc\tmpf@ra{#4}%
+  {\expandafter\f@nch@ifin\tmpf@ra{eolcrhf,EOLCRHF}%
+    {}{\edef\temp@c{\temp@c\tmpf@ra}}}%
+  \ifx\@empty\temp@c\else \PackageError{fancyhdr}{Illegal char `\temp@c' in
+    \string#2 argument: [#4]}{}%
+  \fi
+  \f@nch@for\temp@c{#4}%
+  {\f@nch@default\f@nch@@eo{eo}\temp@c
+    \f@nch@fancyhf@Echeck{#2}%
+    \f@nch@default\f@nch@@lcr{lcr}\temp@c
+    \f@nch@default\f@nch@@hf{hf}{#3\temp@c}%
+    \f@nch@forc\f@nch@eo\f@nch@@eo
+        {\f@nch@forc\f@nch@lcr\f@nch@@lcr
+          {\f@nch@forc\f@nch@hf\f@nch@@hf
+            {%
+              \IfBooleanTF{#1}{%
+                \expandafter\edef\csname
+                  f@nch@width@\f@nch@eo\f@nch@lcr\f@nch@hf\endcsname{\the\@tempdima}%
+              }%
+              {%
+                \expandafter\def\csname
+                  f@nch@width@\f@nch@eo\f@nch@lcr\f@nch@hf\endcsname{#6}%
+              }%
+              \csname f@nchdrwdt@align@v@\f@nch@hf\endcsname
+              \edef\f@nch@align@@h{\f@nch@lcr}%
+              \def\temp@a{#5}%
+              \ifx\temp@a\@empty \else \f@nchdrwdt@align#5\@nil{#2}\fi
+              \expandafter\edef\csname
+                f@nch@align@\f@nch@eo\f@nch@lcr\f@nch@hf\endcsname
+                   {\f@nch@align@@v\f@nch@align@@h}}}}}}
+\def\f@nch@width@elh{\headwidth}
+\def\f@nch@width@ech{\headwidth}
+\def\f@nch@width@erh{\headwidth}
+\def\f@nch@width@olh{\headwidth}
+\def\f@nch@width@och{\headwidth}
+\def\f@nch@width@orh{\headwidth}
+\def\f@nch@width@elf{\headwidth}
+\def\f@nch@width@ecf{\headwidth}
+\def\f@nch@width@erf{\headwidth}
+\def\f@nch@width@olf{\headwidth}
+\def\f@nch@width@ocf{\headwidth}
+\def\f@nch@width@orf{\headwidth}
+\def\f@nch@align@elh{bl}
+\def\f@nch@align@ech{bc}
+\def\f@nch@align@erh{br}
+\def\f@nch@align@olh{bl}
+\def\f@nch@align@och{bc}
+\def\f@nch@align@orh{br}
+\def\f@nch@align@elf{tl}
+\def\f@nch@align@ecf{tc}
+\def\f@nch@align@erf{tr}
+\def\f@nch@align@olf{tl}
+\def\f@nch@align@ocf{tc}
+\def\f@nch@align@orf{tr}
+\def\f@nchdrwdt@align@v@h{\def\f@nch@align@@v{b}}%
+\def\f@nchdrwdt@align@v@f{\def\f@nch@align@@v{t}}%
+\long\def\f@nchdrwdt@align#1#2\@nil#3{%
+  \f@nch@ifin{#1}{TtcbB-}{%
+    \f@nch@ifin{#1}{-}{}{\def\f@nch@align@@v{#1}}%
+    \def\@tempa{#2}%
+    \ifx\@tempa\@empty \else \def\f@nch@align@@h{#2}\fi
+  }%
+  {\def\f@nch@align@@h{#1}}%
+  \expandafter\f@nch@ifin\expandafter{\f@nch@align@@h}{lcrj}{}%
+    {\PackageError{fancyhdr}
+                  {\string#3: Illegal char `\f@nch@align@@h'\MessageBreak
+                              in alignment argument}{}}%
+}
+\newcommand{\lhead}[2][\f@nch@olh]%
+                     {\f@nch@def\f@nch@olh{#2}\f@nch@def\f@nch@elh{#1}}
+\newcommand{\chead}[2][\f@nch@och]%
+                     {\f@nch@def\f@nch@och{#2}\f@nch@def\f@nch@ech{#1}}
+\newcommand{\rhead}[2][\f@nch@orh]%
+                     {\f@nch@def\f@nch@orh{#2}\f@nch@def\f@nch@erh{#1}}
+\newcommand{\lfoot}[2][\f@nch@olf]%
+                     {\f@nch@def\f@nch@olf{#2}\f@nch@def\f@nch@elf{#1}}
+\newcommand{\cfoot}[2][\f@nch@ocf]%
+                     {\f@nch@def\f@nch@ocf{#2}\f@nch@def\f@nch@ecf{#1}}
+\newcommand{\rfoot}[2][\f@nch@orf]%
+                     {\f@nch@def\f@nch@orf{#2}\f@nch@def\f@nch@erf{#1}}
+\newlength{\f@nch@headwidth} \let\headwidth\f@nch@headwidth
+\newlength{\f@nch@offset@elh}
+\newlength{\f@nch@offset@erh}
+\newlength{\f@nch@offset@olh}
+\newlength{\f@nch@offset@orh}
+\newlength{\f@nch@offset@elf}
+\newlength{\f@nch@offset@erf}
+\newlength{\f@nch@offset@olf}
+\newlength{\f@nch@offset@orf}
+\newcommand{\headrulewidth}{0.4pt}
+\newcommand{\footrulewidth}{0pt}
+\@ifundefined{headruleskip}%
+      {\newcommand{\headruleskip}{0pt}}{}
+\@ifundefined{footruleskip}%
+      {\newcommand{\footruleskip}{.3\normalbaselineskip}}{}
+\newcommand{\plainheadrulewidth}{0pt}
+\newcommand{\plainfootrulewidth}{0pt}
+\newif\if@fancyplain \@fancyplainfalse
+\def\fancyplain#1#2{\if@fancyplain#1\else#2\fi}
+\headwidth=-123456789sp
+\let\f@nch@raggedleft\raggedleft
+\let\f@nch@raggedright\raggedright
+\let\f@nch@centering\centering
+\let\f@nch@everypar\everypar
+\ifdefined\ExplSyntaxOn
+  \ExplSyntaxOn
+  \providecommand\IfFormatAtLeastTF{\@ifl@t@r\fmtversion}
+  \IfFormatAtLeastTF{2021-06-01}{
+    \def\f@nch@saveclr@parhook #1{
+      \expandafter\let\csname f@nch@__hook~#1\expandafter\endcsname
+                      \csname __hook~#1\endcsname
+      \expandafter\let\csname f@nch@__hook_toplevel~#1\expandafter\endcsname
+                      \csname __hook_toplevel~#1\endcsname
+      \expandafter\let\csname f@nch@__hook_next~#1\expandafter\endcsname
+                      \csname __hook_next~#1\endcsname
+      \expandafter\let\csname f@nch@g__hook_#1_code_prop\expandafter\endcsname
+                      \csname g__hook_#1_code_prop\endcsname
+      \RemoveFromHook{#1}[*]
+      \ClearHookNext{#1}
+    }
+    \def\f@nch@restore@parhook #1{
+      \global\expandafter\let\csname __hook~#1\expandafter\endcsname
+                             \csname f@nch@__hook~#1\endcsname
+      \global\expandafter\let\csname __hook_toplevel~#1\expandafter\endcsname
+                             \csname f@nch@__hook_toplevel~#1\endcsname
+      \global\expandafter\let\csname __hook_next~#1\expandafter\endcsname
+                             \csname f@nch@__hook_next~#1\endcsname
+      \global\expandafter\let\csname g__hook_#1_code_prop\expandafter\endcsname
+                             \csname f@nch@g__hook_#1_code_prop\endcsname
+    }
+    \def\f@nch@resetpar{
+      \f@nch@everypar{}
+      \f@nch@saveclr@parhook{para/before}
+      \f@nch@saveclr@parhook{para/begin}
+      \f@nch@saveclr@parhook{para/end}
+      \f@nch@saveclr@parhook{para/after}
+    }
+    \def\f@nch@restorepar{
+      \f@nch@restore@parhook{para/before}
+      \f@nch@restore@parhook{para/begin}
+      \f@nch@restore@parhook{para/end}
+      \f@nch@restore@parhook{para/after}
+    }
+  }{
+    \def\f@nch@resetpar{
+      \f@nch@everypar{}
+    }
+    \def\f@nch@restorepar{}
+  }
+  \ExplSyntaxOff
+\else
+  \def\f@nch@resetpar{%
+    \f@nch@everypar{}%
+  }
+  \def\f@nch@restorepar{}
+\fi
+\newcommand\f@nch@noUppercase[2][]{#2}
+\def\f@nch@reset{\f@nch@resetpar\restorecr\endlinechar=13
+  \catcode`\\=0\catcode`\{=1\catcode`\}=2\catcode`\$=3\catcode`\&=4
+  \catcode`\#=6\catcode`\^=7\catcode`\_=8\catcode`\ =10\catcode`\@=11
+  \catcode`\:=11\catcode`\~=13\catcode`\%=14
+  \catcode0=15 %NULL
+  \catcode9=10 %TAB
+  \let\\\@normalcr \let\raggedleft\f@nch@raggedleft
+  \let\raggedright\f@nch@raggedright \let\centering\f@nch@centering
+  \def\baselinestretch{1}%
+  \hsize=\headwidth
+  \def\nouppercase##1{{%
+      \let\uppercase\relax\let\MakeUppercase\f@nch@noUppercase
+      \expandafter\let\csname MakeUppercase \endcsname\relax
+      \expandafter\def\csname MakeUppercase\space\space\space\endcsname
+                                                   [####1]####2{####2}%
+      ##1}}%
+  \@ifundefined{@normalsize} {\normalsize} % for ucthesis.cls
+   {\@normalsize}%
+  }
+\newcommand*{\fancycenter}[1][1em]{%
+  \@ifnextchar[{\f@nch@center{#1}}{\f@nch@center{#1}[3]}%
+}
+\def\f@nch@center#1[#2]#3#4#5{%
+  \def\@tempa{#4}\ifx\@tempa\@empty
+    \hbox to\linewidth{\color@begingroup{#3}\hfil {#5}\color@endgroup}%
+  \else
+    \setlength\@tempdima{#1}%
+    \setlength{\@tempdimb}{#2\@tempdima}%
+    \@tempdimc \@tempdimb \advance\@tempdimc -\@tempdima
+    \setlength\@tempskipa{\@tempdimb \@plus 1fil \@minus \@tempdimc}%
+    \@tempskipb\@tempskipa
+    \def\@tempa{#3}\ifx\@tempa\@empty
+      \addtolength\@tempskipa{\z@ \@minus \@tempdima}%
+    \fi
+    \def\@tempa{#5}\ifx\@tempa\@empty % empty right
+      \addtolength\@tempskipb{\z@ \@minus \@tempdima}%
+    \fi
+    \settowidth{\@tempdimb}{#3}%
+    \settowidth{\@tempdimc}{#5}%
+    \ifdim\@tempdimb>\@tempdimc
+      \advance\@tempdimb -\@tempdimc
+      \addtolength\@tempskipb{\@tempdimb \@minus \@tempdimb}%
+    \else
+      \advance\@tempdimc -\@tempdimb
+      \addtolength\@tempskipa{\@tempdimc \@minus \@tempdimc}%
+    \fi
+    \hbox to\linewidth{\color@begingroup{#3}\hskip \@tempskipa
+                      {#4}\hskip \@tempskipb {#5}\color@endgroup}%
+  \fi
+}
+\newcommand{\f@nch@headinit}{}
+\newcommand{\fancyheadinit}[1]{%
+  \def\f@nch@headinit{#1}%
+}
+\newcommand{\f@nch@footinit}{}
+\newcommand{\fancyfootinit}[1]{%
+  \def\f@nch@footinit{#1}%
+}
+\newcommand{\fancyhfinit}[1]{%
+  \def\f@nch@headinit{#1}%
+  \def\f@nch@footinit{#1}%
+}
+\ifdefined\NewMirroredHookPair
+  \NewMirroredHookPair{fancyhdr/before}{fancyhdr/after}
+  \NewMirroredHookPair{fancyhdr/head/begin}{fancyhdr/head/end}
+  \NewMirroredHookPair{fancyhdr/foot/begin}{fancyhdr/foot/end}
+\fi
+\newlength\f@nch@height
+\newlength\f@nch@footalignment
+\newif\iff@nch@footalign\f@nch@footalignfalse
+\newcommand{\fancyfootalign}[1]{%
+  \def\temp@a{#1}%
+  \ifx\temp@a\@empty
+    \f@nch@footalignfalse
+  \else
+    \f@nch@footaligntrue
+    \setlength\f@nch@footalignment{#1}%
+  \fi
+}
+\newcommand\fancyhdrsettoheight[2]{%
+  \expandafter\ifx\csname f@nch@#2\endcsname\fancyhdrsettoheight
+    \else\PackageError{fancyhdr}{Unknown parameter #2 in \string\fancyhdrsettoheight}{}\fi
+  \setbox\@tempboxa\hbox{{\f@nch@checkfalse\csname @#2\endcsname}}%
+  \setlength{#1}\f@nch@height
+  \setbox\@tempboxa\box\voidb@x
+}
+\let\f@nch@oddhead\fancyhdrsettoheight
+\let\f@nch@evenhead\fancyhdrsettoheight
+\let\f@nch@oddfoot\fancyhdrsettoheight
+\let\f@nch@evenfoot\fancyhdrsettoheight
+\newcommand\f@nch@vbox[2]{%
+  \setbox0\vbox{#2}%
+  \global\f@nch@height=\ht0
+  \ifdim\ht0>#1\relax
+    \iff@nch@check
+      \dimen0=#1\advance\dimen0-\ht0
+      \PackageWarning{fancyhdr}{%
+        \string#1 is too small (\the#1): \MessageBreak
+        Make it at least \the\ht0, for example:\MessageBreak
+        \string\setlength{\string#1}{\the\ht0}%
+        \iff@nch@compatViii .\MessageBreak
+        We now make it that large for the rest of the document.\MessageBreak
+        This may cause the page layout to be inconsistent, however
+        \fi
+        \ifx#1\headheight .\MessageBreak
+          You might also make \topmargin smaller:\MessageBreak
+          \string\addtolength{\string\topmargin}{\the\dimen0}%
+        \fi
+        \@gobble
+      }%
+      \iff@nch@compatViii
+        \dimen0=#1\relax
+        \global#1=\ht0\relax
+        \ht0=\dimen0 %
+      \else
+        \ht0=#1\relax
+      \fi
+    \else
+      \ht0=#1\relax
+    \fi
+  \fi
+  \box0}
+\newcommand\f@nch@head[6]{%
+  \f@nch@reset
+  \ifdefined\UseHook\UseHook{fancyhdr/before}\UseHook{fancyhdr/head/begin}\fi
+  \f@nch@headinit\relax
+  #1%
+  \hbox to\headwidth{%
+    \f@nch@vbox\headheight{%
+      \f@nch@hfbox{#2}{#3}{#4}{#6}{h}%
+      \vskip\headruleskip\relax
+      \headrule
+    }%
+  }%
+  #5%
+  \ifdefined\UseHook\UseHook{fancyhdr/head/end}\UseHook{fancyhdr/after}\fi
+  \f@nch@restorepar
+}
+\newcommand\f@nch@foot[6]{%
+  \f@nch@reset
+  \ifdefined\UseHook\UseHook{fancyhdr/before}\UseHook{fancyhdr/foot/begin}\fi
+  \f@nch@footinit\relax
+  #1%
+  \hbox to\headwidth{%
+    \f@nch@vbox\footskip{%
+      \setbox0=\vbox{\footrule}\unvbox0
+      \vskip\footruleskip
+      \f@nch@hfbox{#2}{#3}{#4}{#6}{f}%
+    \iff@nch@footalign \vskip\f@nch@footalignment \fi
+    }%
+  }%
+  #5%
+  \ifdefined\UseHook\UseHook{fancyhdr/foot/end}\UseHook{fancyhdr/after}\fi
+  \f@nch@restorepar
+}
+\newlength\f@nch@widthL
+\newlength\f@nch@widthC
+\newlength\f@nch@widthR
+\newcommand\f@nch@hfbox[5]{%
+  \setlength\f@nch@widthL{\csname f@nch@width@#4l#5\endcsname}%
+  \setlength\f@nch@widthC{\csname f@nch@width@#4c#5\endcsname}%
+  \setlength\f@nch@widthR{\csname f@nch@width@#4r#5\endcsname}%
+  \let\@tempa\f@nch@hfbox@center
+  \ifdim \dimexpr \f@nch@widthL+\f@nch@widthC+\f@nch@widthR>\headwidth
+  \else
+    \ifdim \dimexpr \f@nch@widthL+0.5\f@nch@widthC>0.5\headwidth
+      \let \@tempa\f@nch@hfbox@fit
+    \fi
+    \ifdim \dimexpr \f@nch@widthR+0.5\f@nch@widthC>0.5\headwidth
+      \let \@tempa\f@nch@hfbox@fit
+    \fi
+  \fi
+  \@tempa{#1}{#2}{#3}#4#5%
+}
+\newcommand\f@nch@hfbox@center[5]{%
+  \hbox to \headwidth{%
+    \rlap{\f@nch@parbox{#1}\f@nch@widthL{#4}l{#5}}%
+    \hfill
+    \f@nch@parbox{#2}\f@nch@widthC{#4}c{#5}%
+    \hfill
+    \llap{\f@nch@parbox{#3}\f@nch@widthR{#4}r{#5}}%
+  }%
+}
+\newcommand\f@nch@hfbox@fit[5]{%
+  \hbox to \headwidth{%
+    \f@nch@parbox{#1}\f@nch@widthL{#4}l{#5}%
+    \hfill
+    \f@nch@parbox{#2}\f@nch@widthC{#4}c{#5}%
+    \hfill
+    \f@nch@parbox{#3}\f@nch@widthR{#4}r{#5}%
+  }%
+}%
+\newcommand\f@nch@parbox[5]{%
+  \expandafter\expandafter\expandafter\f@nch@parbox@align
+                     \csname f@nch@align@#3#4#5\endcsname
+  \parbox[\f@nch@align@@v]{#2}%
+    {%
+      \f@nch@align@@pre
+      \f@nch@align@@h\leavevmode\ignorespaces#1%
+      \f@nch@align@@post
+    }%
+}
+\newcommand\f@nch@parbox@align[2]{%
+  \def\f@nch@align@@pre{}%
+  \def\f@nch@align@@post{}%
+  \csname f@nch@parbox@align@v#1\endcsname
+  \csname f@nch@parbox@align@h#2\endcsname
+}
+\def\f@nch@parbox@align@vT{\def\f@nch@align@@v{t}\def\f@nch@align@@pre{\vspace{0pt}}}
+\def\f@nch@parbox@align@vt{\def\f@nch@align@@v{t}}
+\def\f@nch@parbox@align@vc{\def\f@nch@align@@v{c}}
+\def\f@nch@parbox@align@vb{\def\f@nch@align@@v{b}}
+\def\f@nch@parbox@align@vB{\def\f@nch@align@@v{b}\def\f@nch@align@@post{\vspace{0pt}}}
+\def\f@nch@parbox@align@hl{\def\f@nch@align@@h{\raggedright}}
+\def\f@nch@parbox@align@hc{\def\f@nch@align@@h{\centering}}
+\def\f@nch@parbox@align@hr{\def\f@nch@align@@h{\raggedleft}}
+\def\f@nch@parbox@align@hj{\def\f@nch@align@@h{}}
+\@ifundefined{@chapapp}{\let\@chapapp\chaptername}{}%
+\def\f@nch@initialise{%
+  \@ifundefined{chapter}%
+   {\def\sectionmark##1{\markboth{\MakeUppercase{\ifnum \c@secnumdepth>\z@
+          \thesection\hskip 1em\relax
+        \fi ##1}}{}}%
+    \def\subsectionmark##1{\markright {\ifnum \c@secnumdepth >\@ne
+      \thesubsection\hskip 1em\relax \fi ##1}}}%
+   {\def\chaptermark##1{\markboth {\MakeUppercase{\ifnum
+        \c@secnumdepth>\m@ne \@chapapp\ \thechapter. \ \fi ##1}}{}}%
+    \def\sectionmark##1{\markright{\MakeUppercase{\ifnum \c@secnumdepth >\z@
+        \thesection. \ \fi ##1}}}%
+   }%
+  \def\headrule{{\if@fancyplain\let\headrulewidth\plainheadrulewidth\fi
+      \hrule\@height\headrulewidth\@width\headwidth
+      \vskip-\headrulewidth}}%
+  \def\footrule{{\if@fancyplain\let\footrulewidth\plainfootrulewidth\fi
+      \hrule\@width\headwidth\@height\footrulewidth}}%
+  \def\headrulewidth{0.4pt}%
+  \def\footrulewidth{0pt}%
+  \def\headruleskip{0pt}%
+  \def\footruleskip{0.3\normalbaselineskip}%
+  \fancyhf{}%
+  \if@twoside
+    \fancyhead[el,or]{\fancyplain{}{\slshape\rightmark}}%
+    \fancyhead[er,ol]{\fancyplain{}{\slshape\leftmark}}%
+  \else
+    \fancyhead[l]{\fancyplain{}{\slshape\rightmark}}%
+    \fancyhead[r]{\fancyplain{}{\slshape\leftmark}}%
+  \fi
+  \fancyfoot[c]{\rmfamily\thepage}% page number
+}
+\f@nch@initialise
+\def\ps@f@nch@fancyproto{%
+  \ifdim\headwidth<0sp
+    \global\advance\headwidth123456789sp\global\advance\headwidth\textwidth
+  \fi
+  \gdef\ps@f@nch@fancyproto{\@fancyplainfalse\ps@f@nch@fancycore}%
+  \@fancyplainfalse\ps@f@nch@fancycore
+}%
+\@namedef{f@nch@ps@f@nch@fancyproto-is-fancyhdr}{}
+\def\ps@fancy{\ps@f@nch@fancyproto}
+\@namedef{f@nch@ps@fancy-is-fancyhdr}{}
+\def\ps@fancyplain{\ps@f@nch@fancyproto \let\ps@plain\ps@plain@fancy}
+\def\ps@plain@fancy{\@fancyplaintrue\ps@f@nch@fancycore}
+\let\f@nch@ps@empty\ps@empty
+\def\ps@f@nch@fancycore{%
+  \f@nch@ps@empty
+  \def\@mkboth{\protect\markboth}%
+  \def\f@nch@oddhead{\f@nch@head\f@nch@Oolh\f@nch@olh\f@nch@och\f@nch@orh\f@nch@Oorh{o}}%
+  \def\@oddhead{%
+    \iff@nch@twoside
+      \ifodd\c@page
+        \f@nch@oddhead
+      \else
+        \@evenhead
+      \fi
+    \else
+      \f@nch@oddhead
+    \fi
+  }
+  \def\f@nch@oddfoot{\f@nch@foot\f@nch@Oolf\f@nch@olf\f@nch@ocf\f@nch@orf\f@nch@Oorf{o}}%
+  \def\@oddfoot{%
+    \iff@nch@twoside
+      \ifodd\c@page
+        \f@nch@oddfoot
+      \else
+        \@evenfoot
+      \fi
+    \else
+      \f@nch@oddfoot
+    \fi
+  }
+  \def\@evenhead{\f@nch@head\f@nch@Oelh\f@nch@elh\f@nch@ech\f@nch@erh\f@nch@Oerh{e}}%
+  \def\@evenfoot{\f@nch@foot\f@nch@Oelf\f@nch@elf\f@nch@ecf\f@nch@erf\f@nch@Oerf{e}}%
+}
+\def\f@nch@Oolh{\if@reversemargin\hss\else\relax\fi}
+\def\f@nch@Oorh{\if@reversemargin\relax\else\hss\fi}
+\let\f@nch@Oelh\f@nch@Oorh
+\let\f@nch@Oerh\f@nch@Oolh
+\let\f@nch@Oolf\f@nch@Oolh
+\let\f@nch@Oorf\f@nch@Oorh
+\let\f@nch@Oelf\f@nch@Oelh
+\let\f@nch@Oerf\f@nch@Oerh
+\def\f@nch@offsolh{\headwidth=\textwidth\advance\headwidth\f@nch@offset@olh
+                   \advance\headwidth\f@nch@offset@orh\hskip-\f@nch@offset@olh}
+\def\f@nch@offselh{\headwidth=\textwidth\advance\headwidth\f@nch@offset@elh
+                   \advance\headwidth\f@nch@offset@erh\hskip-\f@nch@offset@elh}
+\def\f@nch@offsolf{\headwidth=\textwidth\advance\headwidth\f@nch@offset@olf
+                   \advance\headwidth\f@nch@offset@orf\hskip-\f@nch@offset@olf}
+\def\f@nch@offself{\headwidth=\textwidth\advance\headwidth\f@nch@offset@elf
+                   \advance\headwidth\f@nch@offset@erf\hskip-\f@nch@offset@elf}
+\def\f@nch@setoffs{%
+  \f@nch@gbl\let\headwidth\f@nch@headwidth
+  \f@nch@gbl\def\f@nch@Oolh{\f@nch@offsolh}%
+  \f@nch@gbl\def\f@nch@Oelh{\f@nch@offselh}%
+  \f@nch@gbl\def\f@nch@Oorh{\hss}%
+  \f@nch@gbl\def\f@nch@Oerh{\hss}%
+  \f@nch@gbl\def\f@nch@Oolf{\f@nch@offsolf}%
+  \f@nch@gbl\def\f@nch@Oelf{\f@nch@offself}%
+  \f@nch@gbl\def\f@nch@Oorf{\hss}%
+  \f@nch@gbl\def\f@nch@Oerf{\hss}%
+}
+\newif\iff@nch@footnote
+\AtBeginDocument{%
+  \let\latex@makecol\@makecol
+  \def\@makecol{\ifvoid\footins\f@nch@footnotefalse\else\f@nch@footnotetrue\fi
+    \let\f@nch@topfloat\@toplist\let\f@nch@botfloat\@botlist\latex@makecol}%
+}
+\newcommand\iftopfloat[2]{\ifx\f@nch@topfloat\@empty #2\else #1\fi}%
+\newcommand\ifbotfloat[2]{\ifx\f@nch@botfloat\@empty #2\else #1\fi}%
+\newcommand\iffloatpage[2]{\if@fcolmade #1\else #2\fi}%
+\newcommand\iffootnote[2]{\iff@nch@footnote #1\else #2\fi}%
+\ifx\@temptokenb\undefined \csname newtoks\endcsname\@temptokenb\fi
+\newif\iff@nch@pagestyle@star
+\newcommand\fancypagestyle{%
+  \@ifstar{\f@nch@pagestyle@startrue\f@nch@pagestyle}%
+          {\f@nch@pagestyle@starfalse\f@nch@pagestyle}%
+}
+\newcommand\f@nch@pagestyle[1]{%
+  \@ifnextchar[{\f@nch@@pagestyle{#1}}{\f@nch@@pagestyle{#1}[f@nch@fancyproto]}%
+}
+\long\def\f@nch@@pagestyle#1[#2]#3{%
+  \@ifundefined{ps@#2}{%
+    \PackageError{fancyhdr}{\string\fancypagestyle: Unknown base page style `#2'}{}%
+  }{%
+    \@ifundefined{f@nch@ps@#2-is-fancyhdr}{%
+      \PackageError{fancyhdr}{\string\fancypagestyle: Base page style `#2' is not fancyhdr-based}{}%
+    }%
+    {%
+      \f@nch@pagestyle@setup
+      \def\temp@b{\@namedef{ps@#1}}%
+      \expandafter\temp@b\expandafter{\the\@temptokenb
+          \let\f@nch@gbl\relax\@nameuse{ps@#2}#3\relax}%
+      \@namedef{f@nch@ps@#1-is-fancyhdr}{}%
+    }%
+  }%
+}
+\newcommand\f@nch@pagestyle@setup{%
+  \iff@nch@pagestyle@star
+    \iff@nch@check\@temptokenb={\f@nch@checktrue}\else\@temptokenb={\f@nch@checkfalse}\fi
+    \@tfor\temp@a:=
+      \f@nch@olh\f@nch@och\f@nch@orh\f@nch@elh\f@nch@ech\f@nch@erh
+      \f@nch@olf\f@nch@ocf\f@nch@orf\f@nch@elf\f@nch@ecf\f@nch@erf
+      \f@nch@width@elh\f@nch@width@ech\f@nch@width@erh\f@nch@width@olh
+      \f@nch@width@och\f@nch@width@orh\f@nch@width@elf\f@nch@width@ecf
+      \f@nch@width@erf\f@nch@width@olf\f@nch@width@ocf\f@nch@width@orf
+      \f@nch@align@elh\f@nch@align@ech\f@nch@align@erh\f@nch@align@olh
+      \f@nch@align@och\f@nch@align@orh\f@nch@align@elf\f@nch@align@ecf
+      \f@nch@align@erf\f@nch@align@olf\f@nch@align@ocf\f@nch@align@orf
+      \f@nch@Oolh\f@nch@Oorh\f@nch@Oelh\f@nch@Oerh
+      \f@nch@Oolf\f@nch@Oorf\f@nch@Oelf\f@nch@Oerf
+      \f@nch@headinit\f@nch@footinit
+      \headrule\headrulewidth\footrule\footrulewidth
+    \do {%
+      \toks@=\expandafter\expandafter\expandafter{\temp@a}%
+      \toks@=\expandafter\expandafter\expandafter{%
+        \expandafter\expandafter\expandafter\def
+        \expandafter\expandafter\temp@a\expandafter{\the\toks@}}%
+      \edef\temp@b{\@temptokenb={\the\@temptokenb\the\toks@}}%
+      \temp@b
+    }%
+    \@tfor\temp@a:=
+      \f@nch@offset@olh\f@nch@offset@orh\f@nch@offset@elh\f@nch@offset@erh
+      \f@nch@offset@olf\f@nch@offset@orf\f@nch@offset@elf\f@nch@offset@erf
+    \do {%
+      \toks@=\expandafter\expandafter\expandafter{\expandafter\the\temp@a}%
+      \toks@=\expandafter\expandafter\expandafter{%
+        \expandafter\expandafter\expandafter\setlength
+        \expandafter\expandafter\temp@a\expandafter{\the\toks@}}%
+      \edef\temp@b{\@temptokenb={\the\@temptokenb\the\toks@}}%
+      \temp@b
+    }%
+  \else
+    \@temptokenb={}%
+  \fi
+}
+\newcommand\fancypagestyleassign[2]{%
+  \@ifundefined{ps@#2}{%
+    \PackageError{fancyhdr}{\string\fancypagestyleassign: Unknown page style `#2'}{}%
+    }{%
+     \expandafter\let
+       \csname ps@#1\expandafter\endcsname
+       \csname ps@#2\endcsname
+     \@ifundefined{f@nch@ps@#2-is-fancyhdr}{%
+       \expandafter\let\csname f@nch@ps@#1-is-fancyhdr\endcsname\@undefined
+     }{%
+       \@namedef{f@nch@ps@#1-is-fancyhdr}{}%
+     }%
+   }%
+}
+\fancypagestyle*{fancydefault}{\f@nch@initialise}
+\def\f@nchdrbox@topstrut{\vrule height\ht\strutbox width\z@}
+\def\f@nchdrbox@botstrut{\vrule depth\dp\strutbox width\z@}
+\def\f@nchdrbox@nostrut{\noalign{\vspace{0pt}}\let\f@nchdrbox@@crstrut\f@nchdrbox@botstrut}
+\NewDocumentCommand{\fancyhdrbox}{ O{cl} o m }{%
+\begingroup
+  \let\f@nchdrbox@@pre\f@nchdrbox@topstrut
+  \let\f@nchdrbox@@postx\f@nchdrbox@botstrut
+  \let\f@nchdrbox@@posty\relax
+  \let\f@nchdrbox@@crstrut\strut
+  \IfNoValueTF{#2}%
+    {\let\f@nchdrbox@@halignto\@empty}%
+    {\setlength\@tempdima{#2}%
+      \def\f@nchdrbox@@halignto{to\@tempdima}}%
+  \def\@tempa{#1}%
+  \ifx\@tempa\@empty
+    \f@nchdrbox@align cl\@nil{#3}%
+  \else
+    \f@nchdrbox@align #1\@nil{#3}%
+  \fi
+\endgroup
+}
+\protected\def\f@nchdrbox@cr{%
+  {\ifnum0=`}\fi\@ifstar\@f@nchdrbox@xcr\@f@nchdrbox@xcr}
+
+\def\@f@nchdrbox@xcr{%
+  \unskip\f@nchdrbox@@crstrut
+  \@ifnextchar[\@f@nchdrbox@argc{\ifnum0=`{\fi}\cr}%
+}
+
+\def\@f@nchdrbox@argc[#1]{%
+  \ifnum0=`{\fi}%
+    \ifdim #1>\z@
+      \unskip\@f@nchdrbox@xargc{#1}%
+    \else
+      \@f@nchdrbox@yargc{#1}%
+    \fi}
+
+\def\@f@nchdrbox@xargc#1{\@tempdima #1\advance\@tempdima \dp \strutbox
+   \vrule \@height\z@ \@depth\@tempdima \@width\z@ \cr}
+
+\def\@f@nchdrbox@yargc#1{\cr\noalign{\setlength\@tempdima{#1}\vskip\@tempdima}}
+\def\f@nchdrbox@T{\let\f@nchdrbox@@pre\f@nchdrbox@nostrut
+                  \f@nchdrbox@t}
+\def\f@nchdrbox@t{\def\f@nchdrbox@@v{t}\def\f@nchdrbox@@h{l}}
+\def\f@nchdrbox@c{\def\f@nchdrbox@@v{c}\def\f@nchdrbox@@h{c}}
+\def\f@nchdrbox@b{\def\f@nchdrbox@@v{b}\def\f@nchdrbox@@h{l}}
+\def\f@nchdrbox@B{\let\f@nchdrbox@@postx\relax
+                  \def\f@nchdrbox@@posty{\vspace{0pt}}%
+                  \f@nchdrbox@b}
+\long\def\f@nchdrbox@align#1#2\@nil#3{%
+  \f@nch@ifin{#1}{TtcbB}{%
+    \@nameuse{f@nchdrbox@#1}%
+    \def\@tempa{#2}%
+    \ifx\@tempa\@empty\else \def\f@nchdrbox@@h{#2}\fi
+  }%
+  {\def\f@nchdrbox@@v{c}\def\f@nchdrbox@@h{#1}}%
+  \expandafter\f@nch@ifin\expandafter{\f@nchdrbox@@h}{lcr}{}%
+  {\PackageError{fancyhdr}{\string\fancyhdrbox: Illegal char `\f@nchdrbox@@h'\MessageBreak
+                            in alignment argument}{}}%
+  \let\\\f@nchdrbox@cr
+  \setbox0=\if \f@nchdrbox@@v t\vtop
+  \else \vbox
+  \fi
+  {%
+     \ialign \f@nchdrbox@@halignto
+     \bgroup \relax
+     {\if \f@nchdrbox@@h l\hskip 1sp\else \hfil \fi
+       \ignorespaces ##\unskip
+       \if\f@nchdrbox@@h r\else \hfil \fi
+     }%
+     \tabskip\z@skip \cr
+     \f@nchdrbox@@pre
+     #3\unskip \f@nchdrbox@@postx
+     \crcr
+     \egroup
+     \f@nchdrbox@@posty
+  }%
+  \if\f@nchdrbox@@v c\@tempdima=\ht0\advance\@tempdima\dp0%
+    \ht0=0.5\@tempdima\dp0=0.5\@tempdima\fi
+  \leavevmode \box0
+}
+\@ifclassloaded{newlfm}
+{
+  \let\ps@@empty\f@nch@ps@empty
+  \AtBeginDocument{%
+    \renewcommand{\@zfancyhead}[5]{\relax\hbox to\headwidth{\f@nch@reset
+      \@zfancyvbox\headheight{\hbox
+        {\rlap{\parbox[b]{\headwidth}{\raggedright\f@nch@olh}}\hfill
+          \parbox[b]{\headwidth}{\centering\f@nch@olh}\hfill
+          \llap{\parbox[b]{\headwidth}{\raggedleft\f@nch@orh}}}%
+        \zheadrule}}\relax}%
+  }
+}
+{}
+\endinput
+%%
+%% End of file `fancyhdr.sty'.
+
+\end{filecontents*}
+\begin{filecontents*}[overwrite]{icml2026.sty}
+% File: icml2026.sty (LaTeX style file for ICML-2026, version of 2025-10-29)
+
+% This file contains the LaTeX formatting parameters for a two-column
+% conference proceedings that is 8.5 inches wide by 11 inches high.
+%
+% Modified by Hanze Dong, Alberto Bietti, and Felix Berkenkamp, 2025
+% - Revert to times for better compatibility
+% - Updated years, volume, location
+% - Added preprint version
+% - Based on the suggestion from Johan Larsson:
+%   1. Added an end-of-document safety check to ensure the affiliations or notice footnote is printed:
+%      (1) Introduces a flag \newif\ificml@noticeprinted and sets it false by default.
+%      (2) At end of document, emits a package warning if \printAffiliationsAndNotice{...} was never called.
+%   2. \printAffiliationsAndNotice now sets the flag when called: Begins with \global\icml@noticeprintedtrue.
+% - Migrated to more recent version of fancyhdr for running title in header
+%
+% Modified by Johan Larsson, 2025
+% - Use newtx instead of times, aligning serif, sans-serif, typerwriter,
+%   and math fonts.
+% - Use caption package to setup captions instead of manually defining themanually defining them.
+% - Formatted icml2026.sty and example_paper.tex
+% - Use title case for section title to 2.9
+% - Replace subfigure package with subcaption in example, since it is
+%   designed to work together with the caption package (which is now required).
+% - Remove unused label in example
+%
+% Modified by Tegan Maharaj and Felix Berkenkamp 2025: changed years, volume, location
+%
+% Modified by Jonathan Scarlett 2024: changed years, volume, location
+%
+% Modified by Sivan Sabato 2023: changed years and volume number.
+% Modified by Jonathan Scarlett 2023: added page numbers to every page
+%
+% Modified by Csaba Szepesvari 2022: changed years, PMLR ref. Turned off checking marginparwidth
+%     as marginparwidth only controls the space available for margin notes and margin notes
+%     will NEVER be used anyways in submitted versions, so there is no reason one should
+%     check whether marginparwidth has been tampered with.
+%     Also removed pdfview=FitH from hypersetup as it did not do its job; the default choice is a bit better
+%     but of course the double-column format is not supported by this hyperlink preview functionality
+%     in a completely satisfactory fashion.
+% Modified by Gang Niu 2022: Changed color to xcolor
+%
+% Modified by Iain Murray 2018: changed years, location. Remove affiliation notes when anonymous.
+%     Move times dependency from .tex to .sty so fewer people delete it.
+%
+% Modified by Daniel Roy 2017: changed byline to use footnotes for affiliations, and removed emails
+%
+% Modified by Percy Liang 12/2/2013: changed the year, location from the previous template for ICML 2014
+
+% Modified by Fei Sha 9/2/2013: changed the year, location form the previous template for ICML 2013
+%
+% Modified by Fei Sha 4/24/2013: (1) remove the extra whitespace after the
+%     first author's email address (in %the camera-ready version) (2) change the
+%     Proceeding ... of ICML 2010 to 2014 so PDF's metadata will show up %
+%     correctly
+%
+% Modified by Sanjoy Dasgupta, 2013: changed years, location
+%
+% Modified by Francesco Figari, 2012: changed years, location
+%
+% Modified by Christoph Sawade and Tobias Scheffer, 2011: added line
+% numbers, changed years
+%
+% Modified by Hal Daume III, 2010: changed years, added hyperlinks
+%
+% Modified by Kiri Wagstaff, 2009: changed years
+%
+% Modified by Sam Roweis, 2008: changed years
+%
+% Modified by Ricardo Silva, 2007: update of the ifpdf verification
+%
+% Modified by Prasad Tadepalli and Andrew Moore, merely changing years.
+%
+% Modified by Kristian Kersting, 2005, based on Jennifer Dy's 2004 version
+% - running title. If the original title is to long or is breaking a line,
+%   use \icmltitlerunning{...} in the preamble to supply a shorter form.
+%   Added fancyhdr package to get a running head.
+% - Updated to store the page size because pdflatex does compile the
+%   page size into the pdf.
+%
+% Hacked by Terran Lane, 2003:
+% - Updated to use LaTeX2e style file conventions (ProvidesPackage,
+%   etc.)
+% - Added an ``appearing in'' block at the base of the first column
+%   (thus keeping the ``appearing in'' note out of the bottom margin
+%   where the printer should strip in the page numbers).
+% - Added a package option [accepted] that selects between the ``Under
+%   review'' notice (default, when no option is specified) and the
+%   ``Appearing in'' notice (for use when the paper has been accepted
+%   and will appear).
+%
+%   Originally created as:  ml2k.sty (LaTeX style file for ICML-2000)
+%   by P. Langley (12/23/99)
+
+%%%%%%%%%%%%%%%%%%%%
+%% This version of the style file supports both a ``review'' version
+%% and a ``final/accepted'' version.  The difference is only in the
+%% text that appears in the note at the bottom of the first column of
+%% the first page.  The default behavior is to print a note to the
+%% effect that the paper is under review and don't distribute it.  The
+%% final/accepted version prints an ``Appearing in'' note.  To get the
+%% latter behavior, in the calling file change the ``usepackage'' line
+%% from:
+%% \usepackage{icml2025}
+%% to
+%% \usepackage[accepted]{icml2025}
+%%%%%%%%%%%%%%%%%%%%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{icml2026}[2025/10/29 v2.0 ICML Conference Style File]
+
+% Before 2018, \usepackage{times} was in the example TeX, but inevitably
+% not everybody did it.
+% \RequirePackage[amsthm]{newtx}
+% 2025.11.6 revert to times for better compatibility
+\RequirePackage{times}
+
+% Use fancyhdr package
+\RequirePackage{fancyhdr}
+\RequirePackage{xcolor} % changed from color to xcolor (2021/11/24)
+\RequirePackage{algorithm}
+\RequirePackage{algorithmic}
+\RequirePackage{natbib}
+\RequirePackage{eso-pic} % used by \AddToShipoutPicture
+\RequirePackage{forloop}
+\RequirePackage{url}
+\RequirePackage{caption}
+
+%%%%%%%% Options
+\DeclareOption{accepted}{%
+  \renewcommand{\Notice@String}{\ICML@appearing}
+  \gdef\isaccepted{1}
+}
+
+% === Preprint option ===
+\DeclareOption{preprint}{%%
+  \renewcommand{\Notice@String}{\ICML@preprint}%%
+  \gdef\ispreprint{1}%%
+}
+
+% Distinct preprint footer text
+\newcommand{\ICML@preprint}{%
+  \textit{Preprint. \today.}%
+}
+
+\DeclareOption{nohyperref}{%
+  \gdef\nohyperref{1}
+}
+
+% Helper flag: show real authors for accepted or preprint
+\newif\ificmlshowauthors
+\icmlshowauthorsfalse
+
+%%%%%%%%%%%%%%%%%%%%
+% This string is printed at the bottom of the page for the
+% final/accepted version of the ``appearing in'' note.  Modify it to
+% change that text.
+%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ICML@appearing}{\textit{Proceedings of the
+$\mathit{43}^{rd}$ International Conference on Machine Learning},
+Seoul, South Korea. PMLR 306, 2026.
+Copyright 2026 by the author(s).}
+
+%%%%%%%%%%%%%%%%%%%%
+% This string is printed at the bottom of the page for the draft/under
+% review version of the ``appearing in'' note.  Modify it to change
+% that text.
+%%%%%%%%%%%%%%%%%%%%
+\newcommand{\Notice@String}{Preliminary work.  Under review by the
+International Conference on Machine Learning (ICML)\@.  Do not distribute.}
+
+% Cause the declared options to actually be parsed and activated
+\ProcessOptions\relax
+
+% After options are processed, decide if authors should be visible
+\ifdefined\isaccepted \icmlshowauthorstrue \fi
+\ifdefined\ispreprint \icmlshowauthorstrue \fi
+
+\ifdefined\isaccepted\else\ifdefined\ispreprint\else\ifdefined\hypersetup
+  \hypersetup{pdfauthor={Anonymous Authors}}
+\fi\fi\fi
+
+\ifdefined\nohyperref\else\ifdefined\hypersetup
+  \definecolor{mydarkblue}{rgb}{0,0.08,0.45}
+  \hypersetup{ %
+    pdftitle={},
+    pdfsubject={Proceedings of the International Conference on Machine Learning 2026},
+    pdfkeywords={},
+    pdfborder=0 0 0,
+    pdfpagemode=UseNone,
+    colorlinks=true,
+    linkcolor=mydarkblue,
+    citecolor=mydarkblue,
+    filecolor=mydarkblue,
+    urlcolor=mydarkblue,
+    }
+  \fi
+\fi
+
+
+
+% Uncomment the following for debugging.  It will cause LaTeX to dump
+% the version of the ``appearing in'' string that will actually appear
+% in the document.
+%\typeout{>> Notice string='\Notice@String'}
+
+% Change citation commands to be more like old ICML styles
+\newcommand{\yrcite}[1]{\citeyearpar{#1}}
+\renewcommand{\cite}[1]{\citep{#1}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% to ensure the letter format is used. pdflatex does compile the
+% page size into the pdf. This is done using \pdfpagewidth and
+% \pdfpageheight. As Latex does not know this directives, we first
+% check whether pdflatex or latex is used.
+%
+% Kristian Kersting 2005
+%
+% in order to account for the more recent use of pdfetex as the default
+% compiler, I have changed the pdf verification.
+%
+% Ricardo Silva 2007
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\paperwidth=8.5in
+\paperheight=11in
+
+% old PDFLaTex verification, circa 2005
+%
+%\newif\ifpdf\ifx\pdfoutput\undefined
+%  \pdffalse % we are not running PDFLaTeX
+%\else
+%  \pdfoutput=1 % we are running PDFLaTeX
+%  \pdftrue
+%\fi
+
+\newif\ifpdf %adapted from ifpdf.sty
+\ifx\pdfoutput\undefined
+\else
+   \ifx\pdfoutput\relax
+   \else
+     \ifcase\pdfoutput
+     \else
+       \pdftrue
+     \fi
+   \fi
+\fi
+
+\ifpdf
+%    \pdfpagewidth=\paperwidth
+%    \pdfpageheight=\paperheight
+  \setlength{\pdfpagewidth}{8.5in}
+  \setlength{\pdfpageheight}{11in}
+\fi
+
+% Physical page layout
+
+\evensidemargin -0.23in
+\oddsidemargin -0.23in
+\setlength\textheight{9.0in}
+\setlength\textwidth{6.75in}
+\setlength\columnsep{0.25in}
+\setlength\headheight{10pt}
+\setlength\headsep{10pt}
+\addtolength{\topmargin}{-20pt}
+\addtolength{\topmargin}{-0.29in}
+
+% Historically many authors tried to include packages like geometry or fullpage,
+% which change the page layout. It either makes the proceedings inconsistent, or
+% wastes organizers' time chasing authors. So let's nip these problems in the
+% bud here. -- Iain Murray 2018.
+%\RequirePackage{printlen}
+\AtBeginDocument{%
+\newif\ifmarginsmessedwith
+\marginsmessedwithfalse
+\ifdim\oddsidemargin=-16.62178pt     \else oddsidemargin has been altered.\\ \marginsmessedwithtrue\fi
+\ifdim\headheight=10.0pt             \else headheight has been altered.\\ \marginsmessedwithtrue\fi
+\ifdim\textheight=650.43pt           \else textheight has been altered.\\ \marginsmessedwithtrue\fi
+\ifdim\marginparsep=11.0pt           \else marginparsep has been altered.\\ \marginsmessedwithtrue\fi
+\ifdim\footskip=25.0pt               \else footskip has been altered.\\ \marginsmessedwithtrue\fi
+\ifdim\hoffset=0.0pt                 \else hoffset has been altered.\\ \marginsmessedwithtrue\fi
+\ifdim\paperwidth=614.295pt          \else paperwidth has been altered.\\ \marginsmessedwithtrue\fi
+\ifdim\topmargin=-24.95781pt         \else topmargin has been altered.\\ \marginsmessedwithtrue\fi
+\ifdim\headsep=10.0pt                \else headsep has been altered.\\ \marginsmessedwithtrue\fi
+\ifdim\textwidth=487.8225pt          \else textwidth has been altered.\\ \marginsmessedwithtrue\fi
+\ifdim\marginparpush=5.0pt           \else marginparpush has been altered.\\ \marginsmessedwithtrue\fi
+\ifdim\voffset=0.0pt                 \else voffset has been altered.\\ \marginsmessedwithtrue\fi
+\ifdim\paperheight=794.96999pt       \else paperheight has been altered.\\ \marginsmessedwithtrue\fi
+\ifmarginsmessedwith
+
+\textbf{\large \em The page layout violates the ICML style.}
+
+Please do not change the page layout, or include packages like geometry,
+savetrees, or fullpage, which change it for you.
+
+We're not able to reliably undo arbitrary changes to the style. Please remove
+the offending package(s), or layout-changing commands and try again.
+
+\fi}
+
+
+%% The following is adapted from code in the acmconf.sty conference
+%% style file.  The constants in it are somewhat magical, and appear
+%% to work well with the two-column format on US letter paper that
+%% ICML uses, but will break if you change that layout, or if you use
+%% a longer block of text for the copyright notice string.  Fiddle with
+%% them if necessary to get the block to fit/look right.
+%%
+%% -- Terran Lane, 2003
+%%
+%% The following comments are included verbatim from acmconf.sty:
+%%
+%%% This section (written by KBT) handles the 1" box in the lower left
+%%% corner of the left column of the first page by creating a picture,
+%%% and inserting the predefined string at the bottom (with a negative
+%%% displacement to offset the space allocated for a non-existent
+%%% caption).
+%%%
+\def\ftype@copyrightbox{8}
+\def\@copyrightspace{
+\@float{copyrightbox}[b]
+\begin{center}
+\setlength{\unitlength}{1pc}
+\begin{picture}(20,1.5)
+\put(0,2.5){\line(1,0){4.818}}
+\put(0,0){\parbox[b]{19.75pc}{\small \Notice@String}}
+\end{picture}
+\end{center}
+\end@float}
+
+\setlength\footskip{25.0pt}
+\flushbottom \twocolumn
+\sloppy
+
+% Clear out the addcontentsline command
+\def\addcontentsline#1#2#3{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% commands for formatting paper title, author names, and addresses.
+
+% box to check the size of the running head
+\newbox\titrun
+
+% general page style
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+% set the width of the head rule to 1 point
+\renewcommand{\headrulewidth}{1pt}
+
+% definition to set the head as running head in the preamble
+\def\icmltitlerunning#1{\gdef\@icmltitlerunning{#1}}
+
+% main definition adapting \icmltitle from 2004
+\long\def\icmltitle#1{%
+
+   %check whether @icmltitlerunning exists
+   % if not \icmltitle is used as running head
+   \ifx\undefined\@icmltitlerunning%
+      \gdef\@icmltitlerunning{#1}
+   \fi
+
+   %add it to pdf information
+  \ifdefined\nohyperref\else\ifdefined\hypersetup
+     \hypersetup{pdftitle={#1}}
+   \fi\fi
+
+   %get the dimension of the running title
+   \global\setbox\titrun=\vbox{\small\bf\@icmltitlerunning}
+
+   % error flag
+   \gdef\@runningtitleerror{0}
+
+    % running title too long
+    \ifdim\wd\titrun>\textwidth%
+      \gdef\@runningtitleerror{1}%
+      % running title breaks a line
+    \else \ifdim\ht\titrun>6.25pt
+    \gdef\@runningtitleerror{2}%
+      \fi
+    \fi
+
+       % if there is somthing wrong with the running title
+    \ifnum\@runningtitleerror>0
+      \typeout{}%
+                 \typeout{}%
+                 \typeout{*******************************************************}%
+                 \typeout{Title exceeds size limitations for running head.}%
+                 \typeout{Please supply a shorter form for the running head}
+                 \typeout{with \string\icmltitlerunning{...}\space prior to \string\begin{document}}%
+      \typeout{*******************************************************}%
+      \typeout{}%
+      \typeout{}%
+      % set default running title
+      \gdef\@icmltitlerunning{Title Suppressed Due to Excessive Size}
+    \fi
+
+    % no running title on the first page of the paper
+    \thispagestyle{plain}
+
+    {\center\baselineskip 18pt
+      \toptitlebar{\Large\bf #1}\bottomtitlebar}
+}
+
+% set running title header
+\fancyhead[C]{\small\bf\@icmltitlerunning}
+
+\gdef\icmlfullauthorlist{}
+\newcommand\addstringtofullauthorlist{\g@addto@macro\icmlfullauthorlist}
+\newcommand\addtofullauthorlist[1]{%
+  \ifdefined\icmlanyauthors%
+    \addstringtofullauthorlist{, #1}%
+  \else%
+    \addstringtofullauthorlist{#1}%
+    \gdef\icmlanyauthors{1}%
+  \fi%
+  \ifdefined\hypersetup%
+    \hypersetup{pdfauthor=\icmlfullauthorlist}%
+  \fi
+}
+
+\def\toptitlebar{\hrule height1pt \vskip .25in}
+\def\bottomtitlebar{\vskip .22in \hrule height1pt \vskip .3in}
+
+\newenvironment{icmlauthorlist}{%
+  \setlength\topsep{0pt}
+  \setlength\parskip{0pt}
+  \begin{center}
+    }{%
+  \end{center}
+}
+
+\newcounter{@affiliationcounter}
+\newcommand{\@pa}[1]{%
+  \ifcsname the@affil#1\endcsname
+    % do nothing
+  \else
+    \ifcsname @icmlsymbol#1\endcsname
+      % nothing
+    \else
+      \stepcounter{@affiliationcounter}%
+      \newcounter{@affil#1}%
+      \setcounter{@affil#1}{\value{@affiliationcounter}}%
+    \fi
+  \fi%
+  \ifcsname @icmlsymbol#1\endcsname
+    \textsuperscript{\csname @icmlsymbol#1\endcsname\,}%
+  \else
+    \textsuperscript{\arabic{@affil#1}\,}%
+  \fi
+}
+
+\newcommand{\icmlauthor}[2]{%
+  \ificmlshowauthors
+    \mbox{\bf #1}\,\@for\theaffil:=#2\do{\@pa{\theaffil}} \addtofullauthorlist{#1}%
+  \else
+    \ifdefined\@icmlfirsttime\else
+      \gdef\@icmlfirsttime{1}
+      \mbox{\bf Anonymous Authors}\@pa{@anon} \addtofullauthorlist{Anonymous Authors}
+    \fi
+  \fi
+}
+
+\newcommand{\icmlsetsymbol}[2]{%
+  \expandafter\gdef\csname @icmlsymbol#1\endcsname{#2}
+}
+
+\newcommand{\icmlaffiliation}[2]{%
+  \ificmlshowauthors
+    \ifcsname the@affil#1\endcsname
+      \expandafter\gdef\csname @affilname\csname the@affil#1\endcsname\endcsname{#2}%
+    \else
+      {\bf AUTHORERR: Error in use of \textbackslash{}icmlaffiliation command. Label ``#1'' not mentioned in some \textbackslash{}icmlauthor\{author name\}\{labels here\} command beforehand. }
+      \typeout{}%
+      \typeout{}%
+      \typeout{*******************************************************}%
+      \typeout{Affiliation label undefined. }%
+      \typeout{Make sure \string\icmlaffiliation\space follows }%
+      \typeout{all of \string\icmlauthor\space commands}%
+      \typeout{*******************************************************}%
+      \typeout{}%
+      \typeout{}%
+    \fi
+  \else
+    \expandafter\gdef\csname @affilname1\endcsname{Anonymous Institution, Anonymous City, Anonymous Region, Anonymous Country}
+  \fi
+}
+
+\newcommand{\icmlcorrespondingauthor}[2]{%
+  \ificmlshowauthors
+    \ifdefined\icmlcorrespondingauthor@text
+      \g@addto@macro\icmlcorrespondingauthor@text{, #1 \textless{}#2\textgreater{}}
+    \else
+      \gdef\icmlcorrespondingauthor@text{#1 \textless{}#2\textgreater{}}
+    \fi
+  \else
+    \gdef\icmlcorrespondingauthor@text{Anonymous Author \textless{}anon.email@domain.com\textgreater{}}
+  \fi
+}
+
+\newcommand{\icmlEqualContribution}{\textsuperscript{*}Equal contribution }
+
+
+% --- ICML 2026: ensure authors do not omit the affiliations/notice footnote ---
+\newif\ificml@noticeprinted
+\icml@noticeprintedfalse
+\AtEndDocument{%
+  \ificml@noticeprinted\relax\else
+    \PackageWarningNoLine{icml2026}{%
+      You did not call \string\printAffiliationsAndNotice{}. If you have no notice,%
+      call \string\printAffiliationsAndNotice\string{} (empty braces).%
+    }%
+  \fi
+}
+
+
+\newcounter{@affilnum}
+\newcommand{\printAffiliationsAndNotice}[1]{\global\icml@noticeprintedtrue%
+  \stepcounter{@affiliationcounter}%
+  {\let\thefootnote\relax\footnotetext{\hspace*{-\footnotesep}\ificmlshowauthors #1\fi%
+      \forloop{@affilnum}{1}{\value{@affilnum} < \value{@affiliationcounter}}{
+        \textsuperscript{\arabic{@affilnum}}\ifcsname @affilname\the@affilnum\endcsname%
+          \csname @affilname\the@affilnum\endcsname%
+        \else
+          {\bf AUTHORERR: Missing \textbackslash{}icmlaffiliation.}
+        \fi
+      }.%
+      \ifdefined\icmlcorrespondingauthor@text
+         { }Correspondence to: \icmlcorrespondingauthor@text.
+      \else
+        {\bf AUTHORERR: Missing \textbackslash{}icmlcorrespondingauthor.}
+      \fi
+
+      \ \\
+      \Notice@String
+    }
+  }
+}
+
+\long\def\icmladdress#1{%
+  {\bf The \textbackslash{}icmladdress command is no longer used.  See the example\_paper PDF .tex for usage of \textbackslash{}icmlauther and \textbackslash{}icmlaffiliation.}
+}
+
+%% keywords as first class citizens
+\def\icmlkeywords#1{%
+  \ifdefined\nohyperref\else\ifdefined\hypersetup
+      \hypersetup{pdfkeywords={#1}}
+    \fi\fi
+}
+
+% modification to natbib citations
+\setcitestyle{authoryear,round,citesep={;},aysep={,},yysep={;}}
+
+% Redefinition of the abstract environment.
+\renewenvironment{abstract}
+{%
+  \centerline{\large\bf Abstract}
+  \vspace{-0.12in}\begin{quote}}
+    {\par\end{quote}\vskip 0.12in}
+
+% numbered section headings with different treatment of numbers
+
+\def\@startsection#1#2#3#4#5#6{\if@noskipsec \leavevmode \fi
+  \par \@tempskipa #4\relax
+  \@afterindenttrue
+  \ifdim \@tempskipa <\z@ \@tempskipa -\@tempskipa \fi
+  \if@nobreak \everypar{}\else
+    \addpenalty{\@secpenalty}\addvspace{\@tempskipa}\fi \@ifstar
+  {\@ssect{#3}{#4}{#5}{#6}}{\@dblarg{\@sict{#1}{#2}{#3}{#4}{#5}{#6}}}}
+
+\def\@sict#1#2#3#4#5#6[#7]#8{\ifnum #2>\c@secnumdepth
+    \def\@svsec{}\else
+    \refstepcounter{#1}\edef\@svsec{\csname the#1\endcsname}\fi
+  \@tempskipa #5\relax
+  \ifdim \@tempskipa>\z@
+    \begingroup #6\relax
+    \@hangfrom{\hskip #3\relax\@svsec.~}{\interlinepenalty \@M #8\par}
+    \endgroup
+    \csname #1mark\endcsname{#7}\addcontentsline
+    {toc}{#1}{\ifnum #2>\c@secnumdepth \else
+        \protect\numberline{\csname the#1\endcsname}\fi
+      #7}\else
+    \def\@svsechd{#6\hskip #3\@svsec #8\csname #1mark\endcsname
+      {#7}\addcontentsline
+      {toc}{#1}{\ifnum #2>\c@secnumdepth \else
+          \protect\numberline{\csname the#1\endcsname}\fi
+        #7}}\fi
+  \@xsect{#5}}
+
+\def\@sect#1#2#3#4#5#6[#7]#8{\ifnum #2>\c@secnumdepth
+    \def\@svsec{}\else
+    \refstepcounter{#1}\edef\@svsec{\csname the#1\endcsname\hskip 0.4em }\fi
+  \@tempskipa #5\relax
+  \ifdim \@tempskipa>\z@
+    \begingroup #6\relax
+    \@hangfrom{\hskip #3\relax\@svsec}{\interlinepenalty \@M #8\par}
+    \endgroup
+    \csname #1mark\endcsname{#7}\addcontentsline
+    {toc}{#1}{\ifnum #2>\c@secnumdepth \else
+        \protect\numberline{\csname the#1\endcsname}\fi
+      #7}\else
+    \def\@svsechd{#6\hskip #3\@svsec #8\csname #1mark\endcsname
+      {#7}\addcontentsline
+      {toc}{#1}{\ifnum #2>\c@secnumdepth \else
+          \protect\numberline{\csname the#1\endcsname}\fi
+        #7}}\fi
+  \@xsect{#5}}
+
+% section headings with less space above and below them
+\def\thesection {\arabic{section}}
+\def\thesubsection {\thesection.\arabic{subsection}}
+\def\section{\@startsection{section}{1}{\z@}{-0.12in}{0.02in}
+  {\large\bf\raggedright}}
+\def\subsection{\@startsection{subsection}{2}{\z@}{-0.10in}{0.01in}
+  {\normalsize\bf\raggedright}}
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}{-0.08in}{0.01in}
+  {\normalsize\sc\raggedright}}
+\def\paragraph{\@startsection{paragraph}{4}{\z@}{1.5ex plus
+    0.5ex minus .2ex}{-1em}{\normalsize\bf}}
+\def\subparagraph{\@startsection{subparagraph}{5}{\z@}{1.5ex plus
+    0.5ex minus .2ex}{-1em}{\normalsize\bf}}
+
+% Footnotes
+\footnotesep 6.65pt %
+\skip\footins 9pt
+\def\footnoterule{\kern-3pt \hrule width 0.8in \kern 2.6pt }
+\setcounter{footnote}{0}
+
+% Lists and paragraphs
+\parindent 0pt
+\topsep 4pt plus 1pt minus 2pt
+\partopsep 1pt plus 0.5pt minus 0.5pt
+\itemsep 2pt plus 1pt minus 0.5pt
+\parsep 2pt plus 1pt minus 0.5pt
+\parskip 6pt
+
+\leftmargin 2em \leftmargini\leftmargin \leftmarginii 2em
+\leftmarginiii 1.5em \leftmarginiv 1.0em \leftmarginv .5em
+\leftmarginvi .5em
+\labelwidth\leftmargini\advance\labelwidth-\labelsep \labelsep 5pt
+
+\def\@listi{\leftmargin\leftmargini}
+\def\@listii{\leftmargin\leftmarginii
+  \labelwidth\leftmarginii\advance\labelwidth-\labelsep
+  \topsep 2pt plus 1pt minus 0.5pt
+  \parsep 1pt plus 0.5pt minus 0.5pt
+  \itemsep \parsep}
+\def\@listiii{\leftmargin\leftmarginiii
+  \labelwidth\leftmarginiii\advance\labelwidth-\labelsep
+  \topsep 1pt plus 0.5pt minus 0.5pt
+  \parsep \z@ \partopsep 0.5pt plus 0pt minus 0.5pt
+  \itemsep \topsep}
+\def\@listiv{\leftmargin\leftmarginiv
+  \labelwidth\leftmarginiv\advance\labelwidth-\labelsep}
+\def\@listv{\leftmargin\leftmarginv
+  \labelwidth\leftmarginv\advance\labelwidth-\labelsep}
+\def\@listvi{\leftmargin\leftmarginvi
+  \labelwidth\leftmarginvi\advance\labelwidth-\labelsep}
+
+\abovedisplayskip 7pt plus2pt minus5pt%
+\belowdisplayskip \abovedisplayskip
+\abovedisplayshortskip  0pt plus3pt%
+\belowdisplayshortskip  4pt plus3pt minus3pt%
+
+% Less leading in most fonts (due to the narrow columns)
+% The choices were between 1-pt and 1.5-pt leading
+\def\@normalsize{\@setsize\normalsize{11pt}\xpt\@xpt}
+\def\small{\@setsize\small{10pt}\ixpt\@ixpt}
+\def\footnotesize{\@setsize\footnotesize{10pt}\ixpt\@ixpt}
+\def\scriptsize{\@setsize\scriptsize{8pt}\viipt\@viipt}
+\def\tiny{\@setsize\tiny{7pt}\vipt\@vipt}
+\def\large{\@setsize\large{14pt}\xiipt\@xiipt}
+\def\Large{\@setsize\Large{16pt}\xivpt\@xivpt}
+\def\LARGE{\@setsize\LARGE{20pt}\xviipt\@xviipt}
+\def\huge{\@setsize\huge{23pt}\xxpt\@xxpt}
+\def\Huge{\@setsize\Huge{28pt}\xxvpt\@xxvpt}
+
+% Revised formatting for figure captions and table titles.
+\captionsetup{
+  skip=0.1in,
+  font=small,
+  labelfont={it,small},
+  labelsep=period
+}
+\captionsetup[table]{position=above}
+\captionsetup[figure]{position=below}
+
+\def\fnum@figure{Figure \thefigure}
+\def\fnum@table{Table \thetable}
+
+% Strut macros for skipping spaces above and below text in tables.
+\def\abovestrut#1{\rule[0in]{0in}{#1}\ignorespaces}
+\def\belowstrut#1{\rule[-#1]{0in}{#1}\ignorespaces}
+
+\def\abovespace{\abovestrut{0.20in}}
+\def\aroundspace{\abovestrut{0.20in}\belowstrut{0.10in}}
+\def\belowspace{\belowstrut{0.10in}}
+
+% Various personal itemization commands.
+\def\texitem#1{\par\noindent\hangindent 12pt
+  \hbox to 12pt {\hss #1 ~}\ignorespaces}
+\def\icmlitem{\texitem{$\bullet$}}
+
+% To comment out multiple lines of text.
+\long\def\comment#1{}
+
+%% Line counter (not in final version). Adapted from NIPS style file by Christoph Sawade
+
+% Vertical Ruler
+% This code is, largely, from the CVPR 2010 conference style file
+% ----- define vruler
+\makeatletter
+\newbox\icmlrulerbox
+\newcount\icmlrulercount
+\newdimen\icmlruleroffset
+\newdimen\cv@lineheight
+\newdimen\cv@boxheight
+\newbox\cv@tmpbox
+\newcount\cv@refno
+\newcount\cv@tot
+% NUMBER with left flushed zeros  \fillzeros[<WIDTH>]<NUMBER>
+\newcount\cv@tmpc@ \newcount\cv@tmpc
+\def\fillzeros[#1]#2{\cv@tmpc@=#2\relax\ifnum\cv@tmpc@<0\cv@tmpc@=-\cv@tmpc@\fi
+  \cv@tmpc=1 %
+  \loop\ifnum\cv@tmpc@<10 \else \divide\cv@tmpc@ by 10 \advance\cv@tmpc by 1 \fi
+  \ifnum\cv@tmpc@=10\relax\cv@tmpc@=11\relax\fi \ifnum\cv@tmpc@>10 \repeat
+  \ifnum#2<0\advance\cv@tmpc1\relax-\fi
+  \loop\ifnum\cv@tmpc<#1\relax0\advance\cv@tmpc1\relax\fi \ifnum\cv@tmpc<#1 \repeat
+  \cv@tmpc@=#2\relax\ifnum\cv@tmpc@<0\cv@tmpc@=-\cv@tmpc@\fi \relax\the\cv@tmpc@}%
+% \makevruler[<SCALE>][<INITIAL_COUNT>][<STEP>][<DIGITS>][<HEIGHT>]
+\def\makevruler[#1][#2][#3][#4][#5]{
+  \begingroup\offinterlineskip
+  \textheight=#5\vbadness=10000\vfuzz=120ex\overfullrule=0pt%
+  \global\setbox\icmlrulerbox=\vbox to \textheight{%
+    {
+        \parskip=0pt\hfuzz=150em\cv@boxheight=\textheight
+        \cv@lineheight=#1\global\icmlrulercount=#2%
+        \cv@tot\cv@boxheight\divide\cv@tot\cv@lineheight\advance\cv@tot2%
+        \cv@refno1\vskip-\cv@lineheight\vskip1ex%
+        \loop\setbox\cv@tmpbox=\hbox to0cm{\hfil {\hfil\fillzeros[#4]\icmlrulercount}}%
+        \ht\cv@tmpbox\cv@lineheight\dp\cv@tmpbox0pt\box\cv@tmpbox\break
+        \advance\cv@refno1\global\advance\icmlrulercount#3\relax
+        \ifnum\cv@refno<\cv@tot\repeat
+      }
+  }
+  \endgroup
+}%
+\makeatother
+% ----- end of vruler
+
+% \makevruler[<SCALE>][<INITIAL_COUNT>][<STEP>][<DIGITS>][<HEIGHT>]
+\def\icmlruler#1{\makevruler[12pt][#1][1][3][\textheight]\usebox{\icmlrulerbox}}
+\AddToShipoutPicture{%
+  \icmlruleroffset=\textheight
+  \advance\icmlruleroffset by 5.2pt % top margin
+  \color[rgb]{.7,.7,.7}
+  \ificmlshowauthors\else
+    \AtTextUpperLeft{%
+      \put(\LenToUnit{-35pt},\LenToUnit{-\icmlruleroffset}){%left ruler
+        \icmlruler{\icmlrulercount}}
+      %\put(\LenToUnit{1.04\textwidth},\LenToUnit{-\icmlruleroffset}){%right ruler
+      %  \icmlruler{\icmlrulercount}}
+    }
+  \fi
+}
+\endinput
+
+
+
+
+
+
+\end{filecontents*}
+\documentclass{article}
+\usepackage{luatex85}
+\usepackage[T1]{fontenc}
+\usepackage{microtype,graphicx,booktabs}
+\usepackage{hyperref,xurl}
+\usepackage[accepted]{icml2026}
+% Author-visible ICML typography, without a preprint or proceedings notice.
+\makeatletter\renewcommand{\Notice@String}{}\makeatother
+\usepackage{amsmath,amssymb,tikz}
+\definecolor{panelnavy}{HTML}{081A32}
+\definecolor{treeink}{HTML}{EDF5FF}
+\definecolor{rootpurple}{HTML}{FFFFFF}
+\definecolor{leafteal}{HTML}{EDF5FF}
+\definecolor{leafgray}{HTML}{EDF5FF}
+\definecolor{treeblue}{HTML}{00E5FF}
+\definecolor{treeorange}{HTML}{FFEE32}
+\hypersetup{pdftitle={Compact Decision Programs over Frozen Neural Features for Lesion Segmentation},pdfauthor={Brian Mingus},hidelinks}
+\icmltitlerunning{Compact Decision Programs over Frozen Neural Features}
+\newcommand{\doi}[1]{\href{https://doi.org/#1}{doi:~\nolinkurl{#1}}}
+\begin{document}
+\twocolumn[
+\icmltitle{Compact Decision Programs over Frozen Neural Features\\for Lesion Segmentation}
+\begin{icmlauthorlist}
+\icmlauthor{Brian Mingus}{cognatory}
+\end{icmlauthorlist}
+\icmlaffiliation{cognatory}{Cognatory, LLC, Denver, Colorado, USA}
+\icmlcorrespondingauthor{Brian Mingus}{brian@cognatory.com}
+\icmlkeywords{Decision programs, gradient boosting, segmentation, frozen features}
+\vskip 0.12in
+{\begin{minipage}{.94\textwidth}\small Frozen neural features support compact decision programs for location-assisted lesion segmentation. On 32 RIDER patients and 62 scans, patient-grouped evaluation yields mean Dice of \textbf{0.765}, versus \textbf{0.734} for the pretrained mask and \textbf{0.758} for an earlier hybrid procedure. Current and earlier all-patient refits yield complete binary trees with 181 and 21 nodes, respectively. Both trees are shown in full. The neural feature pipeline remains necessary; these exploratory results demonstrate adaptable, inspectable downstream decisions.\end{minipage}}
+\vskip 0.12in
+{\begin{minipage}{\textwidth}
+\centering
+{\setlength{\fboxsep}{7pt}\colorbox{panelnavy}{\begin{minipage}{\dimexpr\textwidth-14pt\relax}\centering\color{white}
+\begin{minipage}[t]{.30\textwidth}\centering\vspace{0pt}
+{\small\bfseries (a) Earlier: Dice 0.758}\\{\footnotesize 21 nodes; $\sim$250 B}\par\smallskip
+\begin{tikzpicture}[x=1in,y=1in, every node/.style={inner sep=.6pt,outer sep=0pt,font=\fontsize{7}{8}\selectfont},
+trueedge/.style={draw=treeblue,line width=.6pt,preaction={draw=treeblue,opacity=.08,line width=1.4pt}},falseedge/.style={draw=treeorange,densely dashed,line width=.6pt,preaction={draw=treeorange,opacity=.08,line width=1.4pt}}]
+\node[text=leafgray] (n1) at (0.61458,1.94970) {$\mathbf{B}$};
+\node[text=leafteal] (n5) at (0.43403,1.14760) {$\mathbf{L}$};
+\node[text=leafgray] (n10) at (0.10069,0.07812) {$\mathbf{B}$};
+\node[text=leafteal] (n11) at (0.22569,0.07812) {$\mathbf{L}$};
+\node[text=treeink] (n9) at (0.15625,0.34549) {$x<\tau_{7}$};
+\node[text=leafteal] (n12) at (0.39236,0.34549) {$\mathbf{L}$};
+\node[text=treeink] (n8) at (0.32292,0.61285) {$u<\tau_{6}$};
+\node[text=leafgray] (n14) at (0.62847,0.34549) {$\mathbf{B}$};
+\node[text=leafgray] (n16) at (0.80903,0.07812) {$\mathbf{B}$};
+\node[text=leafteal] (n17) at (0.93403,0.07812) {$\mathbf{L}$};
+\node[text=treeink] (n15) at (0.87847,0.34549) {$x<\tau_{7}$};
+\node[text=treeink] (n13) at (0.68403,0.61285) {$u<\tau_{6}$};
+\node[text=treeink] (n7) at (0.50347,0.88021) {$a_{21}<\tau_{5}$};
+\node[text=leafteal] (n18) at (0.86458,0.88021) {$\mathbf{L}$};
+\node[text=treeink] (n6) at (0.68403,1.14760) {$u<\tau_{4}$};
+\node[text=treeink] (n4) at (0.55903,1.41490) {$a_{21}<\tau_{3}$};
+\node[text=leafteal] (n19) at (0.92014,1.41490) {$\mathbf{L}$};
+\node[text=treeink] (n3) at (0.73958,1.68230) {$x<\tau_{2}$};
+\node[text=leafteal] (n20) at (0.97569,1.68230) {$\mathbf{L}$};
+\node[text=treeink] (n2) at (0.86458,1.94970) {$x<\tau_{1}$};
+\node[text=rootpurple] (n0) at (0.73958,2.21700) {$m<1$};
+\draw[trueedge] (n0.south) -- (n1.north);
+\draw[falseedge] (n0.south) -- (n2.north);
+\draw[trueedge] (n2.south) -- (n3.north);
+\draw[trueedge] (n3.south) -- (n4.north);
+\draw[trueedge] (n4.south) -- (n5.north);
+\draw[falseedge] (n4.south) -- (n6.north);
+\draw[trueedge] (n6.south) -- (n7.north);
+\draw[trueedge] (n7.south) -- (n8.north);
+\draw[trueedge] (n8.south) -- (n9.north);
+\draw[trueedge] (n9.south) -- (n10.north);
+\draw[falseedge] (n9.south) -- (n11.north);
+\draw[falseedge] (n8.south) -- (n12.north);
+\draw[falseedge] (n7.south) -- (n13.north);
+\draw[trueedge] (n13.south) -- (n14.north);
+\draw[falseedge] (n13.south) -- (n15.north);
+\draw[trueedge] (n15.south) -- (n16.north);
+\draw[falseedge] (n15.south) -- (n17.north);
+\draw[falseedge] (n6.south) -- (n18.north);
+\draw[falseedge] (n3.south) -- (n19.north);
+\draw[falseedge] (n2.south) -- (n20.north);
+\end{tikzpicture}
+\end{minipage}\hfill\begin{minipage}[t]{.68\textwidth}\centering\vspace{0pt}
+{\small\bfseries (b) Current: Dice 0.765}\\{\footnotesize 181 nodes; $\sim$770 B}\par\smallskip
+\begin{tikzpicture}[x=1in,y=1in, every node/.style={inner sep=.6pt,outer sep=0pt,font=\fontsize{6.5}{7.5}\selectfont},
+trueedge/.style={draw=treeblue,line width=.6pt,preaction={draw=treeblue,opacity=.08,line width=1.4pt}},falseedge/.style={draw=treeorange,densely dashed,line width=.6pt,preaction={draw=treeorange,opacity=.08,line width=1.4pt}}]
+\node[text=leafgray] (n2) at (1.58728,1.87820) {$\mathbf{B}$};
+\node[text=leafgray] (n4) at (1.58728,1.73668) {$\mathbf{B}$};
+\node[text=leafteal] (n6) at (1.61523,1.59521) {$\mathbf{L}$};
+\node[text=leafgray] (n7) at (1.73056,1.59521) {$\mathbf{B}$};
+\node[text=treeink] (n5) at (1.74439,1.73668) {$P_{4}$};
+\node[text=treeink] (n3) at (1.74439,1.87820) {$P_{3}$};
+\node[text=treeink] (n1) at (1.74439,2.01967) {$P_{2}$};
+\node[text=leafteal] (n12) at (1.74439,1.45373) {$\mathbf{L}$};
+\node[text=leafteal] (n17) at (0.48338,0.88779) {$\mathbf{L}$};
+\node[text=leafgray] (n23) at (0.03152,0.18035) {$\mathbf{B}$};
+\node[text=leafteal] (n24) at (0.12610,0.18035) {$\mathbf{L}$};
+\node[text=treeink] (n22) at (0.10508,0.32183) {$P_{17}$};
+\node[text=leafgray] (n27) at (0.24169,0.03886) {$\mathbf{B}$};
+\node[text=leafteal] (n28) at (0.33626,0.03886) {$\mathbf{L}$};
+\node[text=treeink] (n26) at (0.29423,0.18035) {$P_{17}$};
+\node[text=leafteal] (n29) at (0.44134,0.18035) {$\mathbf{L}$};
+\node[text=treeink] (n25) at (0.30474,0.32183) {$P_{18}$};
+\node[text=treeink] (n21) at (0.19966,0.46332) {$P_{16}$};
+\node[text=leafteal] (n30) at (0.34677,0.46332) {$\mathbf{L}$};
+\node[text=treeink] (n20) at (0.31525,0.60479) {$P_{15}$};
+\node[text=leafgray] (n32) at (0.49389,0.46332) {$\mathbf{B}$};
+\node[text=leafteal] (n33) at (0.58846,0.46332) {$\mathbf{L}$};
+\node[text=treeink] (n31) at (0.51491,0.60479) {$P_{18}$};
+\node[text=treeink] (n19) at (0.48338,0.74627) {$P_{14}$};
+\node[text=leafteal] (n34) at (0.63049,0.74627) {$\mathbf{L}$};
+\node[text=treeink] (n18) at (0.63049,0.88779) {$P_{13}$};
+\node[text=treeink] (n16) at (0.63049,1.02926) {$P_{12}$};
+\node[text=leafteal] (n35) at (0.83013,1.02926) {$\mathbf{L}$};
+\node[text=treeink] (n15) at (0.83013,1.17074) {$P_{11}$};
+\node[text=leafteal] (n36) at (1.07186,1.17074) {$\mathbf{L}$};
+\node[text=treeink] (n14) at (1.07186,1.31226) {$P_{10}$};
+\node[text=leafteal] (n37) at (1.85993,1.31226) {$\mathbf{L}$};
+\node[text=treeink] (n13) at (1.85993,1.45373) {$P_{9}$};
+\node[text=treeink] (n11) at (1.85993,1.59521) {$P_{8}$};
+\node[text=leafteal] (n38) at (1.97553,1.59521) {$\mathbf{L}$};
+\node[text=treeink] (n10) at (1.92303,1.73668) {$P_{7}$};
+\node[text=leafgray] (n47) at (0.71455,0.60479) {$\mathbf{B}$};
+\node[text=leafteal] (n48) at (0.80910,0.60479) {$\mathbf{L}$};
+\node[text=treeink] (n46) at (0.77762,0.74627) {$P_{17}$};
+\node[text=leafteal] (n49) at (0.92470,0.74627) {$\mathbf{L}$};
+\node[text=treeink] (n45) at (0.92470,0.88779) {$P_{15}$};
+\node[text=leafteal] (n50) at (1.07186,0.88779) {$\mathbf{L}$};
+\node[text=treeink] (n44) at (1.07186,1.02926) {$P_{13}$};
+\node[text=leafgray] (n54) at (0.92470,0.60479) {$\mathbf{B}$};
+\node[text=leafgray] (n57) at (0.75659,0.32183) {$\mathbf{B}$};
+\node[text=leafgray] (n59) at (0.86168,0.18035) {$\mathbf{B}$};
+\node[text=leafteal] (n60) at (0.95625,0.18035) {$\mathbf{L}$};
+\node[text=treeink] (n58) at (0.90367,0.32183) {$P_{18}$};
+\node[text=treeink] (n56) at (0.88271,0.46332) {$P_{17}$};
+\node[text=leafgray] (n62) at (1.06134,0.32183) {$\mathbf{B}$};
+\node[text=leafgray] (n64) at (1.15592,0.18035) {$\mathbf{B}$};
+\node[text=leafteal] (n65) at (1.25049,0.18035) {$\mathbf{L}$};
+\node[text=treeink] (n63) at (1.20843,0.32183) {$P_{17}$};
+\node[text=treeink] (n61) at (1.08238,0.46332) {$P_{18}$};
+\node[text=treeink] (n55) at (1.07186,0.60479) {$P_{16}$};
+\node[text=treeink] (n53) at (1.07186,0.74627) {$P_{15}$};
+\node[text=leafgray] (n66) at (1.21894,0.74627) {$\mathbf{B}$};
+\node[text=treeink] (n52) at (1.21894,0.88779) {$P_{14}$};
+\node[text=leafgray] (n69) at (1.21894,0.60479) {$\mathbf{B}$};
+\node[text=leafteal] (n71) at (1.30300,0.46332) {$\mathbf{L}$};
+\node[text=leafgray] (n73) at (1.40809,0.32183) {$\mathbf{B}$};
+\node[text=leafteal] (n74) at (1.50266,0.32183) {$\mathbf{L}$};
+\node[text=treeink] (n72) at (1.45016,0.46332) {$P_{18}$};
+\node[text=treeink] (n70) at (1.36610,0.60479) {$P_{16}$};
+\node[text=treeink] (n68) at (1.36610,0.74627) {$P_{15}$};
+\node[text=leafgray] (n75) at (1.51318,0.74627) {$\mathbf{B}$};
+\node[text=treeink] (n67) at (1.41861,0.88779) {$P_{14}$};
+\node[text=treeink] (n51) at (1.34507,1.02926) {$P_{13}$};
+\node[text=treeink] (n43) at (1.34507,1.17074) {$P_{12}$};
+\node[text=leafgray] (n80) at (1.51318,0.60479) {$\mathbf{B}$};
+\node[text=leafteal] (n81) at (1.60775,0.60479) {$\mathbf{L}$};
+\node[text=treeink] (n79) at (1.66026,0.74627) {$P_{17}$};
+\node[text=leafteal] (n82) at (1.80742,0.74627) {$\mathbf{L}$};
+\node[text=treeink] (n78) at (1.80742,0.88779) {$P_{15}$};
+\node[text=leafteal] (n83) at (1.95450,0.88779) {$\mathbf{L}$};
+\node[text=treeink] (n77) at (1.95450,1.02926) {$P_{13}$};
+\node[text=leafgray] (n88) at (1.62879,0.46332) {$\mathbf{B}$};
+\node[text=leafgray] (n90) at (1.66026,0.32183) {$\mathbf{B}$};
+\node[text=leafgray] (n92) at (1.73388,0.18035) {$\mathbf{B}$};
+\node[text=leafteal] (n93) at (1.82845,0.18035) {$\mathbf{L}$};
+\node[text=treeink] (n91) at (1.80742,0.32183) {$P_{17}$};
+\node[text=treeink] (n89) at (1.77587,0.46332) {$P_{18}$};
+\node[text=treeink] (n87) at (1.75484,0.60479) {$P_{16}$};
+\node[text=leafteal] (n95) at (1.94398,0.46332) {$\mathbf{L}$};
+\node[text=leafgray] (n98) at (1.98605,0.18035) {$\mathbf{B}$};
+\node[text=leafteal] (n99) at (2.08062,0.18035) {$\mathbf{L}$};
+\node[text=treeink] (n97) at (2.03856,0.32183) {$P_{17}$};
+\node[text=leafteal] (n100) at (2.18571,0.32183) {$\mathbf{L}$};
+\node[text=treeink] (n96) at (2.09114,0.46332) {$P_{18}$};
+\node[text=treeink] (n94) at (1.95450,0.60479) {$P_{16}$};
+\node[text=treeink] (n86) at (1.95450,0.74627) {$P_{15}$};
+\node[text=leafgray] (n102) at (2.10166,0.60479) {$\mathbf{B}$};
+\node[text=leafgray] (n104) at (2.24874,0.46332) {$\mathbf{B}$};
+\node[text=leafteal] (n105) at (2.34331,0.46332) {$\mathbf{L}$};
+\node[text=treeink] (n103) at (2.24874,0.60479) {$P_{17}$};
+\node[text=treeink] (n101) at (2.15416,0.74627) {$P_{18}$};
+\node[text=treeink] (n85) at (2.15416,0.88779) {$P_{14}$};
+\node[text=leafgray] (n109) at (2.43788,0.46332) {$\mathbf{B}$};
+\node[text=leafteal] (n110) at (2.53246,0.46332) {$\mathbf{L}$};
+\node[text=treeink] (n108) at (2.44840,0.60479) {$P_{18}$};
+\node[text=leafteal] (n111) at (2.59556,0.60479) {$\mathbf{L}$};
+\node[text=treeink] (n107) at (2.46943,0.74627) {$P_{15}$};
+\node[text=leafgray] (n113) at (2.69013,0.60479) {$\mathbf{B}$};
+\node[text=leafteal] (n114) at (2.78471,0.60479) {$\mathbf{L}$};
+\node[text=treeink] (n112) at (2.69013,0.74627) {$P_{18}$};
+\node[text=treeink] (n106) at (2.46943,0.88779) {$P_{14}$};
+\node[text=treeink] (n84) at (2.15416,1.02926) {$P_{13}$};
+\node[text=treeink] (n76) at (2.05959,1.17074) {$P_{12}$};
+\node[text=treeink] (n42) at (2.05959,1.31226) {$P_{11}$};
+\node[text=leafteal] (n117) at (2.77419,1.02926) {$\mathbf{L}$};
+\node[text=leafteal] (n119) at (2.84773,0.88779) {$\mathbf{L}$};
+\node[text=leafgray] (n124) at (2.80566,0.32183) {$\mathbf{B}$};
+\node[text=leafteal] (n125) at (2.90024,0.32183) {$\mathbf{L}$};
+\node[text=treeink] (n123) at (2.85825,0.46332) {$P_{11}$};
+\node[text=leafteal] (n126) at (3.00533,0.46332) {$\mathbf{L}$};
+\node[text=treeink] (n122) at (2.93179,0.60479) {$P_{17}$};
+\node[text=leafteal] (n127) at (3.07887,0.60479) {$\mathbf{L}$};
+\node[text=treeink] (n121) at (2.93179,0.74627) {$P_{20}$};
+\node[text=leafteal] (n128) at (3.07887,0.74627) {$\mathbf{L}$};
+\node[text=treeink] (n120) at (2.99481,0.88779) {$P_{15}$};
+\node[text=treeink] (n118) at (2.92127,1.02926) {$P_{19}$};
+\node[text=treeink] (n116) at (2.84773,1.17074) {$P_{12}$};
+\node[text=leafteal] (n131) at (3.18396,0.88779) {$\mathbf{L}$};
+\node[text=leafgray] (n135) at (3.15248,0.46332) {$\mathbf{B}$};
+\node[text=leafteal] (n136) at (3.24706,0.46332) {$\mathbf{L}$};
+\node[text=treeink] (n134) at (3.22602,0.60479) {$P_{11}$};
+\node[text=leafteal] (n137) at (3.37311,0.60479) {$\mathbf{L}$};
+\node[text=treeink] (n133) at (3.22602,0.74627) {$P_{17}$};
+\node[text=leafteal] (n138) at (3.37311,0.74627) {$\mathbf{L}$};
+\node[text=treeink] (n132) at (3.33112,0.88779) {$P_{20}$};
+\node[text=treeink] (n130) at (3.26802,1.02926) {$P_{14}$};
+\node[text=leafgray] (n144) at (3.41517,0.32183) {$\mathbf{B}$};
+\node[text=leafteal] (n145) at (3.50975,0.32183) {$\mathbf{L}$};
+\node[text=treeink] (n143) at (3.45716,0.46332) {$P_{11}$};
+\node[text=leafteal] (n146) at (3.60432,0.46332) {$\mathbf{L}$};
+\node[text=treeink] (n142) at (3.52026,0.60479) {$P_{17}$};
+\node[text=leafteal] (n147) at (3.66734,0.60479) {$\mathbf{L}$};
+\node[text=treeink] (n141) at (3.52026,0.74627) {$P_{20}$};
+\node[text=leafteal] (n148) at (3.66734,0.74627) {$\mathbf{L}$};
+\node[text=treeink] (n140) at (3.55174,0.88779) {$P_{15}$};
+\node[text=leafgray] (n152) at (3.75140,0.46332) {$\mathbf{B}$};
+\node[text=leafteal] (n153) at (3.84598,0.46332) {$\mathbf{L}$};
+\node[text=treeink] (n151) at (3.81450,0.60479) {$P_{11}$};
+\node[text=leafteal] (n154) at (3.96158,0.60479) {$\mathbf{L}$};
+\node[text=treeink] (n150) at (3.81450,0.74627) {$P_{17}$};
+\node[text=leafteal] (n155) at (3.96158,0.74627) {$\mathbf{L}$};
+\node[text=treeink] (n149) at (3.81450,0.88779) {$P_{20}$};
+\node[text=treeink] (n139) at (3.55174,1.02926) {$P_{14}$};
+\node[text=treeink] (n129) at (3.26802,1.17074) {$P_{19}$};
+\node[text=treeink] (n115) at (2.84773,1.31226) {$P_{16}$};
+\node[text=treeink] (n41) at (2.10166,1.45373) {$P_{10}$};
+\node[text=leafteal] (n159) at (3.84598,1.02926) {$\mathbf{L}$};
+\node[text=leafgray] (n166) at (3.87752,0.18035) {$\mathbf{B}$};
+\node[text=leafteal] (n167) at (3.97210,0.18035) {$\mathbf{L}$};
+\node[text=treeink] (n165) at (3.93003,0.32183) {$P_{18}$};
+\node[text=leafteal] (n168) at (4.07719,0.32183) {$\mathbf{L}$};
+\node[text=treeink] (n164) at (4.06667,0.46332) {$P_{17}$};
+\node[text=leafgray] (n171) at (4.19280,0.18035) {$\mathbf{B}$};
+\node[text=leafteal] (n172) at (4.28737,0.18035) {$\mathbf{L}$};
+\node[text=treeink] (n170) at (4.24530,0.32183) {$P_{17}$};
+\node[text=leafteal] (n173) at (4.39246,0.32183) {$\mathbf{L}$};
+\node[text=treeink] (n169) at (4.26634,0.46332) {$P_{18}$};
+\node[text=treeink] (n163) at (4.10874,0.60479) {$P_{16}$};
+\node[text=leafteal] (n174) at (4.25582,0.60479) {$\mathbf{L}$};
+\node[text=treeink] (n162) at (4.10874,0.74627) {$P_{15}$};
+\node[text=leafteal] (n175) at (4.25582,0.74627) {$\mathbf{L}$};
+\node[text=treeink] (n161) at (4.10874,0.88779) {$P_{14}$};
+\node[text=leafteal] (n176) at (4.25582,0.88779) {$\mathbf{L}$};
+\node[text=treeink] (n160) at (4.10874,1.02926) {$P_{13}$};
+\node[text=treeink] (n158) at (3.84598,1.17074) {$P_{12}$};
+\node[text=leafteal] (n177) at (3.99313,1.17074) {$\mathbf{L}$};
+\node[text=treeink] (n157) at (3.84598,1.31226) {$P_{10}$};
+\node[text=leafteal] (n178) at (3.99313,1.31226) {$\mathbf{L}$};
+\node[text=treeink] (n156) at (3.84598,1.45373) {$P_{21}$};
+\node[text=treeink] (n40) at (2.10166,1.59521) {$P_{9}$};
+\node[text=leafteal] (n179) at (2.21726,1.59521) {$\mathbf{L}$};
+\node[text=treeink] (n39) at (2.10166,1.73668) {$P_{7}$};
+\node[text=treeink] (n9) at (1.92303,1.87820) {$P_{6}$};
+\node[text=leafteal] (n180) at (2.03856,1.87820) {$\mathbf{L}$};
+\node[text=treeink] (n8) at (1.92303,2.01967) {$P_{5}$};
+\node[text=rootpurple] (n0) at (1.83897,2.16115) {$P_{1}$};
+\draw[trueedge] (n0.south) -- (n1.north);
+\draw[trueedge] (n1.south) -- (n2.north);
+\draw[falseedge] (n1.south) -- (n3.north);
+\draw[trueedge] (n3.south) -- (n4.north);
+\draw[falseedge] (n3.south) -- (n5.north);
+\draw[trueedge] (n5.south) -- (n6.north);
+\draw[falseedge] (n5.south) -- (n7.north);
+\draw[falseedge] (n0.south) -- (n8.north);
+\draw[trueedge] (n8.south) -- (n9.north);
+\draw[trueedge] (n9.south) -- (n10.north);
+\draw[trueedge] (n10.south) -- (n11.north);
+\draw[trueedge] (n11.south) -- (n12.north);
+\draw[falseedge] (n11.south) -- (n13.north);
+\draw[trueedge] (n13.south) -- (n14.north);
+\draw[trueedge] (n14.south) -- (n15.north);
+\draw[trueedge] (n15.south) -- (n16.north);
+\draw[trueedge] (n16.south) -- (n17.north);
+\draw[falseedge] (n16.south) -- (n18.north);
+\draw[trueedge] (n18.south) -- (n19.north);
+\draw[trueedge] (n19.south) -- (n20.north);
+\draw[trueedge] (n20.south) -- (n21.north);
+\draw[trueedge] (n21.south) -- (n22.north);
+\draw[trueedge] (n22.south) -- (n23.north);
+\draw[falseedge] (n22.south) -- (n24.north);
+\draw[falseedge] (n21.south) -- (n25.north);
+\draw[trueedge] (n25.south) -- (n26.north);
+\draw[trueedge] (n26.south) -- (n27.north);
+\draw[falseedge] (n26.south) -- (n28.north);
+\draw[falseedge] (n25.south) -- (n29.north);
+\draw[falseedge] (n20.south) -- (n30.north);
+\draw[falseedge] (n19.south) -- (n31.north);
+\draw[trueedge] (n31.south) -- (n32.north);
+\draw[falseedge] (n31.south) -- (n33.north);
+\draw[falseedge] (n18.south) -- (n34.north);
+\draw[falseedge] (n15.south) -- (n35.north);
+\draw[falseedge] (n14.south) -- (n36.north);
+\draw[falseedge] (n13.south) -- (n37.north);
+\draw[falseedge] (n10.south) -- (n38.north);
+\draw[falseedge] (n9.south) -- (n39.north);
+\draw[trueedge] (n39.south) -- (n40.north);
+\draw[trueedge] (n40.south) -- (n41.north);
+\draw[trueedge] (n41.south) -- (n42.north);
+\draw[trueedge] (n42.south) -- (n43.north);
+\draw[trueedge] (n43.south) -- (n44.north);
+\draw[trueedge] (n44.south) -- (n45.north);
+\draw[trueedge] (n45.south) -- (n46.north);
+\draw[trueedge] (n46.south) -- (n47.north);
+\draw[falseedge] (n46.south) -- (n48.north);
+\draw[falseedge] (n45.south) -- (n49.north);
+\draw[falseedge] (n44.south) -- (n50.north);
+\draw[falseedge] (n43.south) -- (n51.north);
+\draw[trueedge] (n51.south) -- (n52.north);
+\draw[trueedge] (n52.south) -- (n53.north);
+\draw[trueedge] (n53.south) -- (n54.north);
+\draw[falseedge] (n53.south) -- (n55.north);
+\draw[trueedge] (n55.south) -- (n56.north);
+\draw[trueedge] (n56.south) -- (n57.north);
+\draw[falseedge] (n56.south) -- (n58.north);
+\draw[trueedge] (n58.south) -- (n59.north);
+\draw[falseedge] (n58.south) -- (n60.north);
+\draw[falseedge] (n55.south) -- (n61.north);
+\draw[trueedge] (n61.south) -- (n62.north);
+\draw[falseedge] (n61.south) -- (n63.north);
+\draw[trueedge] (n63.south) -- (n64.north);
+\draw[falseedge] (n63.south) -- (n65.north);
+\draw[falseedge] (n52.south) -- (n66.north);
+\draw[falseedge] (n51.south) -- (n67.north);
+\draw[trueedge] (n67.south) -- (n68.north);
+\draw[trueedge] (n68.south) -- (n69.north);
+\draw[falseedge] (n68.south) -- (n70.north);
+\draw[trueedge] (n70.south) -- (n71.north);
+\draw[falseedge] (n70.south) -- (n72.north);
+\draw[trueedge] (n72.south) -- (n73.north);
+\draw[falseedge] (n72.south) -- (n74.north);
+\draw[falseedge] (n67.south) -- (n75.north);
+\draw[falseedge] (n42.south) -- (n76.north);
+\draw[trueedge] (n76.south) -- (n77.north);
+\draw[trueedge] (n77.south) -- (n78.north);
+\draw[trueedge] (n78.south) -- (n79.north);
+\draw[trueedge] (n79.south) -- (n80.north);
+\draw[falseedge] (n79.south) -- (n81.north);
+\draw[falseedge] (n78.south) -- (n82.north);
+\draw[falseedge] (n77.south) -- (n83.north);
+\draw[falseedge] (n76.south) -- (n84.north);
+\draw[trueedge] (n84.south) -- (n85.north);
+\draw[trueedge] (n85.south) -- (n86.north);
+\draw[trueedge] (n86.south) -- (n87.north);
+\draw[trueedge] (n87.south) -- (n88.north);
+\draw[falseedge] (n87.south) -- (n89.north);
+\draw[trueedge] (n89.south) -- (n90.north);
+\draw[falseedge] (n89.south) -- (n91.north);
+\draw[trueedge] (n91.south) -- (n92.north);
+\draw[falseedge] (n91.south) -- (n93.north);
+\draw[falseedge] (n86.south) -- (n94.north);
+\draw[trueedge] (n94.south) -- (n95.north);
+\draw[falseedge] (n94.south) -- (n96.north);
+\draw[trueedge] (n96.south) -- (n97.north);
+\draw[trueedge] (n97.south) -- (n98.north);
+\draw[falseedge] (n97.south) -- (n99.north);
+\draw[falseedge] (n96.south) -- (n100.north);
+\draw[falseedge] (n85.south) -- (n101.north);
+\draw[trueedge] (n101.south) -- (n102.north);
+\draw[falseedge] (n101.south) -- (n103.north);
+\draw[trueedge] (n103.south) -- (n104.north);
+\draw[falseedge] (n103.south) -- (n105.north);
+\draw[falseedge] (n84.south) -- (n106.north);
+\draw[trueedge] (n106.south) -- (n107.north);
+\draw[trueedge] (n107.south) -- (n108.north);
+\draw[trueedge] (n108.south) -- (n109.north);
+\draw[falseedge] (n108.south) -- (n110.north);
+\draw[falseedge] (n107.south) -- (n111.north);
+\draw[falseedge] (n106.south) -- (n112.north);
+\draw[trueedge] (n112.south) -- (n113.north);
+\draw[falseedge] (n112.south) -- (n114.north);
+\draw[falseedge] (n41.south) -- (n115.north);
+\draw[trueedge] (n115.south) -- (n116.north);
+\draw[trueedge] (n116.south) -- (n117.north);
+\draw[falseedge] (n116.south) -- (n118.north);
+\draw[trueedge] (n118.south) -- (n119.north);
+\draw[falseedge] (n118.south) -- (n120.north);
+\draw[trueedge] (n120.south) -- (n121.north);
+\draw[trueedge] (n121.south) -- (n122.north);
+\draw[trueedge] (n122.south) -- (n123.north);
+\draw[trueedge] (n123.south) -- (n124.north);
+\draw[falseedge] (n123.south) -- (n125.north);
+\draw[falseedge] (n122.south) -- (n126.north);
+\draw[falseedge] (n121.south) -- (n127.north);
+\draw[falseedge] (n120.south) -- (n128.north);
+\draw[falseedge] (n115.south) -- (n129.north);
+\draw[trueedge] (n129.south) -- (n130.north);
+\draw[trueedge] (n130.south) -- (n131.north);
+\draw[falseedge] (n130.south) -- (n132.north);
+\draw[trueedge] (n132.south) -- (n133.north);
+\draw[trueedge] (n133.south) -- (n134.north);
+\draw[trueedge] (n134.south) -- (n135.north);
+\draw[falseedge] (n134.south) -- (n136.north);
+\draw[falseedge] (n133.south) -- (n137.north);
+\draw[falseedge] (n132.south) -- (n138.north);
+\draw[falseedge] (n129.south) -- (n139.north);
+\draw[trueedge] (n139.south) -- (n140.north);
+\draw[trueedge] (n140.south) -- (n141.north);
+\draw[trueedge] (n141.south) -- (n142.north);
+\draw[trueedge] (n142.south) -- (n143.north);
+\draw[trueedge] (n143.south) -- (n144.north);
+\draw[falseedge] (n143.south) -- (n145.north);
+\draw[falseedge] (n142.south) -- (n146.north);
+\draw[falseedge] (n141.south) -- (n147.north);
+\draw[falseedge] (n140.south) -- (n148.north);
+\draw[falseedge] (n139.south) -- (n149.north);
+\draw[trueedge] (n149.south) -- (n150.north);
+\draw[trueedge] (n150.south) -- (n151.north);
+\draw[trueedge] (n151.south) -- (n152.north);
+\draw[falseedge] (n151.south) -- (n153.north);
+\draw[falseedge] (n150.south) -- (n154.north);
+\draw[falseedge] (n149.south) -- (n155.north);
+\draw[falseedge] (n40.south) -- (n156.north);
+\draw[trueedge] (n156.south) -- (n157.north);
+\draw[trueedge] (n157.south) -- (n158.north);
+\draw[trueedge] (n158.south) -- (n159.north);
+\draw[falseedge] (n158.south) -- (n160.north);
+\draw[trueedge] (n160.south) -- (n161.north);
+\draw[trueedge] (n161.south) -- (n162.north);
+\draw[trueedge] (n162.south) -- (n163.north);
+\draw[trueedge] (n163.south) -- (n164.north);
+\draw[trueedge] (n164.south) -- (n165.north);
+\draw[trueedge] (n165.south) -- (n166.north);
+\draw[falseedge] (n165.south) -- (n167.north);
+\draw[falseedge] (n164.south) -- (n168.north);
+\draw[falseedge] (n163.south) -- (n169.north);
+\draw[trueedge] (n169.south) -- (n170.north);
+\draw[trueedge] (n170.south) -- (n171.north);
+\draw[falseedge] (n170.south) -- (n172.north);
+\draw[falseedge] (n169.south) -- (n173.north);
+\draw[falseedge] (n162.south) -- (n174.north);
+\draw[falseedge] (n161.south) -- (n175.north);
+\draw[falseedge] (n160.south) -- (n176.north);
+\draw[falseedge] (n157.south) -- (n177.north);
+\draw[falseedge] (n156.south) -- (n178.north);
+\draw[falseedge] (n39.south) -- (n179.north);
+\draw[falseedge] (n8.south) -- (n180.north);
+\end{tikzpicture}
+\end{minipage}\par\smallskip
+{\footnotesize\textcolor{treeblue}{Solid: true}\quad\textcolor{treeorange}{Dashed: false}\quad $\mathbf B$: background\quad $\mathbf L$: lesion. NaN follows false.}
+\end{minipage}}}
+\captionsetup{type=figure}
+\caption{\textbf{Both complete binary trees, with no collapsed branches.} The labels give each procedure's patient-grouped score; these separately selected all-patient refits have no additional held-out score. Repeated $P_j$ labels denote the same predicate at distinct positions. Every test and terminal decision is shown. The exact predicates are listed on page~2. Training weights and cutoff searches differ between procedures, so the accuracy gain is not attributed to tree size alone.
+}
+\label{fig:tree}
+\end{minipage}}
+\vskip 0.06in
+]
+\printAffiliationsAndNotice{}
+\hypersetup{pdftitle={Compact Decision Programs over Frozen Neural Features for Lesion Segmentation},pdfsubject={Named-author research white paper}}
+\section{Accuracy and Complete Decision Trees}
+We pool each patient's scan counts, calculate $D_g=2\mathrm{TP}_g/(2\mathrm{TP}_g+\mathrm{FP}_g+\mathrm{FN}_g)$, and average over patients. The current procedure improves 28 patients, ties one, and lowers three versus the fixed mask: mean gain $0.031$, with descriptive 95\% patient-bootstrap interval $[0.010,0.052]$ (10,000 paired-patient resamples of saved predictions; unadjusted for repeated selection).
+
+\begin{table}[h]
+\caption{Cross-validated procedure scores and sizes of separately selected all-patient refits. The pictured trees have no additional held-out score. Storage excludes the CNN.}
+\label{tab:performance}
+\centering\small
+\begin{tabular}{lrrr}
+\toprule
+Procedure & Dice & Tree nodes & Storage\\
+\midrule
+Fixed CNN mask & 0.734 & --- & ---\\
+Earlier XGBoost & 0.758 & 21 & $\sim$250 B\\
+Current XGBoost & \textbf{0.765} & 181 & $\sim$770 B\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The $0.007$ gain over the earlier procedure accompanies larger final decision logic (Fig.~\ref{fig:tree}). Fresh all-patient selection chooses depth~3, 16 rounds and FP32 cutoff~0.325. Its 32 source trees contain 480 nodes; conversion merges identical continuations into 63 shared nodes and 768 compact bytes in about half a second. The complete expanded tree has 90 tests and 91 terminal nodes. Construction checks pass; optional independent exhaustive qualification was not run. Native XGBoost~3.4.1 and C++23/CUDA complete evaluation and refitting in about 12 minutes after feature preparation.
+
+
+\clearpage
+\section{Patient-Grouped Learning}
+We combine frozen LesionLocator features \citep{rokuss2025} with XGBoost \citep{chen2016}. RIDER Lung CT version~3 \citep{riderdata,zhao2024} supplies 32 patients: 30 repeat pairs and two single scans. Independent spreadsheet locations define an $80^3$ grid at 2-mm spacing. Two intended acquisitions lack usable location mapping and are withheld without contour-based correction. Missed foreground outside the region counts as false negatives; one patient's zero score is retained.
+
+Each voxel has 54 inputs: 20 CT/location features, the pretrained mask, foreground probability, and 32 decoder activations. Probability uses the released five-model/eight-view ensemble; activations use fold zero's unmirrored pass. No neural weights are fitted locally. Unavailable continuous neural support is zero-filled.
+
+Five outer folds hold out patients; five inner folds select the model and decision rule. Repeat scans always stay together. Eight weighted-cross-entropy candidates cross depths $\{1,2,3,5\}$ with $\{16,64\}$ rounds ($\eta=0.1$, $L_2=1$, 128 bins). Rules include argmax and 161 FP32 probability cutoffs. A second XGBoost stage offers four combiners, trained on patient-excluded predictions using three further folds.
+
+Fitting retains all foreground and samples background at stride~32. The current procedure weights retained class-$c$ rows from patient $g$ by
+\begin{equation}
+ w_{gc}=\frac{n}{G}\frac{N_{gc}}{N_g n_{gc}},
+\end{equation}
+where $G,n$ count fitting patients and retained rows, and $N_g,N_{gc},n_{gc}$ are full patient, full class, and retained class counts. This preserves patient prevalence with equal patient mass. The earlier procedure uses global inverse-retention weights and 19 cutoffs. Within outer evaluation, selection and fitting weights exclude held-out patients.
+
+
+\newpage
+\section{Reading the Complete Trees}
+Each solid branch means the test is true; each dashed branch means false. Terminal $B$ and $L$ denote background and lesion. Repeated $P_j$ labels identify the same test at different positions, not a collapsed branch.\par\smallskip
+Here $x$ is normalized CT intensity; $u,s$ are local mean (2-mm radius) and standard deviation (4-mm radius); $v$ is intensity at the supplied point; $m,p$ are CNN mask and foreground probability; $a_k$ is decoder activation $k$.\par\smallskip
+The constants below round-trip to stored FP32 thresholds. NaN follows the dashed branch. The node labels and line styles preserve meaning independently of color.\par
+\smallskip{\fontsize{7}{8.5}\selectfont
+\textbf{Current predicates}\par\smallskip
+$P_{1}:\;m<1$\quad $P_{2}:\;p<0.0192318726$\par
+$P_{3}:\;x<-0.537887037$\quad $P_{4}:\;v<0.147721395$\par
+$P_{5}:\;x<-0.266500354$\quad $P_{6}:\;a_{28}<-0.0118003832$\par
+$P_{7}:\;x<-0.419816613$\quad $P_{8}:\;a_{28}<-0.012050854$\par
+$P_{9}:\;x<-1.07635784$\quad $P_{10}:\;u<-0.660179913$\par
+$P_{11}:\;x<-1.4028399$\quad $P_{12}:\;a_{21}<-0.0135068875$\par
+$P_{13}:\;s<1.26291883$\quad $P_{14}:\;a_{21}<-0.0102521647$\par
+$P_{15}:\;v<0.207296506$\quad $P_{16}:\;a_{21}<-0.0117333885$\par
+$P_{17}:\;s<1.18441689$\quad $P_{18}:\;u<-0.969308496$\par
+$P_{19}:\;a_{22}<-0.0138405655$\quad $P_{20}:\;u<0.195440516$\par
+$P_{21}:\;x<-0.76002878$\par
+\textbf{Earlier thresholds}\par\smallskip
+$\tau_{1}=-0.407344371$\quad $\tau_{2}=-0.711924314$\par
+$\tau_{3}=-0.0117178345$\quad $\tau_{4}=-0.635912418$\par
+$\tau_{5}=-0.0102527272$\quad $\tau_{6}=-0.785341203$\par
+$\tau_{7}=-1.02144098$\par
+}
+
+\section{Scope and Availability}
+The cohort informed earlier development; nested grouping does not make repeated use confirmatory \citep{cawley2010}. External checkpoint training overlap remains unverified. Independent patient evaluation is needed. The complete trees expose both procedures\textquotesingle{} decision logic while retaining the upstream CNN. Code, models and paper: \href{https://github.com/mingusb/rider-lesion-segmentation}{\texttt{github.com/mingusb/rider-lesion-segmentation}}.
+
+\clearpage
+\begin{thebibliography}{5}
+\bibitem[Cawley \& Talbot(2010)]{cawley2010}
+Cawley, G. C. and Talbot, N. L. C.
+On over-fitting in model selection and subsequent selection bias in performance evaluation.
+\emph{Journal of Machine Learning Research}, 11:2079--2107, 2010.
+\url{https://www.jmlr.org/papers/v11/cawley10a.html}.
+
+\bibitem[Chen \& Guestrin(2016)]{chen2016}
+Chen, T. and Guestrin, C.
+XGBoost: A scalable tree boosting system.
+In \emph{Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining}, pp.~785--794, 2016.
+\doi{10.1145/2939672.2939785}.
+
+\bibitem[Rokuss et~al.(2025)]{rokuss2025}
+Rokuss, M., Kirchhoff, Y., Akbal, S., Kovacs, B., Roy, S., Ulrich, C., Wald, T., Rotkopf, L.~T., Schlemmer, H.-P., and Maier-Hein, K.
+LesionLocator: Zero-shot universal tumor segmentation and tracking in 3D whole-body imaging.
+In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, pp.~30872--30885, 2025.
+
+\bibitem[Zhao et~al.(2015)]{riderdata}
+Zhao, B., Schwartz, L.~H., Kris, M.~G., and Riely, G.~J.
+Coffee-break lung CT collection with scan images reconstructed at multiple imaging parameters.
+\emph{The Cancer Imaging Archive}, 2015. Dataset, version~3, updated June~25, 2024.
+\doi{10.7937/K9/TCIA.2015.U1X8A5NR}.
+
+\bibitem[Zhao et~al.(2024)]{zhao2024}
+Zhao, B., Dercle, L., Yang, H., Riely, G.~J., Kris, M.~G., and Schwartz, L.~H.
+Annotated test-retest dataset of lung cancer CT scan images reconstructed at multiple imaging parameters.
+\emph{Scientific Data}, 11:1259, 2024.
+\doi{10.1038/s41597-024-04085-3}.
+\end{thebibliography}
+\end{document}

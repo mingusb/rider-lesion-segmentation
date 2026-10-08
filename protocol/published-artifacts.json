@@ -1,0 +1,82 @@
+{
+  "paper/current-layout-adjustments.json": {
+    "bytes": 256,
+    "sha256": "a7333be48d1c5f705f3823fdf80f62d8b5bf3e02f4fa8c8f62aa8158281dceb9"
+  },
+  "paper/earlier-complete-tree.tex": {
+    "bytes": 3074,
+    "sha256": "07c7b4f1fb16953e07035bb97e2b8b58264cf2a1d646dd53426b9892fa5a39c4"
+  },
+  "paper/latest-complete-tree.tex": {
+    "bytes": 20758,
+    "sha256": "d59ab199c475fdca7458d2eae09258fd55422a697c3315fa297c84fb9ccb9c20"
+  },
+  "paper/layout_complete_tree.py": {
+    "bytes": 6490,
+    "sha256": "7694819060a36e7d0d2e50ab044ae5857b43574f4ce6f89fd53abbf848ecf593"
+  },
+  "paper/rider-neural-decision-programs.pdf": {
+    "bytes": 195340,
+    "sha256": "7760c1efe028e11d1d0a0ed0c7e8354fcfc35033d4a8bd71735752eac60d8283"
+  },
+  "paper/rider-neural-decision-programs.tex": {
+    "bytes": 104338,
+    "sha256": "f7a8f2486cd82c80812706d3c18f29fe7e802c8cd690fca51c09c49e7187d786"
+  },
+  "models/current/binary-tree.json": {
+    "bytes": 53175,
+    "sha256": "852827da4686c51e70ff29639741169b643e4a132ab561031869f050d3203914"
+  },
+  "models/current/conversion-receipt.json": {
+    "bytes": 15404,
+    "sha256": "016f7fca0463b634337cbc2de1bb9a789bb169d8118f2e407ee7d10e6541b1eb"
+  },
+  "models/current/conversion-summary.json": {
+    "bytes": 1641,
+    "sha256": "ec85a27c78f54b1f2dfa4ed1d1b9ac382300c1f42692fad9bdc735dc34f9f174"
+  },
+  "models/current/decision-program.canonical.bin": {
+    "bytes": 1072,
+    "sha256": "4827327dcb382d29dc0dfd00d5b050d24f0c9a55d9892ec59864892ccf5f8219"
+  },
+  "models/current/decision-program.compact.bin": {
+    "bytes": 768,
+    "sha256": "a71ff3f637d4ce2660f4967ad29f012b563a3075281bb737a7eb421de367e2d9"
+  },
+  "models/current/model.json": {
+    "bytes": 40310,
+    "sha256": "5017f1ff932f0adc2fd3c10b84c8c59bfcb1931fb4b0eb4db17252e095c4c0bd"
+  },
+  "models/earlier/binary-tree.json": {
+    "bytes": 5430,
+    "sha256": "fcbaedc3947760c9684fefe7f59a29024269009df821c36fa12db9245473a662"
+  },
+  "models/earlier/conversion-receipt.json": {
+    "bytes": 15346,
+    "sha256": "b2ac66f4dd0075a8afe04e36dc1aa971213437132d0d5294b0354fc72b1f2295"
+  },
+  "models/earlier/conversion-summary.json": {
+    "bytes": 1637,
+    "sha256": "b1e3a3b55257a5153b08b6dc7bf493fcd3d12de11fb423eba42f623be84ec5d2"
+  },
+  "models/earlier/decision-program.canonical.bin": {
+    "bytes": 240,
+    "sha256": "3603de20647a54d76a3d990f5add489fc27dcca651da2d195416163a1a6e5468"
+  },
+  "models/earlier/decision-program.compact.bin": {
+    "bytes": 248,
+    "sha256": "13581ccb76821d98748df516a98caba7ca2cc9b0274ad28faf2d94a28394ebe4"
+  },
+  "models/earlier/model.json": {
+    "bytes": 25088,
+    "sha256": "52690dd3eb5ff8944b20004b144086a165c31d9ca403c32356b862225236fdd3"
+  },
+  "results/earlier-study-summary.json": {
+    "bytes": 1964,
+    "sha256": "cf3a4a8245575fcf749d00a699516a04652ce9826ff7db306bc97cf350b614ea"
+  },
+  "results/latest-study-summary.json": {
+    "bytes": 8970,
+    "sha256": "ff245c031ca5c25ce31ee60bc84fcb5778288ab5c4fc866d60f0e6d0bc6c6ab2"
+  }
+}

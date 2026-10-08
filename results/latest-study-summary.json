@@ -1,0 +1,255 @@
+{
+  "format": "rider-latest-study-aggregate-summary-1",
+  "complete": true,
+  "scope": "Aggregate evidence only; no clinical arrays or per-patient records. Cross-validation evaluates a procedure; the all-patient model has no new held-out score.",
+  "cohort": {
+    "patients": 32,
+    "scans": 62,
+    "ROI_rows": 31744000,
+    "outside_ROI_false_negatives_preserved": true,
+    "metric": "Dice from pooled repeat-scan counts, then equal mean over patients."
+  },
+  "protocol": {
+    "features": 54,
+    "outer_folds": 5,
+    "inner_folds": 5,
+    "OOF_folds": 3,
+    "base_candidates": 8,
+    "meta_candidates": 4,
+    "native_probability_cutoffs": 161,
+    "native_argmax_also_eligible": true,
+    "fit_group_weights": "equal_patient",
+    "fit_sampling_weights": "inverse_retention",
+    "include_all_fit_positives": true,
+    "class_balancing": false,
+    "hard_negative_sampling_used": false,
+    "outer_results_used_for_final_selection": false,
+    "resolved_plan_matches_registration": true,
+    "resolved_default_additions": {
+      "final_deployment.maximum_seconds": 0,
+      "final_deployment.qualification_mode": "none"
+    }
+  },
+  "metrics": [
+    {
+      "method": "native_baseline",
+      "macro_patient_Dice": 0.7649115662437468,
+      "patients": 32,
+      "scans": 62,
+      "pooled_confusion_counts": {
+        "TP": 143566,
+        "FP": 35210,
+        "FN_in_ROI": 14789,
+        "FN_outside_ROI": 356,
+        "TN_in_ROI": 31550435
+      }
+    },
+    {
+      "method": "nonlinear_combiner",
+      "macro_patient_Dice": 0.7567569781524137,
+      "patients": 32,
+      "scans": 62,
+      "pooled_confusion_counts": {
+        "TP": 143980,
+        "FP": 38086,
+        "FN_in_ROI": 14375,
+        "FN_outside_ROI": 356,
+        "TN_in_ROI": 31547559
+      }
+    },
+    {
+      "method": "inner_selected",
+      "macro_patient_Dice": 0.7642680710826811,
+      "patients": 32,
+      "scans": 62,
+      "pooled_confusion_counts": {
+        "TP": 143557,
+        "FP": 34878,
+        "FN_in_ROI": 14798,
+        "FN_outside_ROI": 356,
+        "TN_in_ROI": 31550767
+      }
+    },
+    {
+      "method": "reference_default",
+      "macro_patient_Dice": 0.7343239168343713,
+      "patients": 32,
+      "scans": 62,
+      "pooled_confusion_counts": {
+        "TP": 148059,
+        "FP": 50697,
+        "FN_in_ROI": 10296,
+        "FN_outside_ROI": 356,
+        "TN_in_ROI": 31534948
+      }
+    },
+    {
+      "method": "reference_inner_selected",
+      "macro_patient_Dice": 0.7274604262795793,
+      "patients": 32,
+      "scans": 62,
+      "pooled_confusion_counts": {
+        "TP": 136782,
+        "FP": 43328,
+        "FN_in_ROI": 21573,
+        "FN_outside_ROI": 356,
+        "TN_in_ROI": 31542317
+      }
+    }
+  ],
+  "native_vs_fixed_CNN": {
+    "mean_patient_Dice_difference": 0.030587649409375632,
+    "better_patients": 28,
+    "equal_patients": 1,
+    "worse_patients": 3,
+    "descriptive_paired_patient_bootstrap_95pct_CI": [
+      0.010352212451963744,
+      0.051503581630512094
+    ],
+    "bootstrap": {
+      "replicates": 10000,
+      "seed": 20261007,
+      "generator": "numpy.random.default_rng PCG64",
+      "sampling": "32 patient indices with replacement per draw; fixed paired predictions",
+      "quantile": "numpy.quantile linear, probabilities .025/.975",
+      "interpretation": "Descriptive conditional interval; no model refits, no correction for cohort-driven feature/procedure selection, no new confirmatory cohort"
+    }
+  },
+  "anchor_comparison": {
+    "all_reference_counts_identical": true,
+    "native_patient_records_identical": 31,
+    "native_patient_records_changed": 1,
+    "native_total_TP_change": 1,
+    "native_total_FN_change": -1,
+    "native_mean_Dice_change": 3.3362764346733798e-06
+  },
+  "outer_selected_family_counts": {
+    "nonlinear_combiner": 2,
+    "native_baseline": 3
+  },
+  "runtime": {
+    "completed_native_fits": 1277,
+    "outer_evaluation_fits": 1065,
+    "final_selection_and_refit_fits": 212,
+    "total_seconds": 726.061914655,
+    "outer_native_evaluation_seconds": 591.773254342,
+    "final_selection_and_refit_seconds": 133.693535912,
+    "neural_preparation_included": false
+  },
+  "final_model": {
+    "family": "native_baseline",
+    "all_patient_refit": true,
+    "FIT_patients": 32,
+    "FIT_rows": 1144201,
+    "heldout_accuracy_claim": false,
+    "bank_index_zero_based": 4,
+    "hyperparameters": {
+      "alpha": 0.0,
+      "eta": 0.1,
+      "gamma": 0.0,
+      "lambda": 1.0,
+      "max_bin": 128,
+      "max_depth": 3,
+      "min_child_weight": 1.0,
+      "rounds": 16,
+      "seed": 20261006
+    },
+    "native_prediction_rule": {
+      "comparison": ">=",
+      "kind": "positive_probability_threshold",
+      "operation": "ResidentTrainer::predict_probabilities; native multi:softprob full-round view",
+      "probability_class": 1,
+      "rounds": "all",
+      "threshold": 0.32499998807907104,
+      "threshold_precision": "FP32"
+    },
+    "cutoff_FP32_bits": 1051092582,
+    "source_trees": 32,
+    "source_nodes": 480,
+    "source_json_bytes": 40310,
+    "source_sha256": "5017f1ff932f0adc2fd3c10b84c8c59bfcb1931fb4b0eb4db17252e095c4c0bd"
+  },
+  "conversion": {
+    "canonical_sha256": "4827327dcb382d29dc0dfd00d5b050d24f0c9a55d9892ec59864892ccf5f8219",
+    "source_sha256": "5017f1ff932f0adc2fd3c10b84c8c59bfcb1931fb4b0eb4db17252e095c4c0bd",
+    "compact_sha256": "a71ff3f637d4ce2660f4967ad29f012b563a3075281bb737a7eb421de367e2d9",
+    "nodes": 63,
+    "classes": 2,
+    "raw_features": 54,
+    "canonical_bytes": 1072,
+    "compact_bytes": 768,
+    "source_nodes": 480,
+    "source_trees": 32,
+    "source_branch_predicates": 31,
+    "source_unique_thresholds": 31,
+    "construction_seconds": 0.552525462,
+    "qualification_seconds": 0.0,
+    "conversion_and_qualification_seconds": 0.552598179,
+    "native_prediction_rule": {
+      "comparison": ">=",
+      "kind": "positive_probability_threshold",
+      "operation": "ResidentTrainer::predict_probabilities; native multi:softprob full-round view",
+      "probability_class": 1,
+      "rounds": "all",
+      "threshold": 0.32499998807907104,
+      "threshold_precision": "FP32"
+    },
+    "qualification_mode": "none",
+    "qualification_performed": false,
+    "qualification_complete": false,
+    "accepted_native_class_root": false,
+    "all_finite_FP32_and_NaN_cells_verified": false,
+    "native_class_mismatches": null,
+    "artifact_qualification": "unqualified_conversion_artifact",
+    "builtin_converter_checks_performed": true,
+    "scope": "Complete maintained converter construction with builtin checks; independent exhaustive native-class qualification not requested",
+    "input_scope": "declared input feature vectors; upstream feature generation is outside this conversion"
+  },
+  "ordinary_tree": {
+    "nodes": 181,
+    "leaves": 91,
+    "internal_nodes": 90,
+    "shared_nodes": 63,
+    "maximum_decision_depth": 15,
+    "source_canonical_sha256": "4827327dcb382d29dc0dfd00d5b050d24f0c9a55d9892ec59864892ccf5f8219"
+  },
+  "source_pins": {
+    "study": {
+      "file": "study/result.json",
+      "sha256": "494d93c94b4fb2fff0841726cee06d35dc3f723eefbd54c6e047a8f23db68a67"
+    },
+    "plan": {
+      "file": "latest54-dense161-final-plan.json",
+      "sha256": "b312fc82eeb9c81ef2024802099afe3a68638560f7fd80936a83753964664d27"
+    },
+    "native_pipeline": {
+      "file": "study/final-native-pipeline.json",
+      "sha256": "765f26b39d8abf911e5a3126d174c8db7bcff0b7625b1b5e50b364585b6a3ff9"
+    },
+    "native_model": {
+      "file": "study/final-native-base-5.json",
+      "sha256": "5017f1ff932f0adc2fd3c10b84c8c59bfcb1931fb4b0eb4db17252e095c4c0bd"
+    },
+    "conversion_receipt": {
+      "file": "converted-final/replay-selected.receipt.json",
+      "sha256": "016f7fca0463b634337cbc2de1bb9a789bb169d8118f2e407ee7d10e6541b1eb"
+    },
+    "ordinary_tree": {
+      "file": "converted-final/binary-tree.json",
+      "sha256": "852827da4686c51e70ff29639741169b643e4a132ab561031869f050d3203914"
+    },
+    "paired_anchor": {
+      "file": "paired-anchor-study/result.json",
+      "sha256": "086a339fa1d6eed517bcc844640a3aea8e890e6bfce7fa42eb429a8991d92e8d"
+    }
+  },
+  "earlier_global_weight_procedure_comparison": {
+    "earlier_native_mean_patient_Dice": 0.7575268777458938,
+    "latest_native_mean_patient_Dice": 0.7649115662437468,
+    "difference_latest_minus_earlier": 0.007384688497853009,
+    "earlier_tree_nodes": 21,
+    "latest_tree_nodes": 181,
+    "scope": "Procedure point-estimate comparison on repeatedly studied cohort; weights and cutoff search differ. All-patient trees have no separate held-out score.",
+    "earlier_study_source_sha256": "761347e6972c08fcaa381eabf15cfde0c2cf91e6756cd920bf47bcb4b3d74fb3"
+  }
+}

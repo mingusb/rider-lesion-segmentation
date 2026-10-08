@@ -1,0 +1,36 @@
+{
+  "format": "rider-release-runtime-smoke-1",
+  "complete": true,
+  "CUDA_executed": true,
+  "clinical_rows_read": false,
+  "training_performed": false,
+  "rows": "10 synthetic rows per model,54 features; finite values and NaN",
+  "models": {
+    "earlier": {
+      "canonical_sha256": "3603de20647a54d76a3d990f5add489fc27dcca651da2d195416163a1a6e5468",
+      "compact_sha256": "13581ccb76821d98748df516a98caba7ca2cc9b0274ad28faf2d94a28394ebe4",
+      "inspection_complete": true,
+      "CUDA_graph_validation": true,
+      "synthetic_rows": 10,
+      "canonical_compact_class_mismatches": 0,
+      "class_counts": {
+        "0": 6,
+        "1": 4
+      }
+    },
+    "current": {
+      "canonical_sha256": "4827327dcb382d29dc0dfd00d5b050d24f0c9a55d9892ec59864892ccf5f8219",
+      "compact_sha256": "a71ff3f637d4ce2660f4967ad29f012b563a3075281bb737a7eb421de367e2d9",
+      "inspection_complete": true,
+      "CUDA_graph_validation": true,
+      "synthetic_rows": 10,
+      "canonical_compact_class_mismatches": 0,
+      "class_counts": {
+        "0": 6,
+        "1": 4
+      }
+    }
+  },
+  "seconds": 1.752964888997667,
+  "scope": "Staged source build successfully inspected saved models and matched canonical/compact class inference. This is not a new native-source equivalence proof or accuracy score."
+}

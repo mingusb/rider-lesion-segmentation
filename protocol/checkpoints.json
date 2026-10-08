@@ -1,0 +1,52 @@
+[
+  {
+    "archive_url": "https://zenodo.org/api/records/15174217/files/LesionLocatorModel.zip/content",
+    "archive_expected_md5": "1f9b8a64703346df9bcc532a0a32a07b",
+    "archive_member": "LesionLocatorCheckpoint/LesionLocatorSeg/point_optimized/fold_0/checkpoint_final.pth",
+    "member_sha256": "d2225370eb01cfd5aeb5276c185e0d5d5f5e0bb20e740a7fa80c7dc688b1b77a",
+    "member_crc32": "27bd0643",
+    "uncompressed_bytes": 819153046,
+    "compressed_bytes": 761779386,
+    "status": "verified"
+  },
+  {
+    "archive_url": "https://zenodo.org/api/records/15174217/files/LesionLocatorModel.zip/content",
+    "archive_expected_md5": "1f9b8a64703346df9bcc532a0a32a07b",
+    "archive_member": "LesionLocatorCheckpoint/LesionLocatorSeg/point_optimized/fold_1/checkpoint_final.pth",
+    "member_sha256": "b058e9740aff901face6de1f5345ef9118f9bd3d564d0b04968598d4d66b4791",
+    "member_crc32": "823b264c",
+    "uncompressed_bytes": 819153046,
+    "compressed_bytes": 762002445,
+    "status": "verified"
+  },
+  {
+    "archive_url": "https://zenodo.org/api/records/15174217/files/LesionLocatorModel.zip/content",
+    "archive_expected_md5": "1f9b8a64703346df9bcc532a0a32a07b",
+    "archive_member": "LesionLocatorCheckpoint/LesionLocatorSeg/point_optimized/fold_2/checkpoint_final.pth",
+    "member_sha256": "5bf70ca0710a23dd54326e3aa1ff2bfd393b58b3986aeb50bc58b724f2b8e2da",
+    "member_crc32": "ca3e1782",
+    "uncompressed_bytes": 819153046,
+    "compressed_bytes": 761862593,
+    "status": "verified"
+  },
+  {
+    "archive_url": "https://zenodo.org/api/records/15174217/files/LesionLocatorModel.zip/content",
+    "archive_expected_md5": "1f9b8a64703346df9bcc532a0a32a07b",
+    "archive_member": "LesionLocatorCheckpoint/LesionLocatorSeg/point_optimized/fold_3/checkpoint_final.pth",
+    "member_sha256": "640a54e927a692963fb0c7ead4d9bc0b90a88ab9b00dcc178215ff1df894ee05",
+    "member_crc32": "2f5bab94",
+    "uncompressed_bytes": 819153046,
+    "compressed_bytes": 761764165,
+    "status": "verified"
+  },
+  {
+    "archive_url": "https://zenodo.org/api/records/15174217/files/LesionLocatorModel.zip/content",
+    "archive_expected_md5": "1f9b8a64703346df9bcc532a0a32a07b",
+    "archive_member": "LesionLocatorCheckpoint/LesionLocatorSeg/point_optimized/fold_4/checkpoint_final.pth",
+    "member_sha256": "b3c80df14b16e9d0d231d4cda4c3c33f0926d183888a4e2cc8aafb5fe9bfbdcd",
+    "member_crc32": "c87a268f",
+    "uncompressed_bytes": 819153046,
+    "compressed_bytes": 761808516,
+    "status": "verified"
+  }
+]

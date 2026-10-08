@@ -1,0 +1,42 @@
+{
+  "complete": true,
+  "construction_complete": true,
+  "source_sha256": "52690dd3eb5ff8944b20004b144086a165c31d9ca403c32356b862225236fdd3",
+  "canonical_sha256": "3603de20647a54d76a3d990f5add489fc27dcca651da2d195416163a1a6e5468",
+  "compact_sha256": "13581ccb76821d98748df516a98caba7ca2cc9b0274ad28faf2d94a28394ebe4",
+  "source_trees": 32,
+  "source_nodes": 224,
+  "nodes": 11,
+  "classes": 2,
+  "raw_features": 54,
+  "canonical_bytes": 240,
+  "compact_bytes": 248,
+  "construction_seconds": 0.104120252,
+  "native_prediction_rule": {
+    "comparison": ">=",
+    "kind": "positive_probability_threshold",
+    "operation": "ResidentTrainer::predict_probabilities; native multi:softprob full-round view",
+    "probability_class": 1,
+    "rounds": "all",
+    "threshold": 0.3499999940395355,
+    "threshold_precision": "FP32"
+  },
+  "qualification_mode": "none",
+  "qualification_performed": false,
+  "qualification_complete": false,
+  "accepted_native_class_root": false,
+  "all_finite_FP32_and_NaN_cells_verified": false,
+  "native_class_mismatches": null,
+  "artifact_qualification": "unqualified_conversion_artifact",
+  "builtin_converter_checks_performed": true,
+  "scope": "Complete maintained converter construction with builtin checks; independent exhaustive native-class qualification not requested",
+  "input_scope": "declared input feature vectors; upstream feature generation is outside this conversion",
+  "ordinary_tree": {
+    "nodes": 21,
+    "leaves": 11,
+    "internal_nodes": 10,
+    "shared_nodes": 11,
+    "maximum_decision_depth": 8
+  },
+  "heldout_accuracy_claim": false
+}

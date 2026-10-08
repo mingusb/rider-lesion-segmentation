@@ -1,0 +1,11 @@
+if(NOT DEFINED DP_TEST_EXECUTABLE OR NOT DEFINED DP_TEST_ROOT)
+  message(FATAL_ERROR "Fixture executable and artifact root are required")
+endif()
+string(RANDOM LENGTH 16 ALPHABET 0123456789abcdef dp_fixture_id)
+set(dp_fixture_directory "${DP_TEST_ROOT}/${dp_fixture_id}")
+file(MAKE_DIRECTORY "${DP_TEST_ROOT}")
+execute_process(COMMAND "${DP_TEST_EXECUTABLE}" ${DP_TEST_ARGUMENT} "${dp_fixture_directory}"
+  RESULT_VARIABLE dp_result)
+if(NOT dp_result EQUAL 0)
+  message(FATAL_ERROR "Fixture failed (${dp_result}); retained artifacts: ${dp_fixture_directory}")
+endif()

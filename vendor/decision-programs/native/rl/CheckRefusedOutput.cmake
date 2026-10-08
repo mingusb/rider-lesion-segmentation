@@ -1,0 +1,27 @@
+# This reaches only argument/output validation, before CUDA initialization.
+if(NOT DEFINED DP_RL_TEST_EXECUTABLE OR NOT DEFINED DP_RL_TEST_ROOT)
+  message(FATAL_ERROR "RL test executable and test root are required")
+endif()
+string(RANDOM LENGTH 16 ALPHABET 0123456789abcdef dp_run_id)
+set(dp_output "${DP_RL_TEST_ROOT}/${dp_run_id}")
+file(MAKE_DIRECTORY "${dp_output}")
+set(dp_sentinel "existing-result-must-be-preserved\n")
+file(WRITE "${dp_output}/result.json" "${dp_sentinel}")
+file(SHA256 "${dp_output}/result.json" dp_before)
+execute_process(COMMAND "${DP_RL_TEST_EXECUTABLE}"
+  "${dp_output}/unused-model.json" "unused-sha" "${dp_output}/unused-library.so"
+  "${dp_output}" - 32 1200 1 4560780790824889414 100000 4096 32 32
+  RESULT_VARIABLE dp_result OUTPUT_VARIABLE dp_stdout ERROR_VARIABLE dp_stderr)
+if(dp_result EQUAL 0 OR NOT dp_stderr MATCHES "resident loop requires fresh output")
+  message(FATAL_ERROR "Existing RL output was not refused at the host guard: ${dp_result}: ${dp_stderr}")
+endif()
+file(SHA256 "${dp_output}/result.json" dp_after)
+file(READ "${dp_output}/result.json" dp_actual)
+if(NOT dp_before STREQUAL dp_after OR NOT dp_actual STREQUAL dp_sentinel)
+  message(FATAL_ERROR "Refused RL output reuse changed existing result bytes")
+endif()
+file(GLOB dp_files RELATIVE "${dp_output}" "${dp_output}/*")
+if(NOT dp_files STREQUAL "result.json")
+  message(FATAL_ERROR "Refused RL output reuse wrote extra files: ${dp_files}")
+endif()
+message(STATUS "RL output reuse refused; existing result bytes preserved; no CUDA initialized")

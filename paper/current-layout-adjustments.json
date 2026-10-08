@@ -1,0 +1,9 @@
+{
+  "scope": "Publication-only optical spacing for the complete current 181-node tree. Node labels, predicates, topology, vertical levels and edge routing are unchanged.",
+  "horizontal_points": {
+    "2": -3,
+    "4": -3,
+    "6": -2.5,
+    "7": -1
+  }
+}

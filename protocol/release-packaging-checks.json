@@ -1,0 +1,23 @@
+{
+  "format": "rider-release-packaging-checks-1",
+  "complete": true,
+  "scope": "release packaging and saved-model runtime smoke only; no new CNN or clinical training",
+  "host_tests_passed": 7,
+  "standalone_vendored_frontend_host_build": "passed GNU15.2 and CMake configure/build/help",
+  "completed_result_summary": "passed32patients62scans1277FITs; all scan/patient counts and macro values agree",
+  "original_CNN_numerical_AST": [
+    "physical_grid",
+    "roi_sample_grid",
+    "FrozenFeatureSegmenter"
+  ],
+  "original_CNN_numerical_AST_unchanged": true,
+  "core_source_hashes_verified": true,
+  "local_path_and_obvious_token_scan": "passed",
+  "excluded_payload_extension_scan": "passed",
+  "core_repository_modified": false,
+  "git_publication_performed": false,
+  "staged_CUDA_frontend_and_model_tools_build": "passed with explicit NVCC13.4.59 path; canonical/compact smoke qualified separately",
+  "saved_model_runtime_receipt": "model-runtime-smoke.json",
+  "reproduction_help": "passed",
+  "copyediting": "README and owned docs spacing corrected; numeric plans unchanged"
+}

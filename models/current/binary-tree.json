@@ -1,0 +1,1311 @@
+{
+  "format": "expanded-binary-decision-tree-1",
+  "complete": true,
+  "features": 54,
+  "classes": 2,
+  "nodes": 181,
+  "leaves": 91,
+  "internal_nodes": 90,
+  "shared_nodes": 63,
+  "reachable_shared_nodes": 63,
+  "unreachable_shared_node_ids": [],
+  "maximum_decision_depth": 15,
+  "comparison": "strict FP32 less-than; raw threshold bits and stored NaN direction preserved",
+  "construction": "Mechanical duplication of shared continuations; no model fitting or numerical prediction",
+  "input_scope": "declared finite FP32 feature vectors plus NaN; upstream feature generation is outside this conversion",
+  "source_canonical_sha256": "4827327dcb382d29dc0dfd00d5b050d24f0c9a55d9892ec59864892ccf5f8219",
+  "source_model_sha256": "5017f1ff932f0adc2fd3c10b84c8c59bfcb1931fb4b0eb4db17252e095c4c0bd",
+  "canonical_bytes": 1072,
+  "CPU_predictions_executed": false,
+  "CUDA_executed_by_exporter": false,
+  "CPU_structure_validated": true,
+  "new_source_equivalence_proved": false,
+  "independent_exhaustive_verification_performed": false,
+  "root": {
+    "id": 0,
+    "source_shared_id": 62,
+    "feature": 20,
+    "raw_threshold_bits": 1065353216,
+    "threshold": 1.0,
+    "threshold_text": "1",
+    "missing_goes_left": false,
+    "left": {
+      "id": 1,
+      "source_shared_id": 4,
+      "feature": 21,
+      "raw_threshold_bits": 1016957993,
+      "threshold": 0.019231872633099556,
+      "threshold_text": "0.0192318726",
+      "missing_goes_left": false,
+      "left": {
+        "id": 2,
+        "source_shared_id": 0,
+        "class": 0
+      },
+      "right": {
+        "id": 3,
+        "source_shared_id": 3,
+        "feature": 0,
+        "raw_threshold_bits": 3205083895,
+        "threshold": -0.5378870368003845,
+        "threshold_text": "-0.537887037",
+        "missing_goes_left": false,
+        "left": {
+          "id": 4,
+          "source_shared_id": 0,
+          "class": 0
+        },
+        "right": {
+          "id": 5,
+          "source_shared_id": 2,
+          "feature": 19,
+          "raw_threshold_bits": 1041712199,
+          "threshold": 0.14772139489650726,
+          "threshold_text": "0.147721395",
+          "missing_goes_left": false,
+          "left": {
+            "id": 6,
+            "source_shared_id": 1,
+            "class": 1
+          },
+          "right": {
+            "id": 7,
+            "source_shared_id": 0,
+            "class": 0
+          }
+        }
+      }
+    },
+    "right": {
+      "id": 8,
+      "source_shared_id": 61,
+      "feature": 0,
+      "raw_threshold_bits": 3196613308,
+      "threshold": -0.2665003538131714,
+      "threshold_text": "-0.266500354",
+      "missing_goes_left": false,
+      "left": {
+        "id": 9,
+        "source_shared_id": 60,
+        "feature": 50,
+        "raw_threshold_bits": 3158398565,
+        "threshold": -0.01180038321763277,
+        "threshold_text": "-0.0118003832",
+        "missing_goes_left": false,
+        "left": {
+          "id": 10,
+          "source_shared_id": 49,
+          "feature": 0,
+          "raw_threshold_bits": 3201757748,
+          "threshold": -0.41981661319732666,
+          "threshold_text": "-0.419816613",
+          "missing_goes_left": false,
+          "left": {
+            "id": 11,
+            "source_shared_id": 48,
+            "feature": 50,
+            "raw_threshold_bits": 3158667506,
+            "threshold": -0.012050854042172432,
+            "threshold_text": "-0.012050854",
+            "missing_goes_left": false,
+            "left": {
+              "id": 12,
+              "source_shared_id": 1,
+              "class": 1
+            },
+            "right": {
+              "id": 13,
+              "source_shared_id": 47,
+              "feature": 0,
+              "raw_threshold_bits": 3213477400,
+              "threshold": -1.0763578414916992,
+              "threshold_text": "-1.07635784",
+              "missing_goes_left": false,
+              "left": {
+                "id": 14,
+                "source_shared_id": 46,
+                "feature": 1,
+                "raw_threshold_bits": 3207135629,
+                "threshold": -0.6601799130439758,
+                "threshold_text": "-0.660179913",
+                "missing_goes_left": false,
+                "left": {
+                  "id": 15,
+                  "source_shared_id": 13,
+                  "feature": 0,
+                  "raw_threshold_bits": 3216216130,
+                  "threshold": -1.4028398990631104,
+                  "threshold_text": "-1.4028399",
+                  "missing_goes_left": false,
+                  "left": {
+                    "id": 16,
+                    "source_shared_id": 12,
+                    "feature": 43,
+                    "raw_threshold_bits": 3160230910,
+                    "threshold": -0.01350688748061657,
+                    "threshold_text": "-0.0135068875",
+                    "missing_goes_left": false,
+                    "left": {
+                      "id": 17,
+                      "source_shared_id": 1,
+                      "class": 1
+                    },
+                    "right": {
+                      "id": 18,
+                      "source_shared_id": 11,
+                      "feature": 4,
+                      "raw_threshold_bits": 1067558739,
+                      "threshold": 1.2629188299179077,
+                      "threshold_text": "1.26291883",
+                      "missing_goes_left": false,
+                      "left": {
+                        "id": 19,
+                        "source_shared_id": 10,
+                        "feature": 43,
+                        "raw_threshold_bits": 3156736178,
+                        "threshold": -0.010252164676785469,
+                        "threshold_text": "-0.0102521647",
+                        "missing_goes_left": false,
+                        "left": {
+                          "id": 20,
+                          "source_shared_id": 9,
+                          "feature": 19,
+                          "raw_threshold_bits": 1045710217,
+                          "threshold": 0.20729650557041168,
+                          "threshold_text": "0.207296506",
+                          "missing_goes_left": false,
+                          "left": {
+                            "id": 21,
+                            "source_shared_id": 8,
+                            "feature": 43,
+                            "raw_threshold_bits": 3158326630,
+                            "threshold": -0.011733388528227806,
+                            "threshold_text": "-0.0117333885",
+                            "missing_goes_left": false,
+                            "left": {
+                              "id": 22,
+                              "source_shared_id": 6,
+                              "feature": 4,
+                              "raw_threshold_bits": 1066900217,
+                              "threshold": 1.1844168901443481,
+                              "threshold_text": "1.18441689",
+                              "missing_goes_left": false,
+                              "left": {
+                                "id": 23,
+                                "source_shared_id": 0,
+                                "class": 0
+                              },
+                              "right": {
+                                "id": 24,
+                                "source_shared_id": 1,
+                                "class": 1
+                              }
+                            },
+                            "right": {
+                              "id": 25,
+                              "source_shared_id": 7,
+                              "feature": 1,
+                              "raw_threshold_bits": 3212321946,
+                              "threshold": -0.9693084955215454,
+                              "threshold_text": "-0.969308496",
+                              "missing_goes_left": false,
+                              "left": {
+                                "id": 26,
+                                "source_shared_id": 6,
+                                "feature": 4,
+                                "raw_threshold_bits": 1066900217,
+                                "threshold": 1.1844168901443481,
+                                "threshold_text": "1.18441689",
+                                "missing_goes_left": false,
+                                "left": {
+                                  "id": 27,
+                                  "source_shared_id": 0,
+                                  "class": 0
+                                },
+                                "right": {
+                                  "id": 28,
+                                  "source_shared_id": 1,
+                                  "class": 1
+                                }
+                              },
+                              "right": {
+                                "id": 29,
+                                "source_shared_id": 1,
+                                "class": 1
+                              }
+                            }
+                          },
+                          "right": {
+                            "id": 30,
+                            "source_shared_id": 1,
+                            "class": 1
+                          }
+                        },
+                        "right": {
+                          "id": 31,
+                          "source_shared_id": 5,
+                          "feature": 1,
+                          "raw_threshold_bits": 3212321946,
+                          "threshold": -0.9693084955215454,
+                          "threshold_text": "-0.969308496",
+                          "missing_goes_left": false,
+                          "left": {
+                            "id": 32,
+                            "source_shared_id": 0,
+                            "class": 0
+                          },
+                          "right": {
+                            "id": 33,
+                            "source_shared_id": 1,
+                            "class": 1
+                          }
+                        }
+                      },
+                      "right": {
+                        "id": 34,
+                        "source_shared_id": 1,
+                        "class": 1
+                      }
+                    }
+                  },
+                  "right": {
+                    "id": 35,
+                    "source_shared_id": 1,
+                    "class": 1
+                  }
+                },
+                "right": {
+                  "id": 36,
+                  "source_shared_id": 1,
+                  "class": 1
+                }
+              },
+              "right": {
+                "id": 37,
+                "source_shared_id": 1,
+                "class": 1
+              }
+            }
+          },
+          "right": {
+            "id": 38,
+            "source_shared_id": 1,
+            "class": 1
+          }
+        },
+        "right": {
+          "id": 39,
+          "source_shared_id": 59,
+          "feature": 0,
+          "raw_threshold_bits": 3201757748,
+          "threshold": -0.41981661319732666,
+          "threshold_text": "-0.419816613",
+          "missing_goes_left": false,
+          "left": {
+            "id": 40,
+            "source_shared_id": 58,
+            "feature": 0,
+            "raw_threshold_bits": 3213477400,
+            "threshold": -1.0763578414916992,
+            "threshold_text": "-1.07635784",
+            "missing_goes_left": false,
+            "left": {
+              "id": 41,
+              "source_shared_id": 45,
+              "feature": 1,
+              "raw_threshold_bits": 3207135629,
+              "threshold": -0.6601799130439758,
+              "threshold_text": "-0.660179913",
+              "missing_goes_left": false,
+              "left": {
+                "id": 42,
+                "source_shared_id": 44,
+                "feature": 0,
+                "raw_threshold_bits": 3216216130,
+                "threshold": -1.4028398990631104,
+                "threshold_text": "-1.4028399",
+                "missing_goes_left": false,
+                "left": {
+                  "id": 43,
+                  "source_shared_id": 35,
+                  "feature": 43,
+                  "raw_threshold_bits": 3160230910,
+                  "threshold": -0.01350688748061657,
+                  "threshold_text": "-0.0135068875",
+                  "missing_goes_left": false,
+                  "left": {
+                    "id": 44,
+                    "source_shared_id": 31,
+                    "feature": 4,
+                    "raw_threshold_bits": 1067558739,
+                    "threshold": 1.2629188299179077,
+                    "threshold_text": "1.26291883",
+                    "missing_goes_left": false,
+                    "left": {
+                      "id": 45,
+                      "source_shared_id": 29,
+                      "feature": 19,
+                      "raw_threshold_bits": 1045710217,
+                      "threshold": 0.20729650557041168,
+                      "threshold_text": "0.207296506",
+                      "missing_goes_left": false,
+                      "left": {
+                        "id": 46,
+                        "source_shared_id": 6,
+                        "feature": 4,
+                        "raw_threshold_bits": 1066900217,
+                        "threshold": 1.1844168901443481,
+                        "threshold_text": "1.18441689",
+                        "missing_goes_left": false,
+                        "left": {
+                          "id": 47,
+                          "source_shared_id": 0,
+                          "class": 0
+                        },
+                        "right": {
+                          "id": 48,
+                          "source_shared_id": 1,
+                          "class": 1
+                        }
+                      },
+                      "right": {
+                        "id": 49,
+                        "source_shared_id": 1,
+                        "class": 1
+                      }
+                    },
+                    "right": {
+                      "id": 50,
+                      "source_shared_id": 1,
+                      "class": 1
+                    }
+                  },
+                  "right": {
+                    "id": 51,
+                    "source_shared_id": 34,
+                    "feature": 4,
+                    "raw_threshold_bits": 1067558739,
+                    "threshold": 1.2629188299179077,
+                    "threshold_text": "1.26291883",
+                    "missing_goes_left": false,
+                    "left": {
+                      "id": 52,
+                      "source_shared_id": 33,
+                      "feature": 43,
+                      "raw_threshold_bits": 3156736178,
+                      "threshold": -0.010252164676785469,
+                      "threshold_text": "-0.0102521647",
+                      "missing_goes_left": false,
+                      "left": {
+                        "id": 53,
+                        "source_shared_id": 32,
+                        "feature": 19,
+                        "raw_threshold_bits": 1045710217,
+                        "threshold": 0.20729650557041168,
+                        "threshold_text": "0.207296506",
+                        "missing_goes_left": false,
+                        "left": {
+                          "id": 54,
+                          "source_shared_id": 0,
+                          "class": 0
+                        },
+                        "right": {
+                          "id": 55,
+                          "source_shared_id": 30,
+                          "feature": 43,
+                          "raw_threshold_bits": 3158326630,
+                          "threshold": -0.011733388528227806,
+                          "threshold_text": "-0.0117333885",
+                          "missing_goes_left": false,
+                          "left": {
+                            "id": 56,
+                            "source_shared_id": 28,
+                            "feature": 4,
+                            "raw_threshold_bits": 1066900217,
+                            "threshold": 1.1844168901443481,
+                            "threshold_text": "1.18441689",
+                            "missing_goes_left": false,
+                            "left": {
+                              "id": 57,
+                              "source_shared_id": 0,
+                              "class": 0
+                            },
+                            "right": {
+                              "id": 58,
+                              "source_shared_id": 5,
+                              "feature": 1,
+                              "raw_threshold_bits": 3212321946,
+                              "threshold": -0.9693084955215454,
+                              "threshold_text": "-0.969308496",
+                              "missing_goes_left": false,
+                              "left": {
+                                "id": 59,
+                                "source_shared_id": 0,
+                                "class": 0
+                              },
+                              "right": {
+                                "id": 60,
+                                "source_shared_id": 1,
+                                "class": 1
+                              }
+                            }
+                          },
+                          "right": {
+                            "id": 61,
+                            "source_shared_id": 27,
+                            "feature": 1,
+                            "raw_threshold_bits": 3212321946,
+                            "threshold": -0.9693084955215454,
+                            "threshold_text": "-0.969308496",
+                            "missing_goes_left": false,
+                            "left": {
+                              "id": 62,
+                              "source_shared_id": 0,
+                              "class": 0
+                            },
+                            "right": {
+                              "id": 63,
+                              "source_shared_id": 6,
+                              "feature": 4,
+                              "raw_threshold_bits": 1066900217,
+                              "threshold": 1.1844168901443481,
+                              "threshold_text": "1.18441689",
+                              "missing_goes_left": false,
+                              "left": {
+                                "id": 64,
+                                "source_shared_id": 0,
+                                "class": 0
+                              },
+                              "right": {
+                                "id": 65,
+                                "source_shared_id": 1,
+                                "class": 1
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "right": {
+                        "id": 66,
+                        "source_shared_id": 0,
+                        "class": 0
+                      }
+                    },
+                    "right": {
+                      "id": 67,
+                      "source_shared_id": 20,
+                      "feature": 43,
+                      "raw_threshold_bits": 3156736178,
+                      "threshold": -0.010252164676785469,
+                      "threshold_text": "-0.0102521647",
+                      "missing_goes_left": false,
+                      "left": {
+                        "id": 68,
+                        "source_shared_id": 18,
+                        "feature": 19,
+                        "raw_threshold_bits": 1045710217,
+                        "threshold": 0.20729650557041168,
+                        "threshold_text": "0.207296506",
+                        "missing_goes_left": false,
+                        "left": {
+                          "id": 69,
+                          "source_shared_id": 0,
+                          "class": 0
+                        },
+                        "right": {
+                          "id": 70,
+                          "source_shared_id": 17,
+                          "feature": 43,
+                          "raw_threshold_bits": 3158326630,
+                          "threshold": -0.011733388528227806,
+                          "threshold_text": "-0.0117333885",
+                          "missing_goes_left": false,
+                          "left": {
+                            "id": 71,
+                            "source_shared_id": 1,
+                            "class": 1
+                          },
+                          "right": {
+                            "id": 72,
+                            "source_shared_id": 5,
+                            "feature": 1,
+                            "raw_threshold_bits": 3212321946,
+                            "threshold": -0.9693084955215454,
+                            "threshold_text": "-0.969308496",
+                            "missing_goes_left": false,
+                            "left": {
+                              "id": 73,
+                              "source_shared_id": 0,
+                              "class": 0
+                            },
+                            "right": {
+                              "id": 74,
+                              "source_shared_id": 1,
+                              "class": 1
+                            }
+                          }
+                        }
+                      },
+                      "right": {
+                        "id": 75,
+                        "source_shared_id": 0,
+                        "class": 0
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "id": 76,
+                  "source_shared_id": 43,
+                  "feature": 43,
+                  "raw_threshold_bits": 3160230910,
+                  "threshold": -0.01350688748061657,
+                  "threshold_text": "-0.0135068875",
+                  "missing_goes_left": false,
+                  "left": {
+                    "id": 77,
+                    "source_shared_id": 31,
+                    "feature": 4,
+                    "raw_threshold_bits": 1067558739,
+                    "threshold": 1.2629188299179077,
+                    "threshold_text": "1.26291883",
+                    "missing_goes_left": false,
+                    "left": {
+                      "id": 78,
+                      "source_shared_id": 29,
+                      "feature": 19,
+                      "raw_threshold_bits": 1045710217,
+                      "threshold": 0.20729650557041168,
+                      "threshold_text": "0.207296506",
+                      "missing_goes_left": false,
+                      "left": {
+                        "id": 79,
+                        "source_shared_id": 6,
+                        "feature": 4,
+                        "raw_threshold_bits": 1066900217,
+                        "threshold": 1.1844168901443481,
+                        "threshold_text": "1.18441689",
+                        "missing_goes_left": false,
+                        "left": {
+                          "id": 80,
+                          "source_shared_id": 0,
+                          "class": 0
+                        },
+                        "right": {
+                          "id": 81,
+                          "source_shared_id": 1,
+                          "class": 1
+                        }
+                      },
+                      "right": {
+                        "id": 82,
+                        "source_shared_id": 1,
+                        "class": 1
+                      }
+                    },
+                    "right": {
+                      "id": 83,
+                      "source_shared_id": 1,
+                      "class": 1
+                    }
+                  },
+                  "right": {
+                    "id": 84,
+                    "source_shared_id": 42,
+                    "feature": 4,
+                    "raw_threshold_bits": 1067558739,
+                    "threshold": 1.2629188299179077,
+                    "threshold_text": "1.26291883",
+                    "missing_goes_left": false,
+                    "left": {
+                      "id": 85,
+                      "source_shared_id": 41,
+                      "feature": 43,
+                      "raw_threshold_bits": 3156736178,
+                      "threshold": -0.010252164676785469,
+                      "threshold_text": "-0.0102521647",
+                      "missing_goes_left": false,
+                      "left": {
+                        "id": 86,
+                        "source_shared_id": 40,
+                        "feature": 19,
+                        "raw_threshold_bits": 1045710217,
+                        "threshold": 0.20729650557041168,
+                        "threshold_text": "0.207296506",
+                        "missing_goes_left": false,
+                        "left": {
+                          "id": 87,
+                          "source_shared_id": 39,
+                          "feature": 43,
+                          "raw_threshold_bits": 3158326630,
+                          "threshold": -0.011733388528227806,
+                          "threshold_text": "-0.0117333885",
+                          "missing_goes_left": false,
+                          "left": {
+                            "id": 88,
+                            "source_shared_id": 0,
+                            "class": 0
+                          },
+                          "right": {
+                            "id": 89,
+                            "source_shared_id": 27,
+                            "feature": 1,
+                            "raw_threshold_bits": 3212321946,
+                            "threshold": -0.9693084955215454,
+                            "threshold_text": "-0.969308496",
+                            "missing_goes_left": false,
+                            "left": {
+                              "id": 90,
+                              "source_shared_id": 0,
+                              "class": 0
+                            },
+                            "right": {
+                              "id": 91,
+                              "source_shared_id": 6,
+                              "feature": 4,
+                              "raw_threshold_bits": 1066900217,
+                              "threshold": 1.1844168901443481,
+                              "threshold_text": "1.18441689",
+                              "missing_goes_left": false,
+                              "left": {
+                                "id": 92,
+                                "source_shared_id": 0,
+                                "class": 0
+                              },
+                              "right": {
+                                "id": 93,
+                                "source_shared_id": 1,
+                                "class": 1
+                              }
+                            }
+                          }
+                        },
+                        "right": {
+                          "id": 94,
+                          "source_shared_id": 38,
+                          "feature": 43,
+                          "raw_threshold_bits": 3158326630,
+                          "threshold": -0.011733388528227806,
+                          "threshold_text": "-0.0117333885",
+                          "missing_goes_left": false,
+                          "left": {
+                            "id": 95,
+                            "source_shared_id": 1,
+                            "class": 1
+                          },
+                          "right": {
+                            "id": 96,
+                            "source_shared_id": 7,
+                            "feature": 1,
+                            "raw_threshold_bits": 3212321946,
+                            "threshold": -0.9693084955215454,
+                            "threshold_text": "-0.969308496",
+                            "missing_goes_left": false,
+                            "left": {
+                              "id": 97,
+                              "source_shared_id": 6,
+                              "feature": 4,
+                              "raw_threshold_bits": 1066900217,
+                              "threshold": 1.1844168901443481,
+                              "threshold_text": "1.18441689",
+                              "missing_goes_left": false,
+                              "left": {
+                                "id": 98,
+                                "source_shared_id": 0,
+                                "class": 0
+                              },
+                              "right": {
+                                "id": 99,
+                                "source_shared_id": 1,
+                                "class": 1
+                              }
+                            },
+                            "right": {
+                              "id": 100,
+                              "source_shared_id": 1,
+                              "class": 1
+                            }
+                          }
+                        }
+                      },
+                      "right": {
+                        "id": 101,
+                        "source_shared_id": 27,
+                        "feature": 1,
+                        "raw_threshold_bits": 3212321946,
+                        "threshold": -0.9693084955215454,
+                        "threshold_text": "-0.969308496",
+                        "missing_goes_left": false,
+                        "left": {
+                          "id": 102,
+                          "source_shared_id": 0,
+                          "class": 0
+                        },
+                        "right": {
+                          "id": 103,
+                          "source_shared_id": 6,
+                          "feature": 4,
+                          "raw_threshold_bits": 1066900217,
+                          "threshold": 1.1844168901443481,
+                          "threshold_text": "1.18441689",
+                          "missing_goes_left": false,
+                          "left": {
+                            "id": 104,
+                            "source_shared_id": 0,
+                            "class": 0
+                          },
+                          "right": {
+                            "id": 105,
+                            "source_shared_id": 1,
+                            "class": 1
+                          }
+                        }
+                      }
+                    },
+                    "right": {
+                      "id": 106,
+                      "source_shared_id": 37,
+                      "feature": 43,
+                      "raw_threshold_bits": 3156736178,
+                      "threshold": -0.010252164676785469,
+                      "threshold_text": "-0.0102521647",
+                      "missing_goes_left": false,
+                      "left": {
+                        "id": 107,
+                        "source_shared_id": 36,
+                        "feature": 19,
+                        "raw_threshold_bits": 1045710217,
+                        "threshold": 0.20729650557041168,
+                        "threshold_text": "0.207296506",
+                        "missing_goes_left": false,
+                        "left": {
+                          "id": 108,
+                          "source_shared_id": 5,
+                          "feature": 1,
+                          "raw_threshold_bits": 3212321946,
+                          "threshold": -0.9693084955215454,
+                          "threshold_text": "-0.969308496",
+                          "missing_goes_left": false,
+                          "left": {
+                            "id": 109,
+                            "source_shared_id": 0,
+                            "class": 0
+                          },
+                          "right": {
+                            "id": 110,
+                            "source_shared_id": 1,
+                            "class": 1
+                          }
+                        },
+                        "right": {
+                          "id": 111,
+                          "source_shared_id": 1,
+                          "class": 1
+                        }
+                      },
+                      "right": {
+                        "id": 112,
+                        "source_shared_id": 5,
+                        "feature": 1,
+                        "raw_threshold_bits": 3212321946,
+                        "threshold": -0.9693084955215454,
+                        "threshold_text": "-0.969308496",
+                        "missing_goes_left": false,
+                        "left": {
+                          "id": 113,
+                          "source_shared_id": 0,
+                          "class": 0
+                        },
+                        "right": {
+                          "id": 114,
+                          "source_shared_id": 1,
+                          "class": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "right": {
+                "id": 115,
+                "source_shared_id": 26,
+                "feature": 43,
+                "raw_threshold_bits": 3158326630,
+                "threshold": -0.011733388528227806,
+                "threshold_text": "-0.0117333885",
+                "missing_goes_left": false,
+                "left": {
+                  "id": 116,
+                  "source_shared_id": 24,
+                  "feature": 43,
+                  "raw_threshold_bits": 3160230910,
+                  "threshold": -0.01350688748061657,
+                  "threshold_text": "-0.0135068875",
+                  "missing_goes_left": false,
+                  "left": {
+                    "id": 117,
+                    "source_shared_id": 1,
+                    "class": 1
+                  },
+                  "right": {
+                    "id": 118,
+                    "source_shared_id": 21,
+                    "feature": 44,
+                    "raw_threshold_bits": 3160589194,
+                    "threshold": -0.013840565457940102,
+                    "threshold_text": "-0.0138405655",
+                    "missing_goes_left": false,
+                    "left": {
+                      "id": 119,
+                      "source_shared_id": 1,
+                      "class": 1
+                    },
+                    "right": {
+                      "id": 120,
+                      "source_shared_id": 19,
+                      "feature": 19,
+                      "raw_threshold_bits": 1045710217,
+                      "threshold": 0.20729650557041168,
+                      "threshold_text": "0.207296506",
+                      "missing_goes_left": false,
+                      "left": {
+                        "id": 121,
+                        "source_shared_id": 16,
+                        "feature": 1,
+                        "raw_threshold_bits": 1044914575,
+                        "threshold": 0.19544051587581635,
+                        "threshold_text": "0.195440516",
+                        "missing_goes_left": false,
+                        "left": {
+                          "id": 122,
+                          "source_shared_id": 15,
+                          "feature": 4,
+                          "raw_threshold_bits": 1066900217,
+                          "threshold": 1.1844168901443481,
+                          "threshold_text": "1.18441689",
+                          "missing_goes_left": false,
+                          "left": {
+                            "id": 123,
+                            "source_shared_id": 14,
+                            "feature": 0,
+                            "raw_threshold_bits": 3216216130,
+                            "threshold": -1.4028398990631104,
+                            "threshold_text": "-1.4028399",
+                            "missing_goes_left": false,
+                            "left": {
+                              "id": 124,
+                              "source_shared_id": 0,
+                              "class": 0
+                            },
+                            "right": {
+                              "id": 125,
+                              "source_shared_id": 1,
+                              "class": 1
+                            }
+                          },
+                          "right": {
+                            "id": 126,
+                            "source_shared_id": 1,
+                            "class": 1
+                          }
+                        },
+                        "right": {
+                          "id": 127,
+                          "source_shared_id": 1,
+                          "class": 1
+                        }
+                      },
+                      "right": {
+                        "id": 128,
+                        "source_shared_id": 1,
+                        "class": 1
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "id": 129,
+                  "source_shared_id": 25,
+                  "feature": 44,
+                  "raw_threshold_bits": 3160589194,
+                  "threshold": -0.013840565457940102,
+                  "threshold_text": "-0.0138405655",
+                  "missing_goes_left": false,
+                  "left": {
+                    "id": 130,
+                    "source_shared_id": 23,
+                    "feature": 43,
+                    "raw_threshold_bits": 3156736178,
+                    "threshold": -0.010252164676785469,
+                    "threshold_text": "-0.0102521647",
+                    "missing_goes_left": false,
+                    "left": {
+                      "id": 131,
+                      "source_shared_id": 1,
+                      "class": 1
+                    },
+                    "right": {
+                      "id": 132,
+                      "source_shared_id": 16,
+                      "feature": 1,
+                      "raw_threshold_bits": 1044914575,
+                      "threshold": 0.19544051587581635,
+                      "threshold_text": "0.195440516",
+                      "missing_goes_left": false,
+                      "left": {
+                        "id": 133,
+                        "source_shared_id": 15,
+                        "feature": 4,
+                        "raw_threshold_bits": 1066900217,
+                        "threshold": 1.1844168901443481,
+                        "threshold_text": "1.18441689",
+                        "missing_goes_left": false,
+                        "left": {
+                          "id": 134,
+                          "source_shared_id": 14,
+                          "feature": 0,
+                          "raw_threshold_bits": 3216216130,
+                          "threshold": -1.4028398990631104,
+                          "threshold_text": "-1.4028399",
+                          "missing_goes_left": false,
+                          "left": {
+                            "id": 135,
+                            "source_shared_id": 0,
+                            "class": 0
+                          },
+                          "right": {
+                            "id": 136,
+                            "source_shared_id": 1,
+                            "class": 1
+                          }
+                        },
+                        "right": {
+                          "id": 137,
+                          "source_shared_id": 1,
+                          "class": 1
+                        }
+                      },
+                      "right": {
+                        "id": 138,
+                        "source_shared_id": 1,
+                        "class": 1
+                      }
+                    }
+                  },
+                  "right": {
+                    "id": 139,
+                    "source_shared_id": 22,
+                    "feature": 43,
+                    "raw_threshold_bits": 3156736178,
+                    "threshold": -0.010252164676785469,
+                    "threshold_text": "-0.0102521647",
+                    "missing_goes_left": false,
+                    "left": {
+                      "id": 140,
+                      "source_shared_id": 19,
+                      "feature": 19,
+                      "raw_threshold_bits": 1045710217,
+                      "threshold": 0.20729650557041168,
+                      "threshold_text": "0.207296506",
+                      "missing_goes_left": false,
+                      "left": {
+                        "id": 141,
+                        "source_shared_id": 16,
+                        "feature": 1,
+                        "raw_threshold_bits": 1044914575,
+                        "threshold": 0.19544051587581635,
+                        "threshold_text": "0.195440516",
+                        "missing_goes_left": false,
+                        "left": {
+                          "id": 142,
+                          "source_shared_id": 15,
+                          "feature": 4,
+                          "raw_threshold_bits": 1066900217,
+                          "threshold": 1.1844168901443481,
+                          "threshold_text": "1.18441689",
+                          "missing_goes_left": false,
+                          "left": {
+                            "id": 143,
+                            "source_shared_id": 14,
+                            "feature": 0,
+                            "raw_threshold_bits": 3216216130,
+                            "threshold": -1.4028398990631104,
+                            "threshold_text": "-1.4028399",
+                            "missing_goes_left": false,
+                            "left": {
+                              "id": 144,
+                              "source_shared_id": 0,
+                              "class": 0
+                            },
+                            "right": {
+                              "id": 145,
+                              "source_shared_id": 1,
+                              "class": 1
+                            }
+                          },
+                          "right": {
+                            "id": 146,
+                            "source_shared_id": 1,
+                            "class": 1
+                          }
+                        },
+                        "right": {
+                          "id": 147,
+                          "source_shared_id": 1,
+                          "class": 1
+                        }
+                      },
+                      "right": {
+                        "id": 148,
+                        "source_shared_id": 1,
+                        "class": 1
+                      }
+                    },
+                    "right": {
+                      "id": 149,
+                      "source_shared_id": 16,
+                      "feature": 1,
+                      "raw_threshold_bits": 1044914575,
+                      "threshold": 0.19544051587581635,
+                      "threshold_text": "0.195440516",
+                      "missing_goes_left": false,
+                      "left": {
+                        "id": 150,
+                        "source_shared_id": 15,
+                        "feature": 4,
+                        "raw_threshold_bits": 1066900217,
+                        "threshold": 1.1844168901443481,
+                        "threshold_text": "1.18441689",
+                        "missing_goes_left": false,
+                        "left": {
+                          "id": 151,
+                          "source_shared_id": 14,
+                          "feature": 0,
+                          "raw_threshold_bits": 3216216130,
+                          "threshold": -1.4028398990631104,
+                          "threshold_text": "-1.4028399",
+                          "missing_goes_left": false,
+                          "left": {
+                            "id": 152,
+                            "source_shared_id": 0,
+                            "class": 0
+                          },
+                          "right": {
+                            "id": 153,
+                            "source_shared_id": 1,
+                            "class": 1
+                          }
+                        },
+                        "right": {
+                          "id": 154,
+                          "source_shared_id": 1,
+                          "class": 1
+                        }
+                      },
+                      "right": {
+                        "id": 155,
+                        "source_shared_id": 1,
+                        "class": 1
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "right": {
+              "id": 156,
+              "source_shared_id": 57,
+              "feature": 0,
+              "raw_threshold_bits": 3208810815,
+              "threshold": -0.7600287795066833,
+              "threshold_text": "-0.76002878",
+              "missing_goes_left": false,
+              "left": {
+                "id": 157,
+                "source_shared_id": 56,
+                "feature": 1,
+                "raw_threshold_bits": 3207135629,
+                "threshold": -0.6601799130439758,
+                "threshold_text": "-0.660179913",
+                "missing_goes_left": false,
+                "left": {
+                  "id": 158,
+                  "source_shared_id": 55,
+                  "feature": 43,
+                  "raw_threshold_bits": 3160230910,
+                  "threshold": -0.01350688748061657,
+                  "threshold_text": "-0.0135068875",
+                  "missing_goes_left": false,
+                  "left": {
+                    "id": 159,
+                    "source_shared_id": 1,
+                    "class": 1
+                  },
+                  "right": {
+                    "id": 160,
+                    "source_shared_id": 54,
+                    "feature": 4,
+                    "raw_threshold_bits": 1067558739,
+                    "threshold": 1.2629188299179077,
+                    "threshold_text": "1.26291883",
+                    "missing_goes_left": false,
+                    "left": {
+                      "id": 161,
+                      "source_shared_id": 53,
+                      "feature": 43,
+                      "raw_threshold_bits": 3156736178,
+                      "threshold": -0.010252164676785469,
+                      "threshold_text": "-0.0102521647",
+                      "missing_goes_left": false,
+                      "left": {
+                        "id": 162,
+                        "source_shared_id": 52,
+                        "feature": 19,
+                        "raw_threshold_bits": 1045710217,
+                        "threshold": 0.20729650557041168,
+                        "threshold_text": "0.207296506",
+                        "missing_goes_left": false,
+                        "left": {
+                          "id": 163,
+                          "source_shared_id": 51,
+                          "feature": 43,
+                          "raw_threshold_bits": 3158326630,
+                          "threshold": -0.011733388528227806,
+                          "threshold_text": "-0.0117333885",
+                          "missing_goes_left": false,
+                          "left": {
+                            "id": 164,
+                            "source_shared_id": 50,
+                            "feature": 4,
+                            "raw_threshold_bits": 1066900217,
+                            "threshold": 1.1844168901443481,
+                            "threshold_text": "1.18441689",
+                            "missing_goes_left": false,
+                            "left": {
+                              "id": 165,
+                              "source_shared_id": 5,
+                              "feature": 1,
+                              "raw_threshold_bits": 3212321946,
+                              "threshold": -0.9693084955215454,
+                              "threshold_text": "-0.969308496",
+                              "missing_goes_left": false,
+                              "left": {
+                                "id": 166,
+                                "source_shared_id": 0,
+                                "class": 0
+                              },
+                              "right": {
+                                "id": 167,
+                                "source_shared_id": 1,
+                                "class": 1
+                              }
+                            },
+                            "right": {
+                              "id": 168,
+                              "source_shared_id": 1,
+                              "class": 1
+                            }
+                          },
+                          "right": {
+                            "id": 169,
+                            "source_shared_id": 7,
+                            "feature": 1,
+                            "raw_threshold_bits": 3212321946,
+                            "threshold": -0.9693084955215454,
+                            "threshold_text": "-0.969308496",
+                            "missing_goes_left": false,
+                            "left": {
+                              "id": 170,
+                              "source_shared_id": 6,
+                              "feature": 4,
+                              "raw_threshold_bits": 1066900217,
+                              "threshold": 1.1844168901443481,
+                              "threshold_text": "1.18441689",
+                              "missing_goes_left": false,
+                              "left": {
+                                "id": 171,
+                                "source_shared_id": 0,
+                                "class": 0
+                              },
+                              "right": {
+                                "id": 172,
+                                "source_shared_id": 1,
+                                "class": 1
+                              }
+                            },
+                            "right": {
+                              "id": 173,
+                              "source_shared_id": 1,
+                              "class": 1
+                            }
+                          }
+                        },
+                        "right": {
+                          "id": 174,
+                          "source_shared_id": 1,
+                          "class": 1
+                        }
+                      },
+                      "right": {
+                        "id": 175,
+                        "source_shared_id": 1,
+                        "class": 1
+                      }
+                    },
+                    "right": {
+                      "id": 176,
+                      "source_shared_id": 1,
+                      "class": 1
+                    }
+                  }
+                },
+                "right": {
+                  "id": 177,
+                  "source_shared_id": 1,
+                  "class": 1
+                }
+              },
+              "right": {
+                "id": 178,
+                "source_shared_id": 1,
+                "class": 1
+              }
+            }
+          },
+          "right": {
+            "id": 179,
+            "source_shared_id": 1,
+            "class": 1
+          }
+        }
+      },
+      "right": {
+        "id": 180,
+        "source_shared_id": 1,
+        "class": 1
+      }
+    }
+  },
+  "source_canonical_path": "build/rider/cnn-hybrid-20261007-v1/research/latest-paper-final-20261008/converted-final/replay-selected.canonical.bin",
+  "conversion_receipt_path": "build/rider/cnn-hybrid-20261007-v1/research/latest-paper-final-20261008/converted-final/replay-selected.receipt.json",
+  "conversion_receipt_qualification": {
+    "qualification_mode": "none",
+    "qualification_performed": false,
+    "qualification_complete": false,
+    "accepted_native_class_root": false,
+    "all_finite_FP32_and_NaN_cells_verified": false,
+    "native_class_mismatches": null,
+    "artifact_qualification": "unqualified_conversion_artifact",
+    "builtin_converter_checks_performed": true
+  },
+  "native_prediction_rule": {
+    "comparison": ">=",
+    "kind": "positive_probability_threshold",
+    "operation": "ResidentTrainer::predict_probabilities; native multi:softprob full-round view",
+    "probability_class": 1,
+    "rounds": "all",
+    "threshold": 0.32499998807907104,
+    "threshold_precision": "FP32"
+  },
+  "upstream_CNN_required": true
+}

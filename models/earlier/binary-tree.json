@@ -1,0 +1,170 @@
+{
+  "classes": 2,
+  "comparison": "strict FP32 less-than; raw threshold bits and stored NaN direction preserved",
+  "complete": true,
+  "construction": "Mechanical duplication of shared continuations; no model fitting or numerical prediction",
+  "features": 54,
+  "format": "expanded-binary-decision-tree-1",
+  "independent_exhaustive_verification_performed": false,
+  "input_scope": "declared input feature vectors; upstream feature generation is outside this conversion",
+  "maximum_decision_depth": 8,
+  "native_prediction_rule": {
+    "comparison": ">=",
+    "kind": "positive_probability_threshold",
+    "operation": "ResidentTrainer::predict_probabilities; native multi:softprob full-round view",
+    "probability_class": 1,
+    "rounds": "all",
+    "threshold": 0.3499999940395355,
+    "threshold_precision": "FP32"
+  },
+  "nodes": 21,
+  "root": {
+    "feature": 20,
+    "id": 0,
+    "left": {
+      "class": 0,
+      "id": 1,
+      "source_shared_id": 0
+    },
+    "missing_goes_left": false,
+    "raw_threshold_bits": 1065353216,
+    "right": {
+      "feature": 0,
+      "id": 2,
+      "left": {
+        "feature": 0,
+        "id": 3,
+        "left": {
+          "feature": 43,
+          "id": 4,
+          "left": {
+            "class": 1,
+            "id": 5,
+            "source_shared_id": 1
+          },
+          "missing_goes_left": false,
+          "raw_threshold_bits": 3158309929,
+          "right": {
+            "feature": 1,
+            "id": 6,
+            "left": {
+              "feature": 43,
+              "id": 7,
+              "left": {
+                "feature": 1,
+                "id": 8,
+                "left": {
+                  "feature": 0,
+                  "id": 9,
+                  "left": {
+                    "class": 0,
+                    "id": 10,
+                    "source_shared_id": 0
+                  },
+                  "missing_goes_left": false,
+                  "raw_threshold_bits": 3213016724,
+                  "right": {
+                    "class": 1,
+                    "id": 11,
+                    "source_shared_id": 1
+                  },
+                  "source_shared_id": 2,
+                  "threshold": -1.0214409828186035,
+                  "threshold_text": "-1.02144098"
+                },
+                "missing_goes_left": false,
+                "raw_threshold_bits": 3209235487,
+                "right": {
+                  "class": 1,
+                  "id": 12,
+                  "source_shared_id": 1
+                },
+                "source_shared_id": 3,
+                "threshold": -0.785341203212738,
+                "threshold_text": "-0.785341203"
+              },
+              "missing_goes_left": false,
+              "raw_threshold_bits": 3156736782,
+              "right": {
+                "feature": 1,
+                "id": 13,
+                "left": {
+                  "class": 0,
+                  "id": 14,
+                  "source_shared_id": 0
+                },
+                "missing_goes_left": false,
+                "raw_threshold_bits": 3209235487,
+                "right": {
+                  "feature": 0,
+                  "id": 15,
+                  "left": {
+                    "class": 0,
+                    "id": 16,
+                    "source_shared_id": 0
+                  },
+                  "missing_goes_left": false,
+                  "raw_threshold_bits": 3213016724,
+                  "right": {
+                    "class": 1,
+                    "id": 17,
+                    "source_shared_id": 1
+                  },
+                  "source_shared_id": 2,
+                  "threshold": -1.0214409828186035,
+                  "threshold_text": "-1.02144098"
+                },
+                "source_shared_id": 4,
+                "threshold": -0.785341203212738,
+                "threshold_text": "-0.785341203"
+              },
+              "source_shared_id": 5,
+              "threshold": -0.010252727195620537,
+              "threshold_text": "-0.0102527272"
+            },
+            "missing_goes_left": false,
+            "raw_threshold_bits": 3206728488,
+            "right": {
+              "class": 1,
+              "id": 18,
+              "source_shared_id": 1
+            },
+            "source_shared_id": 6,
+            "threshold": -0.6359124183654785,
+            "threshold_text": "-0.635912418"
+          },
+          "source_shared_id": 7,
+          "threshold": -0.011717834509909153,
+          "threshold_text": "-0.0117178345"
+        },
+        "missing_goes_left": false,
+        "raw_threshold_bits": 3208003756,
+        "right": {
+          "class": 1,
+          "id": 19,
+          "source_shared_id": 1
+        },
+        "source_shared_id": 8,
+        "threshold": -0.7119243144989014,
+        "threshold_text": "-0.711924314"
+      },
+      "missing_goes_left": false,
+      "raw_threshold_bits": 3201339249,
+      "right": {
+        "class": 1,
+        "id": 20,
+        "source_shared_id": 1
+      },
+      "source_shared_id": 9,
+      "threshold": -0.40734437108039856,
+      "threshold_text": "-0.407344371"
+    },
+    "source_shared_id": 10,
+    "threshold": 1.0,
+    "threshold_text": "1"
+  },
+  "shared_nodes": 11,
+  "source_canonical_sha256": "3603de20647a54d76a3d990f5add489fc27dcca651da2d195416163a1a6e5468",
+  "source_model_sha256": "52690dd3eb5ff8944b20004b144086a165c31d9ca403c32356b862225236fdd3",
+  "upstream_CNN_required": true
+}
