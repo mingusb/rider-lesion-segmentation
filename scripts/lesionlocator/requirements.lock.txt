@@ -20,7 +20,7 @@ dicom2nifti==2.6.2
 diskcache==5.6.3
 dynamic-network-architectures==0.3.1
 einops==0.8.2
-filelock==4.0.12
+filelock==4.2.1
 fonttools==4.66.1
 footsteps==0.1.9
 fsspec==2026.9.0
